@@ -1,0 +1,85 @@
+---
+title: "CFA Training"
+author: "Miguel Fudolig"
+format: html
+editor: visual
+---
+
+```{r,intro}
+#| output: false
+library(here)
+library(tidyverse)
+library(corrplot)
+library(semTools)
+library(lavaanPlot)
+library(tidySEM)
+library(semPlot)
+```
+
+## Testing Measurement Invariance
+
+We implement a measurement invariance analysis using the Confirmatory Factor Analysis to show that the instrument is valid across problem and non-problem gamblers. The CFA is related to the measurement side of the Structural Equation Modeling framework and is sufficient in proving instrument validity.
+
+## Loading in the Dataset
+
+I am loading the recoded dataset that you provided me into R.
+
+```{r}
+#| echo: false
+gambling <- read.csv("Gambling behavior among college students_RECODED.csv") |> as_tibble()
+```
+
+We now check for correlations between the items.
+
+```{r, corr}
+#| echo: false
+cormat <- gambling |> 
+  select(starts_with(c("pa","pad","bc","cpe","et","pfc","cse","Ini","Sus"),ignore.case=F)) |>   cor()
+
+corrplot(cormat)
+```
+
+We now use the `lavaan` package to estimate a multi-group CFA by grouping each construct.
+
+```{r,construct}
+gamblingmod <- 'pa =~ pa1 + pa2 +pa3+pa4 + pa5
+                pad =~ pad1 + pad2 + pad3 + pad4 + pad5
+                bc =~ bc1 + bc2 + bc3 + bc4 + bc5
+                cpe =~ cpe1 + cpe2 + cpe3
+                et =~ et1 + et2 + et3
+                pfc =~ pfc1 + pfc2 + pfc3
+                cse =~ cse1 + cse2 + cse3
+                ini=~ Ini
+                sus=~ Sus'
+
+CFAfit <- cfa(gamblingmod,data=gambling)
+
+CFAfit |> summary(fit.measures=T)
+```
+
+## Configural Invariance
+
+Let us now see if we have configural invariance between the non-gambling and gambling groups.
+
+```{r,config}
+cfa.config <- cfa(gamblingmod,data=gambling,group="ProblemG")
+cfa.config |> summary(fit.measures=T,standardized=T)
+cfasem <- sem(gamblingmod,data=gambling,group="ProblemG")
+lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05,covs=T) -> lp
+save_png(lp,"sem.png")
+semPaths(cfasem,"std",layout="tree")
+```
+
+The results show that the fit is good between the groups. CFI and TLI are close to 0.95, RMSEA is close to 0.06, and SRMR is close to 0.8. We can conclude that the two groups have the same factor structure.
+
+## Metric Invariance
+
+Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.
+
+```{r,metric}
+cfa.metric <- cfa(gamblingmod,data=gambling,group="ProblemG",group.equal="loadings")
+
+compareFit(cfa.config,cfa.metric) |> summary()
+```
+
+Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards gambling.
