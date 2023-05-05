@@ -1,5 +1,5 @@
 ---
-title: "CFA Training"
+title: "Initiation and Sustenance of Quitting Gambling "
 author: "Miguel Fudolig"
 format: html
 editor: visual
@@ -14,6 +14,7 @@ library(semTools)
 library(lavaanPlot)
 library(tidySEM)
 library(semPlot)
+library(ltm)
 ```
 
 ## Testing Measurement Invariance
@@ -25,16 +26,37 @@ We implement a measurement invariance analysis using the Confirmatory Factor Ana
 I am loading the recoded dataset that you provided me into R.
 
 ```{r}
-#| echo: false
+
 gambling <- read.csv("Gambling behavior among college students_RECODED.csv") |> as_tibble()
+
+gambling <- gambling |> mutate(Gambled = ifelse(GambleD==0,0,1))
 ```
 
-We now check for correlations between the items.
+I introduced a new variable named Gambled, where Gambled=0 corresponds to whether the participant gambled within the past 30 days. Else, Gambled=1.
+
+## Cronbach's alpha
+
+We calculate Cronbach's alpha for the responses using the ```cronbach.alpha()``` function in the package ```ltm```.
+
+```{r, ca}
+ responses <- gambling |>
+   dplyr::select(starts_with(c("pa","pad","bc","cpe","Ini",
+                               "et","pfc","cse","Sus"),ignore.case=F))
+
+cronbach.alpha(responses,CI=T,standardized = T)
+```
+
+Cronbach's alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.
+
+## Initiation of quitting gambling
+
+
+We now check for correlations between the items for initiation of quitting gambling.
 
 ```{r, corr}
-#| echo: false
-cormat <- gambling |> 
-  select(starts_with(c("pa","pad","bc","cpe","et","pfc","cse","Ini","Sus"),ignore.case=F)) |>   cor()
+# #| echo: false
+ cormat <- gambling |>
+   dplyr::select(starts_with(c("pa","pad","bc","cpe","Ini"),ignore.case=F)) |>   cor()
 
 corrplot(cormat)
 ```
@@ -42,44 +64,138 @@ corrplot(cormat)
 We now use the `lavaan` package to estimate a multi-group CFA by grouping each construct.
 
 ```{r,construct}
-gamblingmod <- 'pa =~ pa1 + pa2 +pa3+pa4 + pa5
+inimod <- 'pa =~ pa1 + pa2 +pa3+pa4 + pa5
                 pad =~ pad1 + pad2 + pad3 + pad4 + pad5
                 bc =~ bc1 + bc2 + bc3 + bc4 + bc5
-                cpe =~ cpe1 + cpe2 + cpe3
-                et =~ et1 + et2 + et3
-                pfc =~ pfc1 + pfc2 + pfc3
-                cse =~ cse1 + cse2 + cse3
-                ini=~ Ini
-                sus=~ Sus'
+                ini=~ Ini'
 
-CFAfit <- cfa(gamblingmod,data=gambling)
+CFAfit_ini <- cfa(inimod,data=gambling)
 
-CFAfit |> summary(fit.measures=T)
+CFAfit_ini |> summary(fit.measures=T)
 ```
+
+The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of $\leq$ 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable. 
+
 
 ## Configural Invariance
 
 Let us now see if we have configural invariance between the non-gambling and gambling groups.
 
 ```{r,config}
-cfa.config <- cfa(gamblingmod,data=gambling,group="ProblemG")
+cfa.config <- cfa(inimod,data=gambling,group="Gambled",mimic="Mplus")
 cfa.config |> summary(fit.measures=T,standardized=T)
-cfasem <- sem(gamblingmod,data=gambling,group="ProblemG")
-lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05,covs=T) -> lp
-save_png(lp,"sem.png")
+cfa.config |> fitMeasures()
+cfasem <- sem(inimod,data=gambling,group="Gambled")
+lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05) -> lp
+save_png(lp,"sem_ini.png")
 semPaths(cfasem,"std",layout="tree")
+
 ```
 
-The results show that the fit is good between the groups. CFI and TLI are close to 0.95, RMSEA is close to 0.06, and SRMR is close to 0.8. We can conclude that the two groups have the same factor structure.
+The results show that the fit is good between the groups. CFI and TLI are close to 1,and the SRMR is close to 0.8. The RMSEA is slightly higher than 0.06. We can conclude that the two groups have the same factor structure.
 
 ## Metric Invariance
 
 Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.
 
 ```{r,metric}
-cfa.metric <- cfa(gamblingmod,data=gambling,group="ProblemG",group.equal="loadings")
+cfa.metric <- cfa(inimod,data=gambling,group="Gambled",group.equal="loadings")
+
+cfa.metric |> summary(fit.measures=T)
+# cfa.metric |> fitmeasures()
+# lavInspect(cfa.metric,
+# "options")[c("estimator","test","meanstructure")]
+# 
+# lavInspect(cfa.config,
+# "options")[c("estimator","test","meanstructure")]
+compareFit(cfa.config,cfa.metric) |> summary()
+```
+
+Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards quitting gambling.
+
+```{r, lavtestscore}
+lavTestScore(cfa.config)
+```
+The significant score tests shows which questions between groups have different loadings. We can look at which relations/loadings are significantly different in the table below.
+
+```{r,parameters}
+parTable(cfa.config)
+```
+
+The significant 
+
+## Sustenance of quitting gambling
+
+
+We now check for correlations between the items for sustenance of quitting gambling.
+
+```{r, corrsus}
+ cormat <- gambling |> 
+   dplyr::select(starts_with(c("et","pfc","cse","Sus"),ignore.case=F)) |>   cor()
+ 
+ corrplot(cormat)
+```
+
+We now use the `lavaan` package to estimate a multi-group CFA by grouping each construct.
+
+```{r,constructsus}
+susmod <- 'et =~ et1 + et2 + et3
+                pfc =~ pfc1 + pfc2 + pfc3
+                cse =~ cse1 + cse2 + cse3
+                sus=~ Sus'
+
+CFAfit <- cfa(susmod,data=gambling)
+
+CFAfit |> summary(fit.measures=T)
+```
+
+All fit measures indicate a good fit, with the CLI close to 1, RMSEA < 0.06, and SRMR < 0.05.
+
+## Configural Invariance
+
+Let us now see if we have configural invariance between the non-gambling and gambling groups.
+
+```{r,configsus}
+cfa.config <- cfa(susmod,data=gambling,group="Gambled",mimic="Mplus")
+cfa.config |> summary(fit.measures=T,standardized=T)
+cfasem <- sem(susmod,data=gambling,group="Gambled")
+lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05) -> lp_sus
+save_png(lp_sus,"sem_sus.png")
+semPaths(cfasem,"std",layout="tree")
+
+```
+
+The fit still remains acceptable after including groups, which means that both groups have the same factors in their model.
+
+## Metric Invariance
+
+Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.
+
+```{r,metricsus}
+cfa.metric <- cfa(susmod,data=gambling,group="Gambled",group.equal="loadings")
 
 compareFit(cfa.config,cfa.metric) |> summary()
 ```
 
-Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards gambling.
+Results show that the chi-square test is not significant, which means that the metric invariance is satisfied. The new model where we constrained the loadings to be equal for both groups does not differ in terms of performance. This means that the two groups have the same factors and factor loadings. 
+
+
+
+## Scalar Invariance (strong invariance)
+
+For scalar invariance, we also set the intercepts to be equal.
+
+```{r, scalarsus}
+# Scalar model
+cfa.scalar <- cfa(susmod, data = gambling, group = "Gambled", group.equal = c("loadings","intercepts"))
+
+cfa.scalar |> summary(fit.measures=T)
+# Model comparison
+compareFit(cfa.metric, cfa.scalar) |> summary()
+```
+
+There is no significant difference in chi-square values as well as the other fit measures, which means that the constructs in the sustenance aspect of quitting gambling is also scalar invariant. 
+
+## Conclusions
+
+We have established scalar invariance of the construct validity in the sustenance response, which means the factor loadings and intercepts are the same for those who did and did not gamble in the past 30 days. This invariance was not observed in the initiation to quit gambling.  

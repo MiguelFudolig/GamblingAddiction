@@ -8,7 +8,7 @@
 
 <meta name="author" content="Miguel Fudolig">
 
-<title>CFA Training</title>
+<title>Initiation and Sustenance of Quitting Gambling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -98,6 +98,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <link href="GamblingAddiction_InstrumentValidation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="GamblingAddiction_InstrumentValidation_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -109,7 +110,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">CFA Training</h1>
+<h1 class="title">Initiation and Sustenance of Quitting Gambling</h1>
 </div>
 
 
@@ -137,7 +138,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semTools)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaanPlot)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidySEM)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ltm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="testing-measurement-invariance" class="level2">
 <h2 class="anchored" data-anchor-id="testing-measurement-invariance">Testing Measurement Invariance</h2>
@@ -147,75 +149,105 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="loading-in-the-dataset">Loading in the Dataset</h2>
 <p>I am loading the recoded dataset that you provided me into R.</p>
 <div class="cell">
-
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Gambling behavior among college students_RECODED.csv"</span>) <span class="sc">|&gt;</span> <span class="fu">as_tibble</span>()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>gambling <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">Gambled =</span> <span class="fu">ifelse</span>(GambleD<span class="sc">==</span><span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We now check for correlations between the items.</p>
+<p>I introduced a new variable named Gambled, where Gambled=0 corresponds to whether the participant gambled within the past 30 days. Else, Gambled=1.</p>
+</section>
+<section id="cronbachs-alpha" class="level2">
+<h2 class="anchored" data-anchor-id="cronbachs-alpha">Cronbach’s alpha</h2>
+<p>We calculate Cronbach’s alpha for the responses using the <code>cronbach.alpha()</code> function in the package <code>ltm</code>.</p>
 <div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> responses <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"pa"</span>,<span class="st">"pad"</span>,<span class="st">"bc"</span>,<span class="st">"cpe"</span>,<span class="st">"Ini"</span>,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cronbach.alpha</span>(responses,<span class="at">CI=</span>T,<span class="at">standardized =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Standardized Cronbach's alpha for the 'responses' data-set
+
+Items: 29
+Sample units: 1474
+alpha: 0.883
+
+Bootstrap 95% CI based on 1000 samples
+ 2.5% 97.5% 
+0.872 0.894 </code></pre>
+</div>
+</div>
+<p>Cronbach’s alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.</p>
+</section>
+<section id="initiation-of-quitting-gambling" class="level2">
+<h2 class="anchored" data-anchor-id="initiation-of-quitting-gambling">Initiation of quitting gambling</h2>
+<p>We now check for correlations between the items for initiation of quitting gambling.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| echo: false</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"pa"</span>,<span class="st">"pad"</span>,<span class="st">"bc"</span>,<span class="st">"cpe"</span>,<span class="st">"Ini"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/corr-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>gamblingmod <span class="ot">&lt;-</span> <span class="st">'pa =~ pa1 + pa2 +pa3+pa4 + pa5</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pad =~ pad1 + pad2 + pad3 + pad4 + pad5</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="st">                bc =~ bc1 + bc2 + bc3 + bc4 + bc5</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="st">                cpe =~ cpe1 + cpe2 + cpe3</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="st">                et =~ et1 + et2 + et3</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="st">                ini=~ Ini</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(gamblingmod,<span class="at">data=</span>gambling)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>inimod <span class="ot">&lt;-</span> <span class="st">'pa =~ pa1 + pa2 +pa3+pa4 + pa5</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pad =~ pad1 + pad2 + pad3 + pad4 + pad5</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">                bc =~ bc1 + bc2 + bc3 + bc4 + bc5</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">                ini=~ Ini'</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>lavaan 0.6.15 ended normally after 85 iterations
+<pre><code>lavaan 0.6.15 ended normally after 40 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
-  Number of model parameters                        92
+  Number of model parameters                        37
 
   Number of observations                          1474
 
 Model Test User Model:
                                                       
-  Test statistic                              2719.294
-  Degrees of freedom                               343
+  Test statistic                              1188.264
+  Degrees of freedom                                99
   P-value (Chi-square)                           0.000
 
 Model Test Baseline Model:
 
-  Test statistic                             31036.797
-  Degrees of freedom                               406
+  Test statistic                             16484.666
+  Degrees of freedom                               120
   P-value                                        0.000
 
 User Model versus Baseline Model:
 
-  Comparative Fit Index (CFI)                    0.922
-  Tucker-Lewis Index (TLI)                       0.908
+  Comparative Fit Index (CFI)                    0.933
+  Tucker-Lewis Index (TLI)                       0.919
 
 Loglikelihood and Information Criteria:
 
-  Loglikelihood user model (H0)             -52445.704
-  Loglikelihood unrestricted model (H1)     -51086.057
+  Loglikelihood user model (H0)             -28649.358
+  Loglikelihood unrestricted model (H1)     -28055.226
                                                       
-  Akaike (AIC)                              105075.408
-  Bayesian (BIC)                            105562.616
-  Sample-size adjusted Bayesian (SABIC)     105270.360
+  Akaike (AIC)                               57372.716
+  Bayesian (BIC)                             57568.659
+  Sample-size adjusted Bayesian (SABIC)      57451.121
 
 Root Mean Square Error of Approximation:
 
-  RMSEA                                          0.069
-  90 Percent confidence interval - lower         0.066
-  90 Percent confidence interval - upper         0.071
+  RMSEA                                          0.086
+  90 Percent confidence interval - lower         0.082
+  90 Percent confidence interval - upper         0.091
   P-value H_0: RMSEA &lt;= 0.050                    0.000
-  P-value H_0: RMSEA &gt;= 0.080                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    0.992
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.081
+  SRMR                                           0.057
 
 Parameter Estimates:
 
@@ -227,190 +259,439 @@ Latent Variables:
                    Estimate  Std.Err  z-value  P(&gt;|z|)
   pa =~                                               
     pa1               1.000                           
-    pa2               0.687    0.024   28.775    0.000
-    pa3               1.204    0.027   45.048    0.000
-    pa4               1.232    0.028   44.359    0.000
-    pa5               1.174    0.031   37.936    0.000
+    pa2               0.691    0.024   28.886    0.000
+    pa3               1.207    0.027   44.943    0.000
+    pa4               1.233    0.028   44.224    0.000
+    pa5               1.174    0.031   37.747    0.000
   pad =~                                              
     pad1              1.000                           
-    pad2              1.437    0.066   21.902    0.000
-    pad3              1.246    0.055   22.559    0.000
-    pad4              1.595    0.073   21.907    0.000
-    pad5              1.411    0.062   22.761    0.000
+    pad2              1.433    0.065   21.950    0.000
+    pad3              1.241    0.055   22.600    0.000
+    pad4              1.595    0.073   21.995    0.000
+    pad5              1.406    0.062   22.810    0.000
   bc =~                                               
     bc1               1.000                           
-    bc2               1.725    0.053   32.648    0.000
-    bc3               1.559    0.048   32.493    0.000
-    bc4               1.372    0.047   29.101    0.000
-    bc5               1.707    0.057   30.016    0.000
-  cpe =~                                              
-    cpe1              1.000                           
-    cpe2              0.979    0.036   27.375    0.000
-    cpe3              0.542    0.027   20.257    0.000
-  et =~                                               
-    et1               1.000                           
-    et2               0.934    0.018   50.670    0.000
-    et3               0.936    0.019   48.457    0.000
-  pfc =~                                              
-    pfc1              1.000                           
-    pfc2              0.995    0.032   30.821    0.000
-    pfc3              0.972    0.033   29.213    0.000
-  cse =~                                              
-    cse1              1.000                           
-    cse2              0.992    0.030   32.881    0.000
-    cse3              0.801    0.034   23.558    0.000
+    bc2               1.790    0.056   31.901    0.000
+    bc3               1.606    0.051   31.562    0.000
+    bc4               1.370    0.050   27.654    0.000
+    bc5               1.739    0.060   29.042    0.000
   ini =~                                              
     Ini               1.000                           
-  sus =~                                              
-    Sus               1.000                           
 
 Covariances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)
   pa ~~                                               
-    pad               0.032    0.018    1.753    0.080
-    bc                0.141    0.018    7.774    0.000
-    cpe               0.256    0.041    6.239    0.000
-    et                0.184    0.026    6.952    0.000
-    pfc               0.152    0.027    5.669    0.000
-    cse               0.088    0.032    2.779    0.005
-    ini               0.336    0.033   10.336    0.000
-    sus               0.719    0.047   15.160    0.000
+    pad               0.032    0.018    1.741    0.082
+    bc                0.137    0.018    7.729    0.000
+    ini               0.336    0.033   10.327    0.000
   pad ~~                                              
-    bc               -0.104    0.012   -8.908    0.000
-    cpe              -0.027    0.024   -1.128    0.259
-    et               -0.193    0.018  -10.740    0.000
-    pfc              -0.166    0.018   -9.238    0.000
-    cse              -0.155    0.020   -7.681    0.000
-    ini              -0.135    0.019   -7.011    0.000
-    sus              -0.063    0.025   -2.545    0.011
+    bc               -0.100    0.011   -8.809    0.000
+    ini              -0.136    0.019   -7.032    0.000
   bc ~~                                               
-    cpe               0.317    0.026   12.214    0.000
-    et                0.387    0.021   18.658    0.000
-    pfc               0.367    0.022   16.568    0.000
-    cse               0.312    0.022   14.424    0.000
-    ini               0.290    0.020   14.391    0.000
-    sus               0.417    0.028   15.073    0.000
-  cpe ~~                                              
-    et                0.390    0.036   10.785    0.000
-    pfc               0.420    0.038   10.938    0.000
-    cse               0.359    0.043    8.352    0.000
-    ini               0.358    0.042    8.608    0.000
-    sus               0.770    0.060   12.923    0.000
-  et ~~                                               
-    pfc               0.652    0.034   19.061    0.000
-    cse               0.509    0.032   16.110    0.000
-    ini               0.487    0.029   16.537    0.000
-    sus               0.557    0.038   14.537    0.000
-  pfc ~~                                              
-    cse               0.549    0.035   15.587    0.000
-    ini               0.393    0.030   13.091    0.000
-    sus               0.518    0.040   12.872    0.000
-  cse ~~                                              
-    ini               0.337    0.033   10.144    0.000
-    sus               0.367    0.044    8.344    0.000
-  ini ~~                                              
-    sus               0.858    0.047   18.217    0.000
+    ini               0.282    0.020   14.232    0.000
 
 Variances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)
-   .pa1               0.613    0.025   24.622    0.000
-   .pa2               0.603    0.023   25.952    0.000
-   .pa3               0.201    0.013   15.301    0.000
-   .pa4               0.253    0.015   17.066    0.000
-   .pa5               0.645    0.027   23.808    0.000
-   .pad1              0.835    0.032   25.945    0.000
-   .pad2              0.417    0.019   22.033    0.000
-   .pad3              0.215    0.011   19.606    0.000
-   .pad4              0.511    0.023   22.019    0.000
-   .pad5              0.237    0.013   18.388    0.000
-   .bc1               0.311    0.013   24.697    0.000
-   .bc2               0.322    0.016   19.968    0.000
-   .bc3               0.274    0.014   20.246    0.000
-   .bc4               0.419    0.018   23.702    0.000
-   .bc5               0.552    0.024   23.089    0.000
-   .cpe1              0.792    0.058   13.763    0.000
-   .cpe2              0.594    0.052   11.394    0.000
-   .cpe3              1.123    0.045   24.932    0.000
-   .et1               0.255    0.012   21.883    0.000
-   .et2               0.116    0.007   16.918    0.000
-   .et3               0.155    0.008   19.379    0.000
-   .pfc1              0.844    0.034   24.828    0.000
-   .pfc2              0.164    0.011   14.730    0.000
-   .pfc3              0.291    0.014   20.421    0.000
-   .cse1              0.459    0.029   15.603    0.000
-   .cse2              0.321    0.026   12.240    0.000
-   .cse3              1.169    0.047   24.706    0.000
+   .pa1               0.615    0.025   24.623    0.000
+   .pa2               0.598    0.023   25.926    0.000
+   .pa3               0.199    0.013   15.054    0.000
+   .pa4               0.253    0.015   16.948    0.000
+   .pa5               0.651    0.027   23.832    0.000
+   .pad1              0.833    0.032   25.924    0.000
+   .pad2              0.417    0.019   21.995    0.000
+   .pad3              0.217    0.011   19.617    0.000
+   .pad4              0.506    0.023   21.876    0.000
+   .pad5              0.239    0.013   18.374    0.000
+   .bc1               0.325    0.013   24.710    0.000
+   .bc2               0.289    0.016   18.082    0.000
+   .bc3               0.259    0.014   18.995    0.000
+   .bc4               0.447    0.019   23.794    0.000
+   .bc5               0.556    0.024   22.772    0.000
    .Ini               0.000                           
-   .Sus               0.000                           
-    pa                1.121    0.061   18.480    0.000
-    pad               0.376    0.034   11.173    0.000
-    bc                0.339    0.022   15.633    0.000
-    cpe               1.670    0.099   16.843    0.000
-    et                0.765    0.037   20.655    0.000
-    pfc               0.752    0.052   14.529    0.000
-    cse               1.061    0.059   18.120    0.000
-    ini               1.180    0.043   27.148    0.000
-    sus               2.146    0.079   27.148    0.000</code></pre>
+    pa                1.118    0.061   18.445    0.000
+    pad               0.378    0.034   11.204    0.000
+    bc                0.325    0.021   15.151    0.000
+    ini               1.180    0.043   27.148    0.000</code></pre>
 </div>
 </div>
+<p>The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of <span class="math inline">\(\leq\)</span> 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable.</p>
 </section>
 <section id="configural-invariance" class="level2">
 <h2 class="anchored" data-anchor-id="configural-invariance">Configural Invariance</h2>
 <p>Let us now see if we have configural invariance between the non-gambling and gambling groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(gamblingmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"ProblemG"</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>lavaan 0.6.15 ended normally after 264 iterations
+<pre><code>lavaan 0.6.15 ended normally after 72 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
-  Number of model parameters                       242
+  Number of model parameters                       110
+  Number of equality constraints                    28
 
   Number of observations per group:                   
-    0                                             1410
-    1                                               64
+    1                                              562
+    0                                              912
+  Number of missing patterns per group:               
+    1                                                1
+    0                                                1
 
 Model Test User Model:
                                                       
-  Test statistic                              3128.651
-  Degrees of freedom                               686
+  Test statistic                              1435.360
+  Degrees of freedom                               222
   P-value (Chi-square)                           0.000
   Test statistic for each group:
-    0                                         2539.657
-    1                                          588.993
+    1                                          683.083
+    0                                          752.277
 
 Model Test Baseline Model:
 
-  Test statistic                             30243.009
-  Degrees of freedom                               812
+  Test statistic                             15718.522
+  Degrees of freedom                               240
   P-value                                        0.000
 
 User Model versus Baseline Model:
 
-  Comparative Fit Index (CFI)                    0.917
-  Tucker-Lewis Index (TLI)                       0.902
+  Comparative Fit Index (CFI)                    0.922
+  Tucker-Lewis Index (TLI)                       0.915
+                                                      
+  Robust Comparative Fit Index (CFI)             0.922
+  Robust Tucker-Lewis Index (TLI)                0.915
 
 Loglikelihood and Information Criteria:
 
-  Loglikelihood user model (H0)             -51998.259
-  Loglikelihood unrestricted model (H1)     -50433.934
+  Loglikelihood user model (H0)             -28060.875
+  Loglikelihood unrestricted model (H1)     -27343.195
                                                       
-  Akaike (AIC)                              104480.518
-  Bayesian (BIC)                            105762.086
-  Sample-size adjusted Bayesian (SABIC)     104993.325
+  Akaike (AIC)                               56285.750
+  Bayesian (BIC)                             56720.001
+  Sample-size adjusted Bayesian (SABIC)      56459.511
 
 Root Mean Square Error of Approximation:
 
-  RMSEA                                          0.070
-  90 Percent confidence interval - lower         0.067
-  90 Percent confidence interval - upper         0.072
+  RMSEA                                          0.086
+  90 Percent confidence interval - lower         0.082
+  90 Percent confidence interval - upper         0.090
   P-value H_0: RMSEA &lt;= 0.050                    0.000
-  P-value H_0: RMSEA &gt;= 0.080                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    0.991
+                                                      
+  Robust RMSEA                                   0.086
+  90 Percent confidence interval - lower         0.082
+  90 Percent confidence interval - upper         0.090
+  P-value H_0: Robust RMSEA &lt;= 0.050             0.000
+  P-value H_0: Robust RMSEA &gt;= 0.080             0.991
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.077
+  SRMR                                           0.060
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Observed
+  Observed information based on                Hessian
+
+
+Group 1 [1]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  pa =~                                                                 
+    pa1               1.000                               1.029    0.769
+    pa2     (.p2.)    0.713    0.024   29.892    0.000    0.734    0.628
+    pa3     (.p3.)    1.207    0.027   44.756    0.000    1.242    0.923
+    pa4     (.p4.)    1.230    0.028   43.777    0.000    1.267    0.916
+    pa5     (.p5.)    1.175    0.031   38.084    0.000    1.209    0.810
+  pad =~                                                                
+    pad1              1.000                               0.562    0.498
+    pad2    (.p7.)    1.447    0.065   22.106    0.000    0.814    0.755
+    pad3    (.p8.)    1.261    0.057   22.115    0.000    0.709    0.806
+    pad4    (.p9.)    1.608    0.073   22.120    0.000    0.904    0.747
+    pad5    (.10.)    1.433    0.065   22.199    0.000    0.806    0.839
+  bc =~                                                                 
+    bc1               1.000                               0.602    0.659
+    bc2     (.12.)    1.837    0.060   30.594    0.000    1.106    0.892
+    bc3     (.13.)    1.637    0.053   30.850    0.000    0.985    0.856
+    bc4     (.14.)    1.412    0.052   27.377    0.000    0.850    0.734
+    bc5     (.15.)    1.801    0.065   27.695    0.000    1.084    0.808
+  ini =~                                                                
+    Ini               1.000                               1.365    1.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  pa ~~                                                                 
+    pad               0.151    0.028    5.298    0.000    0.261    0.261
+    bc                0.010    0.028    0.351    0.725    0.016    0.016
+    ini               0.307    0.063    4.871    0.000    0.218    0.218
+  pad ~~                                                                
+    bc               -0.142    0.019   -7.569    0.000   -0.419   -0.419
+    ini              -0.171    0.036   -4.713    0.000   -0.223   -0.223
+  bc ~~                                                                 
+    ini               0.328    0.040    8.166    0.000    0.399    0.399
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .pa1     (.43.)    2.206    0.050   44.298    0.000    2.206    1.649
+   .pa2     (.44.)    3.018    0.039   77.645    0.000    3.018    2.582
+   .pa3     (.45.)    2.096    0.055   38.026    0.000    2.096    1.558
+   .pa4     (.46.)    2.023    0.056   35.835    0.000    2.023    1.463
+   .pa5     (.47.)    1.888    0.057   32.976    0.000    1.888    1.265
+   .pad1    (.48.)    1.091    0.035   30.834    0.000    1.091    0.966
+   .pad2    (.49.)    0.917    0.040   22.904    0.000    0.917    0.850
+   .pad3    (.50.)    0.597    0.034   17.633    0.000    0.597    0.678
+   .pad4    (.51.)    1.026    0.045   23.041    0.000    1.026    0.847
+   .pad5    (.52.)    0.705    0.038   18.514    0.000    0.705    0.734
+   .bc1     (.53.)    3.372    0.031  108.713    0.000    3.372    3.690
+   .bc2     (.54.)    2.612    0.050   51.876    0.000    2.612    2.106
+   .bc3     (.55.)    2.874    0.045   63.303    0.000    2.874    2.497
+   .bc4     (.56.)    2.972    0.042   71.172    0.000    2.972    2.566
+   .bc5     (.57.)    2.379    0.052   46.036    0.000    2.379    1.772
+   .Ini     (.58.)    2.948    0.058   51.197    0.000    2.948    2.160
+    pa                0.000                               0.000    0.000
+    pad               0.000                               0.000    0.000
+    bc                0.000                               0.000    0.000
+    ini               0.000                               0.000    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .pa1               0.730    0.049   14.986    0.000    0.730    0.408
+   .pa2               0.828    0.052   15.909    0.000    0.828    0.606
+   .pa3               0.267    0.026   10.391    0.000    0.267    0.148
+   .pa4               0.307    0.028   10.980    0.000    0.307    0.161
+   .pa5               0.765    0.053   14.346    0.000    0.765    0.343
+   .pad1              0.960    0.062   15.517    0.000    0.960    0.752
+   .pad2              0.501    0.037   13.497    0.000    0.501    0.431
+   .pad3              0.271    0.022   12.448    0.000    0.271    0.350
+   .pad4              0.647    0.047   13.637    0.000    0.647    0.442
+   .pad5              0.273    0.024   11.246    0.000    0.273    0.296
+   .bc1               0.473    0.031   15.332    0.000    0.473    0.566
+   .bc2               0.315    0.029   10.686    0.000    0.315    0.205
+   .bc3               0.354    0.028   12.473    0.000    0.354    0.267
+   .bc4               0.618    0.042   14.873    0.000    0.618    0.461
+   .bc5               0.627    0.045   13.952    0.000    0.627    0.348
+   .Ini               0.000                               0.000    0.000
+    pa                1.060    0.078   13.505    0.000    1.000    1.000
+    pad               0.316    0.034    9.438    0.000    1.000    1.000
+    bc                0.362    0.031   11.608    0.000    1.000    1.000
+    ini               1.864    0.111   16.763    0.000    1.000    1.000
+
+
+Group 2 [0]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  pa =~                                                                 
+    pa1               1.000                               0.965    0.795
+    pa2     (.p2.)    0.713    0.024   29.892    0.000    0.688    0.713
+    pa3     (.p3.)    1.207    0.027   44.756    0.000    1.165    0.946
+    pa4     (.p4.)    1.230    0.028   43.777    0.000    1.188    0.929
+    pa5     (.p5.)    1.175    0.031   38.084    0.000    1.134    0.831
+  pad =~                                                                
+    pad1              1.000                               0.629    0.585
+    pad2    (.p7.)    1.447    0.065   22.106    0.000    0.911    0.833
+    pad3    (.p8.)    1.261    0.057   22.115    0.000    0.793    0.880
+    pad4    (.p9.)    1.608    0.073   22.120    0.000    1.012    0.841
+    pad5    (.10.)    1.433    0.065   22.199    0.000    0.902    0.890
+  bc =~                                                                 
+    bc1               1.000                               0.470    0.694
+    bc2     (.12.)    1.837    0.060   30.594    0.000    0.863    0.857
+    bc3     (.13.)    1.637    0.053   30.850    0.000    0.769    0.862
+    bc4     (.14.)    1.412    0.052   27.377    0.000    0.663    0.750
+    bc5     (.15.)    1.801    0.065   27.695    0.000    0.846    0.765
+  ini =~                                                                
+    Ini               1.000                               0.699    1.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  pa ~~                                                                 
+    pad              -0.011    0.021   -0.524    0.600   -0.018   -0.018
+    bc                0.102    0.017    6.051    0.000    0.226    0.226
+    ini               0.112    0.023    4.810    0.000    0.166    0.166
+  pad ~~                                                                
+    bc               -0.052    0.011   -4.624    0.000   -0.176   -0.176
+    ini              -0.077    0.016   -4.893    0.000   -0.174   -0.174
+  bc ~~                                                                 
+    ini               0.119    0.013    9.455    0.000    0.362    0.362
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .pa1     (.43.)    2.206    0.050   44.298    0.000    2.206    1.817
+   .pa2     (.44.)    3.018    0.039   77.645    0.000    3.018    3.130
+   .pa3     (.45.)    2.096    0.055   38.026    0.000    2.096    1.702
+   .pa4     (.46.)    2.023    0.056   35.835    0.000    2.023    1.583
+   .pa5     (.47.)    1.888    0.057   32.976    0.000    1.888    1.383
+   .pad1    (.48.)    1.091    0.035   30.834    0.000    1.091    1.014
+   .pad2    (.49.)    0.917    0.040   22.904    0.000    0.917    0.839
+   .pad3    (.50.)    0.597    0.034   17.633    0.000    0.597    0.662
+   .pad4    (.51.)    1.026    0.045   23.041    0.000    1.026    0.853
+   .pad5    (.52.)    0.705    0.038   18.514    0.000    0.705    0.696
+   .bc1     (.53.)    3.372    0.031  108.713    0.000    3.372    4.981
+   .bc2     (.54.)    2.612    0.050   51.876    0.000    2.612    2.593
+   .bc3     (.55.)    2.874    0.045   63.303    0.000    2.874    3.221
+   .bc4     (.56.)    2.972    0.042   71.172    0.000    2.972    3.362
+   .bc5     (.57.)    2.379    0.052   46.036    0.000    2.379    2.150
+   .Ini     (.58.)    2.948    0.058   51.197    0.000    2.948    4.215
+    pa                0.761    0.057   13.248    0.000    0.789    0.789
+    pad              -0.107    0.034   -3.135    0.002   -0.169   -0.169
+    bc                0.378    0.033   11.470    0.000    0.805    0.805
+    ini               0.840    0.062   13.532    0.000    1.201    1.201
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .pa1               0.542    0.028   19.245    0.000    0.542    0.368
+   .pa2               0.457    0.023   19.930    0.000    0.457    0.491
+   .pa3               0.159    0.013   11.928    0.000    0.159    0.105
+   .pa4               0.223    0.015   14.439    0.000    0.223    0.136
+   .pa5               0.577    0.031   18.621    0.000    0.577    0.310
+   .pad1              0.761    0.038   20.107    0.000    0.761    0.658
+   .pad2              0.365    0.022   16.886    0.000    0.365    0.306
+   .pad3              0.183    0.012   14.714    0.000    0.183    0.226
+   .pad4              0.423    0.025   16.649    0.000    0.423    0.293
+   .pad5              0.213    0.015   13.887    0.000    0.213    0.207
+   .bc1               0.238    0.012   19.304    0.000    0.238    0.519
+   .bc2               0.270    0.018   15.065    0.000    0.270    0.266
+   .bc3               0.205    0.014   14.953    0.000    0.205    0.258
+   .bc4               0.341    0.019   18.235    0.000    0.341    0.437
+   .bc5               0.508    0.029   17.693    0.000    0.508    0.415
+   .Ini               0.000                               0.000    0.000
+    pa                0.932    0.058   16.042    0.000    1.000    1.000
+    pad               0.396    0.038   10.518    0.000    1.000    1.000
+    bc                0.221    0.016   13.465    0.000    1.000    1.000
+    ini               0.489    0.023   21.354    0.000    1.000    1.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        npar                         fmin 
+                      82.000                        0.487 
+                       chisq                           df 
+                    1435.360                      222.000 
+                      pvalue               baseline.chisq 
+                       0.000                    15718.522 
+                 baseline.df              baseline.pvalue 
+                     240.000                        0.000 
+                         cfi                          tli 
+                       0.922                        0.915 
+                  cfi.robust                   tli.robust 
+                       0.922                        0.915 
+                        nnfi                          rfi 
+                       0.915                        0.901 
+                         nfi                         pnfi 
+                       0.909                        0.841 
+                         ifi                          rni 
+                       0.922                        0.922 
+                 nnfi.robust                   rni.robust 
+                       0.915                        0.922 
+                        logl            unrestricted.logl 
+                  -28060.875                   -27343.195 
+                         aic                          bic 
+                   56285.750                    56720.001 
+                      ntotal                         bic2 
+                    1474.000                    56459.511 
+                       rmsea               rmsea.ci.lower 
+                       0.086                        0.082 
+              rmsea.ci.upper               rmsea.ci.level 
+                       0.090                        0.900 
+                rmsea.pvalue               rmsea.close.h0 
+                       0.000                        0.050 
+       rmsea.notclose.pvalue            rmsea.notclose.h0 
+                       0.991                        0.080 
+                rmsea.robust        rmsea.ci.lower.robust 
+                       0.086                        0.082 
+       rmsea.ci.upper.robust          rmsea.pvalue.robust 
+                       0.090                        0.000 
+rmsea.notclose.pvalue.robust                          rmr 
+                       0.991                        0.068 
+                  rmr_nomean                         srmr 
+                       0.069                        0.060 
+                srmr_bentler          srmr_bentler_nomean 
+                       0.057                        0.057 
+                        crmr                  crmr_nomean 
+                       0.056                        0.057 
+                  srmr_mplus            srmr_mplus_nomean 
+                       0.060                        0.055 
+                       cn_05                        cn_01 
+                     265.697                      282.313 
+                         gfi                         agfi 
+                       0.979                        0.972 
+                        pgfi                          mfi 
+                       0.715                        0.663 
+                        ecvi 
+                       1.085 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp,<span class="st">"sem_ini.png"</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/config-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/config-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The results show that the fit is good between the groups. CFI and TLI are close to 1,and the SRMR is close to 0.8. The RMSEA is slightly higher than 0.06. We can conclude that the two groups have the same factor structure.</p>
+</section>
+<section id="metric-invariance" class="level2">
+<h2 class="anchored" data-anchor-id="metric-invariance">Metric Invariance</h2>
+<p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.15 ended normally after 47 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                       106
+  Number of equality constraints                    12
+
+  Number of observations per group:                   
+    1                                              562
+    0                                              912
+
+Model Test User Model:
+                                                      
+  Test statistic                              1266.477
+  Degrees of freedom                               210
+  P-value (Chi-square)                           0.000
+  Test statistic for each group:
+    1                                          577.051
+    0                                          689.426
+
+Model Test Baseline Model:
+
+  Test statistic                             15718.522
+  Degrees of freedom                               240
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.932
+  Tucker-Lewis Index (TLI)                       0.922
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)             -27976.433
+  Loglikelihood unrestricted model (H1)     -27343.195
+                                                      
+  Akaike (AIC)                               56140.867
+  Bayesian (BIC)                             56638.666
+  Sample-size adjusted Bayesian (SABIC)      56340.056
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.083
+  90 Percent confidence interval - lower         0.078
+  90 Percent confidence interval - upper         0.087
+  P-value H_0: RMSEA &lt;= 0.050                    0.000
+  P-value H_0: RMSEA &gt;= 0.080                    0.841
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.054
 
 Parameter Estimates:
 
@@ -419,393 +700,1174 @@ Parameter Estimates:
   Information saturated (h1) model          Structured
 
 
-Group 1 [0]:
+Group 1 [1]:
 
 Latent Variables:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-  pa =~                                                                 
-    pa1               1.000                               1.062    0.802
-    pa2               0.693    0.024   28.410    0.000    0.736    0.689
-    pa3               1.209    0.027   44.231    0.000    1.284    0.947
-    pa4               1.236    0.028   43.580    0.000    1.312    0.937
-    pa5               1.179    0.032   37.204    0.000    1.252    0.843
-  pad =~                                                                
-    pad1              1.000                               0.600    0.555
-    pad2              1.401    0.066   21.208    0.000    0.841    0.798
-    pad3              1.261    0.057   22.099    0.000    0.757    0.866
-    pad4              1.577    0.074   21.303    0.000    0.947    0.805
-    pad5              1.424    0.064   22.186    0.000    0.855    0.873
-  bc =~                                                                 
-    bc1               1.000                               0.505    0.686
-    bc2               1.858    0.064   29.084    0.000    0.939    0.858
-    bc3               1.665    0.057   29.047    0.000    0.842    0.857
-    bc4               1.470    0.056   26.317    0.000    0.743    0.766
-    bc5               1.891    0.070   27.198    0.000    0.956    0.795
-  cpe =~                                                                
-    cpe1              1.000                               1.291    0.822
-    cpe2              0.997    0.038   26.502    0.000    1.287    0.867
-    cpe3              0.511    0.026   19.300    0.000    0.659    0.535
-  et =~                                                                 
-    et1               1.000                               0.821    0.853
-    et2               0.915    0.020   46.695    0.000    0.752    0.915
-    et3               0.936    0.021   45.531    0.000    0.768    0.902
-  pfc =~                                                                
-    pfc1              1.000                               0.832    0.669
-    pfc2              0.969    0.034   28.394    0.000    0.806    0.895
-    pfc3              0.938    0.035   26.798    0.000    0.780    0.822
-  cse =~                                                                
-    cse1              1.000                               0.981    0.826
-    cse2              0.996    0.033   30.583    0.000    0.977    0.869
-    cse3              0.827    0.037   22.554    0.000    0.811    0.604
-  ini =~                                                                
-    Ini               1.000                               1.046    1.000
-  sus =~                                                                
-    Sus               1.000                               1.450    1.000
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  pa =~                                               
+    pa1               1.000                           
+    pa2     (.p2.)    0.740    0.026   28.879    0.000
+    pa3     (.p3.)    1.219    0.029   42.283    0.000
+    pa4     (.p4.)    1.233    0.030   41.368    0.000
+    pa5     (.p5.)    1.145    0.033   35.030    0.000
+  pad =~                                              
+    pad1              1.000                           
+    pad2    (.p7.)    1.473    0.068   21.758    0.000
+    pad3    (.p8.)    1.303    0.058   22.510    0.000
+    pad4    (.p9.)    1.636    0.075   21.838    0.000
+    pad5    (.10.)    1.484    0.065   22.712    0.000
+  bc =~                                               
+    bc1               1.000                           
+    bc2     (.12.)    1.849    0.064   29.080    0.000
+    bc3     (.13.)    1.668    0.058   28.892    0.000
+    bc4     (.14.)    1.445    0.056   25.694    0.000
+    bc5     (.15.)    1.849    0.069   26.841    0.000
+  ini =~                                              
+    Ini               1.000                           
 
 Covariances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-  pa ~~                                                                 
-    pad               0.026    0.018    1.448    0.148    0.041    0.041
-    bc                0.131    0.016    7.971    0.000    0.243    0.243
-    cpe               0.255    0.042    6.094    0.000    0.186    0.186
-    et                0.179    0.026    7.017    0.000    0.206    0.206
-    pfc               0.157    0.027    5.897    0.000    0.178    0.178
-    cse               0.089    0.031    2.884    0.004    0.086    0.086
-    ini               0.335    0.032   10.400    0.000    0.302    0.302
-    sus               0.731    0.048   15.110    0.000    0.475    0.475
-  pad ~~                                                                
-    bc               -0.072    0.010   -7.381    0.000   -0.238   -0.238
-    cpe              -0.000    0.024   -0.008    0.993   -0.000   -0.000
-    et               -0.157    0.016   -9.581    0.000   -0.319   -0.319
-    pfc              -0.136    0.017   -8.090    0.000   -0.273   -0.273
-    cse              -0.124    0.019   -6.566    0.000   -0.211   -0.211
-    ini              -0.105    0.018   -5.756    0.000   -0.167   -0.167
-    sus              -0.037    0.024   -1.522    0.128   -0.043   -0.043
-  bc ~~                                                                 
-    cpe               0.250    0.023   10.967    0.000    0.383    0.383
-    et                0.303    0.018   17.320    0.000    0.731    0.731
-    pfc               0.291    0.019   15.284    0.000    0.691    0.691
-    cse               0.235    0.018   12.936    0.000    0.474    0.474
-    ini               0.218    0.017   12.782    0.000    0.412    0.412
-    sus               0.341    0.024   13.957    0.000    0.465    0.465
-  cpe ~~                                                                
-    et                0.329    0.034    9.590    0.000    0.310    0.310
-    pfc               0.364    0.037    9.795    0.000    0.339    0.339
-    cse               0.302    0.041    7.280    0.000    0.238    0.238
-    ini               0.308    0.041    7.597    0.000    0.228    0.228
-    sus               0.726    0.060   12.146    0.000    0.388    0.388
-  et ~~                                                                 
-    pfc               0.578    0.032   18.081    0.000    0.846    0.846
-    cse               0.433    0.029   15.026    0.000    0.538    0.538
-    ini               0.408    0.027   15.175    0.000    0.475    0.475
-    sus               0.486    0.036   13.427    0.000    0.408    0.408
-  pfc ~~                                                                
-    cse               0.483    0.033   14.603    0.000    0.592    0.592
-    ini               0.327    0.028   11.661    0.000    0.376    0.376
-    sus               0.457    0.039   11.750    0.000    0.379    0.379
-  cse ~~                                                                
-    ini               0.263    0.031    8.523    0.000    0.256    0.256
-    sus               0.289    0.042    6.867    0.000    0.203    0.203
-  ini ~~                                                                
-    sus               0.801    0.046   17.536    0.000    0.528    0.528
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  pa ~~                                               
+    pad               0.146    0.028    5.285    0.000
+    bc                0.009    0.028    0.340    0.734
+    ini               0.305    0.063    4.865    0.000
+  pad ~~                                              
+    bc               -0.135    0.018   -7.643    0.000
+    ini              -0.165    0.035   -4.721    0.000
+  bc ~~                                               
+    ini               0.323    0.039    8.189    0.000
 
 Intercepts:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-   .pa1               2.668    0.035   75.685    0.000    2.668    2.016
-   .pa2               3.370    0.028  118.535    0.000    3.370    3.157
-   .pa3               2.662    0.036   73.774    0.000    2.662    1.965
-   .pa4               2.602    0.037   69.790    0.000    2.602    1.859
-   .pa5               2.440    0.040   61.688    0.000    2.440    1.643
-   .pad1              1.011    0.029   35.108    0.000    1.011    0.935
-   .pad2              0.776    0.028   27.635    0.000    0.776    0.736
-   .pad3              0.479    0.023   20.560    0.000    0.479    0.548
-   .pad4              0.880    0.031   28.083    0.000    0.880    0.748
-   .pad5              0.573    0.026   21.983    0.000    0.573    0.585
-   .bc1               3.655    0.020  186.332    0.000    3.655    4.962
-   .bc2               3.111    0.029  106.793    0.000    3.111    2.844
-   .bc3               3.326    0.026  127.179    0.000    3.326    3.387
-   .bc4               3.368    0.026  130.418    0.000    3.368    3.473
-   .bc5               2.865    0.032   89.438    0.000    2.865    2.382
-   .cpe1              2.146    0.042   51.296    0.000    2.146    1.366
-   .cpe2              1.952    0.040   49.415    0.000    1.952    1.316
-   .cpe3              2.958    0.033   90.195    0.000    2.958    2.402
-   .et1               3.409    0.026  132.971    0.000    3.409    3.541
-   .et2               3.553    0.022  162.502    0.000    3.553    4.328
-   .et3               3.528    0.023  155.517    0.000    3.528    4.142
-   .pfc1              3.131    0.033   94.586    0.000    3.131    2.519
-   .pfc2              3.422    0.024  142.784    0.000    3.422    3.803
-   .pfc3              3.391    0.025  134.086    0.000    3.391    3.571
-   .cse1              3.214    0.032  101.662    0.000    3.214    2.707
-   .cse2              3.225    0.030  107.661    0.000    3.225    2.867
-   .cse3              2.900    0.036   81.087    0.000    2.900    2.159
-   .Ini               3.516    0.028  126.146    0.000    3.516    3.359
-   .Sus               2.685    0.039   69.539    0.000    2.685    1.852
-    pa                0.000                               0.000    0.000
-    pad               0.000                               0.000    0.000
-    bc                0.000                               0.000    0.000
-    cpe               0.000                               0.000    0.000
-    et                0.000                               0.000    0.000
-    pfc               0.000                               0.000    0.000
-    cse               0.000                               0.000    0.000
-    ini               0.000                               0.000    0.000
-    sus               0.000                               0.000    0.000
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .pa1               2.192    0.056   38.914    0.000
+   .pa2               3.132    0.050   62.896    0.000
+   .pa3               2.126    0.057   37.296    0.000
+   .pa4               2.018    0.058   34.611    0.000
+   .pa5               1.760    0.062   28.592    0.000
+   .pad1              1.347    0.046   29.186    0.000
+   .pad2              0.998    0.045   22.038    0.000
+   .pad3              0.530    0.037   14.298    0.000
+   .pad4              1.137    0.051   22.421    0.000
+   .pad5              0.616    0.040   15.225    0.000
+   .bc1               3.335    0.038   87.050    0.000
+   .bc2               2.585    0.052   49.729    0.000
+   .bc3               2.890    0.049   59.380    0.000
+   .bc4               2.996    0.049   61.132    0.000
+   .bc5               2.415    0.057   42.353    0.000
+   .Ini               2.948    0.058   51.197    0.000
+    pa                0.000                           
+    pad               0.000                           
+    bc                0.000                           
+    ini               0.000                           
 
 Variances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-   .pa1               0.625    0.026   24.264    0.000    0.625    0.357
-   .pa2               0.598    0.024   25.417    0.000    0.598    0.525
-   .pa3               0.188    0.013   14.663    0.000    0.188    0.103
-   .pa4               0.238    0.014   16.463    0.000    0.238    0.121
-   .pa5               0.639    0.027   23.409    0.000    0.639    0.290
-   .pad1              0.810    0.032   25.404    0.000    0.810    0.692
-   .pad2              0.404    0.018   21.920    0.000    0.404    0.363
-   .pad3              0.191    0.010   18.496    0.000    0.191    0.250
-   .pad4              0.488    0.023   21.689    0.000    0.488    0.353
-   .pad5              0.227    0.013   17.911    0.000    0.227    0.237
-   .bc1               0.287    0.012   24.368    0.000    0.287    0.529
-   .bc2               0.315    0.016   19.557    0.000    0.315    0.263
-   .bc3               0.256    0.013   19.637    0.000    0.256    0.265
-   .bc4               0.388    0.017   23.044    0.000    0.388    0.413
-   .bc5               0.533    0.024   22.304    0.000    0.533    0.368
-   .cpe1              0.802    0.060   13.383    0.000    0.802    0.325
-   .cpe2              0.545    0.055    9.882    0.000    0.545    0.248
-   .cpe3              1.082    0.044   24.625    0.000    1.082    0.713
-   .et1               0.253    0.012   21.590    0.000    0.253    0.273
-   .et2               0.109    0.007   16.751    0.000    0.109    0.162
-   .et3               0.135    0.007   18.238    0.000    0.135    0.187
-   .pfc1              0.854    0.035   24.206    0.000    0.854    0.552
-   .pfc2              0.161    0.011   14.339    0.000    0.161    0.199
-   .pfc3              0.293    0.014   20.207    0.000    0.293    0.325
-   .cse1              0.448    0.029   15.299    0.000    0.448    0.318
-   .cse2              0.310    0.026   11.828    0.000    0.310    0.245
-   .cse3              1.146    0.048   24.034    0.000    1.146    0.636
-   .Ini               0.000                               0.000    0.000
-   .Sus               0.000                               0.000    0.000
-    pa                1.127    0.063   18.022    0.000    1.000    1.000
-    pad               0.361    0.033   10.879    0.000    1.000    1.000
-    bc                0.256    0.018   14.230    0.000    1.000    1.000
-    cpe               1.666    0.102   16.334    0.000    1.000    1.000
-    et                0.674    0.034   19.669    0.000    1.000    1.000
-    pfc               0.692    0.051   13.661    0.000    1.000    1.000
-    cse               0.962    0.056   17.258    0.000    1.000    1.000
-    ini               1.095    0.041   26.552    0.000    1.000    1.000
-    sus               2.102    0.079   26.552    0.000    1.000    1.000
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .pa1               0.731    0.048   15.213    0.000
+   .pa2               0.817    0.051   16.017    0.000
+   .pa3               0.262    0.026    9.996    0.000
+   .pa4               0.309    0.029   10.819    0.000
+   .pa5               0.749    0.051   14.765    0.000
+   .pad1              0.896    0.056   16.093    0.000
+   .pad2              0.500    0.035   14.113    0.000
+   .pad3              0.262    0.021   12.763    0.000
+   .pad4              0.639    0.045   14.212    0.000
+   .pad5              0.256    0.022   11.440    0.000
+   .bc1               0.473    0.030   15.658    0.000
+   .bc2               0.316    0.029   10.890    0.000
+   .bc3               0.352    0.028   12.459    0.000
+   .bc4               0.616    0.041   14.974    0.000
+   .bc5               0.625    0.045   13.815    0.000
+   .Ini               0.000                           
+    pa                1.053    0.079   13.274    0.000
+    pad               0.301    0.032    9.509    0.000
+    bc                0.352    0.031   11.378    0.000
+    ini               1.864    0.111   16.763    0.000
 
 
-Group 2 [1]:
+Group 2 [0]:
 
 Latent Variables:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-  pa =~                                                                 
-    pa1               1.000                               0.946    0.834
-    pa2               0.552    0.126    4.368    0.000    0.522    0.531
-    pa3               1.144    0.141    8.127    0.000    1.083    0.859
-    pa4               1.189    0.151    7.857    0.000    1.125    0.838
-    pa5               1.064    0.157    6.794    0.000    1.007    0.755
-  pad =~                                                                
-    pad1              1.000                               0.354    0.286
-    pad2              2.537    1.172    2.165    0.030    0.898    0.722
-    pad3              2.262    1.043    2.168    0.030    0.801    0.728
-    pad4              2.196    1.059    2.074    0.038    0.778    0.575
-    pad5              2.805    1.266    2.215    0.027    0.993    0.920
-  bc =~                                                                 
-    bc1               1.000                               0.876    0.726
-    bc2               1.281    0.189    6.765    0.000    1.122    0.872
-    bc3               1.183    0.193    6.113    0.000    1.035    0.786
-    bc4               0.851    0.193    4.409    0.000    0.745    0.571
-    bc5               1.030    0.184    5.608    0.000    0.902    0.723
-  cpe =~                                                                
-    cpe1              1.000                               0.570    0.444
-    cpe2              0.884    0.357    2.478    0.013    0.504    0.386
-    cpe3              1.871    0.514    3.642    0.000    1.067    0.837
-  et =~                                                                 
-    et1               1.000                               1.121    0.910
-    et2               0.956    0.085   11.236    0.000    1.072    0.909
-    et3               0.890    0.106    8.428    0.000    0.997    0.791
-  pfc =~                                                                
-    pfc1              1.000                               1.076    0.830
-    pfc2              1.044    0.109    9.573    0.000    1.124    0.919
-    pfc3              1.115    0.115    9.666    0.000    1.199    0.924
-  cse =~                                                                
-    cse1              1.000                               1.392    0.886
-    cse2              0.857    0.137    6.250    0.000    1.193    0.827
-    cse3              0.412    0.127    3.247    0.001    0.574    0.421
-  ini =~                                                                
-    Ini               1.000                               1.378    1.000
-  sus =~                                                                
-    Sus               1.000                               1.467    1.000
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  pa =~                                               
+    pa1               1.000                           
+    pa2     (.p2.)    0.740    0.026   28.879    0.000
+    pa3     (.p3.)    1.219    0.029   42.283    0.000
+    pa4     (.p4.)    1.233    0.030   41.368    0.000
+    pa5     (.p5.)    1.145    0.033   35.030    0.000
+  pad =~                                              
+    pad1              1.000                           
+    pad2    (.p7.)    1.473    0.068   21.758    0.000
+    pad3    (.p8.)    1.303    0.058   22.510    0.000
+    pad4    (.p9.)    1.636    0.075   21.838    0.000
+    pad5    (.10.)    1.484    0.065   22.712    0.000
+  bc =~                                               
+    bc1               1.000                           
+    bc2     (.12.)    1.849    0.064   29.080    0.000
+    bc3     (.13.)    1.668    0.058   28.892    0.000
+    bc4     (.14.)    1.445    0.056   25.694    0.000
+    bc5     (.15.)    1.849    0.069   26.841    0.000
+  ini =~                                              
+    Ini               1.000                           
 
 Covariances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-  pa ~~                                                                 
-    pad               0.072    0.058    1.254    0.210    0.215    0.215
-    bc                0.288    0.128    2.248    0.025    0.348    0.348
-    cpe               0.138    0.092    1.496    0.135    0.255    0.255
-    et                0.414    0.159    2.602    0.009    0.391    0.391
-    pfc               0.170    0.142    1.196    0.232    0.167    0.167
-    cse               0.152    0.189    0.803    0.422    0.115    0.115
-    ini               0.382    0.181    2.115    0.034    0.293    0.293
-    sus               0.438    0.194    2.258    0.024    0.315    0.315
-  pad ~~                                                                
-    bc               -0.040    0.048   -0.842    0.400   -0.129   -0.129
-    cpe              -0.043    0.038   -1.110    0.267   -0.211   -0.211
-    et               -0.105    0.073   -1.435    0.151   -0.265   -0.265
-    pfc              -0.063    0.060   -1.045    0.296   -0.164   -0.164
-    cse              -0.058    0.075   -0.775    0.439   -0.119   -0.119
-    ini              -0.079    0.074   -1.064    0.287   -0.161   -0.161
-    sus               0.014    0.069    0.202    0.840    0.027    0.027
-  bc ~~                                                                 
-    cpe               0.437    0.153    2.854    0.004    0.874    0.874
-    et                0.679    0.182    3.736    0.000    0.692    0.692
-    pfc               0.721    0.188    3.835    0.000    0.765    0.765
-    cse               0.682    0.214    3.181    0.001    0.560    0.560
-    ini               0.650    0.195    3.328    0.001    0.538    0.538
-    sus               0.851    0.224    3.794    0.000    0.662    0.662
-  cpe ~~                                                                
-    et                0.499    0.171    2.911    0.004    0.780    0.780
-    pfc               0.532    0.180    2.955    0.003    0.868    0.868
-    cse               0.357    0.161    2.213    0.027    0.450    0.450
-    ini               0.535    0.188    2.843    0.004    0.680    0.680
-    sus               0.616    0.211    2.923    0.003    0.736    0.736
-  et ~~                                                                 
-    pfc               0.965    0.222    4.354    0.000    0.801    0.801
-    cse               0.564    0.235    2.403    0.016    0.362    0.362
-    ini               0.887    0.234    3.793    0.000    0.574    0.574
-    sus               0.931    0.248    3.757    0.000    0.566    0.566
-  pfc ~~                                                                
-    cse               0.750    0.242    3.102    0.002    0.500    0.500
-    ini               0.660    0.216    3.059    0.002    0.445    0.445
-    sus               0.838    0.239    3.500    0.000    0.531    0.531
-  cse ~~                                                                
-    ini               0.676    0.276    2.454    0.014    0.352    0.352
-    sus               0.951    0.306    3.111    0.002    0.466    0.466
-  ini ~~                                                                
-    sus               1.054    0.285    3.697    0.000    0.521    0.521
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  pa ~~                                               
+    pad              -0.011    0.021   -0.521    0.602
+    bc                0.101    0.017    6.050    0.000
+    ini               0.112    0.023    4.819    0.000
+  pad ~~                                              
+    bc               -0.049    0.011   -4.620    0.000
+    ini              -0.075    0.015   -4.885    0.000
+  bc ~~                                               
+    ini               0.117    0.012    9.456    0.000
 
 Intercepts:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-   .pa1               2.844    0.142   20.043    0.000    2.844    2.505
-   .pa2               3.453    0.123   28.098    0.000    3.453    3.512
-   .pa3               2.812    0.158   17.844    0.000    2.812    2.230
-   .pa4               2.594    0.168   15.450    0.000    2.594    1.931
-   .pa5               2.188    0.167   13.126    0.000    2.188    1.641
-   .pad1              1.797    0.155   11.595    0.000    1.797    1.449
-   .pad2              2.016    0.155   12.966    0.000    2.016    1.621
-   .pad3              1.094    0.138    7.954    0.000    1.094    0.994
-   .pad4              2.125    0.169   12.573    0.000    2.125    1.572
-   .pad5              1.266    0.135    9.385    0.000    1.266    1.173
-   .bc1               2.375    0.151   15.761    0.000    2.375    1.970
-   .bc2               1.469    0.161    9.133    0.000    1.469    1.142
-   .bc3               1.781    0.165   10.823    0.000    1.781    1.353
-   .bc4               1.953    0.163   11.980    0.000    1.953    1.498
-   .bc5               1.422    0.156    9.118    0.000    1.422    1.140
-   .cpe1              1.297    0.160    8.086    0.000    1.297    1.011
-   .cpe2              1.375    0.163    8.429    0.000    1.375    1.054
-   .cpe3              1.469    0.159    9.220    0.000    1.469    1.153
-   .et1               2.125    0.154   13.809    0.000    2.125    1.726
-   .et2               2.172    0.147   14.725    0.000    2.172    1.841
-   .et3               2.312    0.158   14.672    0.000    2.312    1.834
-   .pfc1              2.094    0.162   12.928    0.000    2.094    1.616
-   .pfc2              2.141    0.153   14.002    0.000    2.141    1.750
-   .pfc3              2.141    0.162   13.199    0.000    2.141    1.650
-   .cse1              1.969    0.196   10.026    0.000    1.969    1.253
-   .cse2              1.984    0.180   11.013    0.000    1.984    1.377
-   .cse3              1.875    0.170   11.000    0.000    1.875    1.375
-   .Ini               2.422    0.172   14.056    0.000    2.422    1.757
-   .Sus               1.688    0.183    9.202    0.000    1.688    1.150
-    pa                0.000                               0.000    0.000
-    pad               0.000                               0.000    0.000
-    bc                0.000                               0.000    0.000
-    cpe               0.000                               0.000    0.000
-    et                0.000                               0.000    0.000
-    pfc               0.000                               0.000    0.000
-    cse               0.000                               0.000    0.000
-    ini               0.000                               0.000    0.000
-    sus               0.000                               0.000    0.000
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .pa1               2.974    0.040   74.143    0.000
+   .pa2               3.522    0.032  108.736    0.000
+   .pa3               3.003    0.041   73.324    0.000
+   .pa4               2.962    0.042   70.055    0.000
+   .pa5               2.842    0.044   64.150    0.000
+   .pad1              0.860    0.035   24.493    0.000
+   .pad2              0.726    0.036   20.146    0.000
+   .pad3              0.490    0.030   16.364    0.000
+   .pad4              0.809    0.040   20.419    0.000
+   .pad5              0.595    0.034   17.680    0.000
+   .bc1               3.762    0.022  168.970    0.000
+   .bc2               3.320    0.033  100.066    0.000
+   .bc3               3.487    0.030  117.676    0.000
+   .bc4               3.498    0.029  119.066    0.000
+   .bc5               3.042    0.037   82.627    0.000
+   .Ini               3.788    0.023  163.570    0.000
+    pa                0.000                           
+    pad               0.000                           
+    bc                0.000                           
+    ini               0.000                           
 
 Variances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-   .pa1               0.393    0.092    4.261    0.000    0.393    0.305
-   .pa2               0.694    0.128    5.424    0.000    0.694    0.718
-   .pa3               0.417    0.106    3.936    0.000    0.417    0.263
-   .pa4               0.538    0.128    4.217    0.000    0.538    0.298
-   .pa5               0.764    0.157    4.859    0.000    0.764    0.430
-   .pad1              1.412    0.252    5.598    0.000    1.412    0.918
-   .pad2              0.740    0.155    4.767    0.000    0.740    0.478
-   .pad3              0.569    0.120    4.731    0.000    0.569    0.470
-   .pad4              1.223    0.231    5.299    0.000    1.223    0.669
-   .pad5              0.178    0.095    1.868    0.062    0.178    0.153
-   .bc1               0.686    0.137    5.026    0.000    0.686    0.472
-   .bc2               0.397    0.104    3.830    0.000    0.397    0.240
-   .bc3               0.661    0.140    4.733    0.000    0.661    0.381
-   .bc4               1.145    0.213    5.386    0.000    1.145    0.673
-   .bc5               0.743    0.147    5.039    0.000    0.743    0.478
-   .cpe1              1.321    0.239    5.522    0.000    1.321    0.802
-   .cpe2              1.449    0.260    5.570    0.000    1.449    0.851
-   .cpe3              0.486    0.179    2.720    0.007    0.486    0.299
-   .et1               0.259    0.072    3.583    0.000    0.259    0.171
-   .et2               0.243    0.067    3.630    0.000    0.243    0.174
-   .et3               0.596    0.120    4.975    0.000    0.596    0.375
-   .pfc1              0.521    0.106    4.892    0.000    0.521    0.310
-   .pfc2              0.233    0.063    3.709    0.000    0.233    0.156
-   .pfc3              0.245    0.069    3.552    0.000    0.245    0.145
-   .cse1              0.529    0.262    2.018    0.044    0.529    0.214
-   .cse2              0.655    0.215    3.051    0.002    0.655    0.315
-   .cse3              1.530    0.280    5.468    0.000    1.530    0.823
-   .Ini               0.000                               0.000    0.000
-   .Sus               0.000                               0.000    0.000
-    pa                0.896    0.225    3.977    0.000    1.000    1.000
-    pad               0.125    0.113    1.105    0.269    1.000    1.000
-    bc                0.767    0.235    3.264    0.001    1.000    1.000
-    cpe               0.325    0.181    1.794    0.073    1.000    1.000
-    et                1.256    0.270    4.656    0.000    1.000    1.000
-    pfc               1.158    0.287    4.032    0.000    1.000    1.000
-    cse               1.938    0.492    3.944    0.000    1.000    1.000
-    ini               1.900    0.336    5.657    0.000    1.000    1.000
-    sus               2.152    0.381    5.657    0.000    1.000    1.000</code></pre>
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .pa1               0.543    0.028   19.519    0.000
+   .pa2               0.451    0.022   20.153    0.000
+   .pa3               0.156    0.014   11.310    0.000
+   .pa4               0.224    0.016   13.887    0.000
+   .pa5               0.578    0.030   19.081    0.000
+   .pad1              0.747    0.036   20.521    0.000
+   .pad2              0.368    0.021   17.577    0.000
+   .pad3              0.180    0.012   15.193    0.000
+   .pad4              0.425    0.025   17.305    0.000
+   .pad5              0.205    0.014   14.377    0.000
+   .bc1               0.238    0.012   19.363    0.000
+   .bc2               0.271    0.018   15.269    0.000
+   .bc3               0.205    0.014   14.769    0.000
+   .bc4               0.340    0.018   18.429    0.000
+   .bc5               0.504    0.028   18.139    0.000
+   .Ini               0.000                           
+    pa                0.924    0.059   15.653    0.000
+    pad               0.376    0.036   10.484    0.000
+    bc                0.214    0.017   12.971    0.000
+    ini               0.489    0.023   21.354    0.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(gamblingmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"ProblemG"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>,<span class="at">covs=</span>T) <span class="ot">-&gt;</span> lp</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp,<span class="st">"sem.png"</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/config-1.png" class="img-fluid" width="672"></p>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cfa.metric |&gt; fitmeasures()</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.metric,</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.config,</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in compareFit(cfa.config, cfa.metric): fitMeasures() returned vectors
+of different lengths for different models, probably because certain options are
+not the same. Check lavInspect(fit,
+"options")[c("estimator","test","meanstructure")] for each model, or run
+fitMeasures() on each model to investigate.</code></pre>
 </div>
-<div class="cell-output-display">
-<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/config-2.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>The results show that the fit is good between the groups. CFI and TLI are close to 0.95, RMSEA is close to 0.06, and SRMR is close to 0.8. We can conclude that the two groups have the same factor structure.</p>
-</section>
-<section id="metric-invariance" class="level2">
-<h2 class="anchored" data-anchor-id="metric-invariance">Metric Invariance</h2>
-<p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(gamblingmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"ProblemG"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>################### Nested Model Comparison #########################
 
 Chi-Squared Difference Test
 
-            Df    AIC    BIC  Chisq Chisq diff   RMSEA Df diff Pr(&gt;Chisq)    
-cfa.config 686 104481 105762 3128.7                                          
-cfa.metric 706 104496 105671 3183.7     55.089 0.04879      20  3.983e-05 ***
+            Df   AIC   BIC  Chisq Chisq diff   RMSEA Df diff Pr(&gt;Chisq)    
+cfa.metric 210 56141 56639 1266.5                                          
+cfa.config 222 56286 56720 1435.4     168.88 0.13319      12  &lt; 2.2e-16 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
 ####################### Model Fit Indices ###########################
-               chisq  df pvalue rmsea   cfi   tli  srmr         aic         bic
-cfa.config 3128.651† 686   .000 .070  .917† .902  .077† 104480.518† 105762.086 
-cfa.metric 3183.739  706   .000 .069† .916  .903† .078  104495.606  105671.260†
+               chisq  df pvalue rmsea   cfi   tli  srmr        aic        bic
+cfa.metric 1266.477† 210   .000 .083† .932† .922† .054† 56140.867† 56638.666†
+cfa.config 1435.360  222   .000 .086  .922  .915  .060  56285.750  56720.001 
 
 ################## Differences in Fit Indices #######################
-                        df  rmsea    cfi   tli  srmr    aic     bic
-cfa.metric - cfa.config 20 -0.001 -0.001 0.001 0.001 15.089 -90.826</code></pre>
+                        df rmsea   cfi    tli  srmr     aic    bic
+cfa.config - cfa.metric 12 0.003 -0.01 -0.007 0.006 144.884 81.335</code></pre>
 </div>
 </div>
-<p>Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards gambling.</p>
+<p>Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards quitting gambling.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestScore</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$test
+
+total score test:
+
+   test      X2 df p.value
+1 score 216.191 28       0
+
+$uni
+
+univariate score tests:
+
+     lhs op    rhs     X2 df p.value
+1   .p2. ==  .p64.  6.567  1   0.010
+2   .p3. ==  .p65.  0.881  1   0.348
+3   .p4. ==  .p66.  2.623  1   0.105
+4   .p5. ==  .p67.  4.317  1   0.038
+5   .p7. ==  .p69.  1.371  1   0.242
+6   .p8. ==  .p70.  0.331  1   0.565
+7   .p9. ==  .p71.  0.802  1   0.370
+8  .p10. ==  .p72.  3.522  1   0.061
+9  .p12. ==  .p74.  0.003  1   0.958
+10 .p13. ==  .p75.  4.835  1   0.028
+11 .p14. ==  .p76.  0.167  1   0.683
+12 .p15. ==  .p77. 15.085  1   0.000
+13 .p43. == .p105.  0.269  1   0.604
+14 .p44. == .p106. 13.809  1   0.000
+15 .p45. == .p107.  5.095  1   0.024
+16 .p46. == .p108.  0.111  1   0.739
+17 .p47. == .p109. 23.001  1   0.000
+18 .p48. == .p110. 60.123  1   0.000
+19 .p49. == .p111. 13.329  1   0.000
+20 .p50. == .p112. 17.806  1   0.000
+21 .p51. == .p113. 18.657  1   0.000
+22 .p52. == .p114. 36.397  1   0.000
+23 .p53. == .p115.  2.689  1   0.101
+24 .p54. == .p116.  3.326  1   0.068
+25 .p55. == .p117.  0.868  1   0.352
+26 .p56. == .p118.  0.929  1   0.335
+27 .p57. == .p119.  2.392  1   0.122
+28 .p58. == .p120.  0.000  1   1.000</code></pre>
+</div>
+</div>
+<p>The significant score tests shows which questions between groups have different loadings. We can look at which relations/loadings are significantly different in the table below.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parTable</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     id   lhs op    rhs user block group free ustart exo label plabel start
+1     1    pa =~    pa1    1     1     1    0      1   0         .p1. 1.000
+2     2    pa =~    pa2    1     1     1    1     NA   0  .p2.   .p2. 0.604
+3     3    pa =~    pa3    1     1     1    2     NA   0  .p3.   .p3. 1.107
+4     4    pa =~    pa4    1     1     1    3     NA   0  .p4.   .p4. 1.137
+5     5    pa =~    pa5    1     1     1    4     NA   0  .p5.   .p5. 1.050
+6     6   pad =~   pad1    1     1     1    0      1   0         .p6. 1.000
+7     7   pad =~   pad2    1     1     1    5     NA   0  .p7.   .p7. 1.330
+8     8   pad =~   pad3    1     1     1    6     NA   0  .p8.   .p8. 1.023
+9     9   pad =~   pad4    1     1     1    7     NA   0  .p9.   .p9. 1.480
+10   10   pad =~   pad5    1     1     1    8     NA   0 .p10.  .p10. 1.128
+11   11    bc =~    bc1    1     1     1    0      1   0        .p11. 1.000
+12   12    bc =~    bc2    1     1     1    9     NA   0 .p12.  .p12. 1.501
+13   13    bc =~    bc3    1     1     1   10     NA   0 .p13.  .p13. 1.462
+14   14    bc =~    bc4    1     1     1   11     NA   0 .p14.  .p14. 1.225
+15   15    bc =~    bc5    1     1     1   12     NA   0 .p15.  .p15. 1.435
+16   16   ini =~    Ini    1     1     1    0      1   0        .p16. 1.000
+17   17   pa1 ~~    pa1    0     1     1   13     NA   0        .p17. 0.900
+18   18   pa2 ~~    pa2    0     1     1   14     NA   0        .p18. 0.618
+19   19   pa3 ~~    pa3    0     1     1   15     NA   0        .p19. 0.920
+20   20   pa4 ~~    pa4    0     1     1   16     NA   0        .p20. 0.986
+21   21   pa5 ~~    pa5    0     1     1   17     NA   0        .p21. 1.036
+22   22  pad1 ~~   pad1    0     1     1   18     NA   0        .p22. 0.631
+23   23  pad2 ~~   pad2    0     1     1   19     NA   0        .p23. 0.599
+24   24  pad3 ~~   pad3    0     1     1   20     NA   0        .p24. 0.379
+25   25  pad4 ~~   pad4    0     1     1   21     NA   0        .p25. 0.746
+26   26  pad5 ~~   pad5    0     1     1   22     NA   0        .p26. 0.437
+27   27   bc1 ~~    bc1    0     1     1   23     NA   0        .p27. 0.446
+28   28   bc2 ~~    bc2    0     1     1   24     NA   0        .p28. 0.769
+29   29   bc3 ~~    bc3    0     1     1   25     NA   0        .p29. 0.697
+30   30   bc4 ~~    bc4    0     1     1   26     NA   0        .p30. 0.662
+31   31   bc5 ~~    bc5    0     1     1   27     NA   0        .p31. 0.808
+32   32   Ini ~~    Ini    0     1     1    0      0   0        .p32. 0.000
+33   33    pa ~~     pa    0     1     1   28     NA   0        .p33. 0.050
+34   34   pad ~~    pad    0     1     1   29     NA   0        .p34. 0.050
+35   35    bc ~~     bc    0     1     1   30     NA   0        .p35. 0.050
+36   36   ini ~~    ini    0     1     1   31     NA   0        .p36. 1.864
+37   37    pa ~~    pad    0     1     1   32     NA   0        .p37. 0.000
+38   38    pa ~~     bc    0     1     1   33     NA   0        .p38. 0.000
+39   39    pa ~~    ini    0     1     1   34     NA   0        .p39. 0.000
+40   40   pad ~~     bc    0     1     1   35     NA   0        .p40. 0.000
+41   41   pad ~~    ini    0     1     1   36     NA   0        .p41. 0.000
+42   42    bc ~~    ini    0     1     1   37     NA   0        .p42. 0.000
+43   43   pa1 ~1           0     1     1   38     NA   0 .p43.  .p43. 2.192
+44   44   pa2 ~1           0     1     1   39     NA   0 .p44.  .p44. 3.132
+45   45   pa3 ~1           0     1     1   40     NA   0 .p45.  .p45. 2.126
+46   46   pa4 ~1           0     1     1   41     NA   0 .p46.  .p46. 2.018
+47   47   pa5 ~1           0     1     1   42     NA   0 .p47.  .p47. 1.760
+48   48  pad1 ~1           0     1     1   43     NA   0 .p48.  .p48. 1.347
+49   49  pad2 ~1           0     1     1   44     NA   0 .p49.  .p49. 0.998
+50   50  pad3 ~1           0     1     1   45     NA   0 .p50.  .p50. 0.530
+51   51  pad4 ~1           0     1     1   46     NA   0 .p51.  .p51. 1.137
+52   52  pad5 ~1           0     1     1   47     NA   0 .p52.  .p52. 0.616
+53   53   bc1 ~1           0     1     1   48     NA   0 .p53.  .p53. 3.335
+54   54   bc2 ~1           0     1     1   49     NA   0 .p54.  .p54. 2.585
+55   55   bc3 ~1           0     1     1   50     NA   0 .p55.  .p55. 2.890
+56   56   bc4 ~1           0     1     1   51     NA   0 .p56.  .p56. 2.996
+57   57   bc5 ~1           0     1     1   52     NA   0 .p57.  .p57. 2.415
+58   58   Ini ~1           0     1     1   53     NA   0 .p58.  .p58. 2.948
+59   59    pa ~1           0     1     1    0      0   0        .p59. 0.000
+60   60   pad ~1           0     1     1    0      0   0        .p60. 0.000
+61   61    bc ~1           0     1     1    0      0   0        .p61. 0.000
+62   62   ini ~1           0     1     1    0      0   0        .p62. 0.000
+63   63    pa =~    pa1    1     2     2    0      1   0        .p63. 1.000
+64   64    pa =~    pa2    1     2     2   54     NA   0  .p2.  .p64. 0.749
+65   65    pa =~    pa3    1     2     2   55     NA   0  .p3.  .p65. 1.109
+66   66    pa =~    pa4    1     2     2   56     NA   0  .p4.  .p66. 1.121
+67   67    pa =~    pa5    1     2     2   57     NA   0  .p5.  .p67. 1.098
+68   68   pad =~   pad1    1     2     2    0      1   0        .p68. 1.000
+69   69   pad =~   pad2    1     2     2   58     NA   0  .p7.  .p69. 1.531
+70   70   pad =~   pad3    1     2     2   59     NA   0  .p8.  .p70. 1.201
+71   71   pad =~   pad4    1     2     2   60     NA   0  .p9.  .p71. 1.601
+72   72   pad =~   pad5    1     2     2   61     NA   0 .p10.  .p72. 1.409
+73   73    bc =~    bc1    1     2     2    0      1   0        .p73. 1.000
+74   74    bc =~    bc2    1     2     2   62     NA   0 .p12.  .p74. 1.783
+75   75    bc =~    bc3    1     2     2   63     NA   0 .p13.  .p75. 1.648
+76   76    bc =~    bc4    1     2     2   64     NA   0 .p14.  .p76. 1.479
+77   77    bc =~    bc5    1     2     2   65     NA   0 .p15.  .p77. 2.088
+78   78   ini =~    Ini    1     2     2    0      1   0        .p78. 1.000
+79   79   pa1 ~~    pa1    0     2     2   66     NA   0        .p79. 0.900
+80   80   pa2 ~~    pa2    0     2     2   67     NA   0        .p80. 0.618
+81   81   pa3 ~~    pa3    0     2     2   68     NA   0        .p81. 0.920
+82   82   pa4 ~~    pa4    0     2     2   69     NA   0        .p82. 0.986
+83   83   pa5 ~~    pa5    0     2     2   70     NA   0        .p83. 1.036
+84   84  pad1 ~~   pad1    0     2     2   71     NA   0        .p84. 0.631
+85   85  pad2 ~~   pad2    0     2     2   72     NA   0        .p85. 0.599
+86   86  pad3 ~~   pad3    0     2     2   73     NA   0        .p86. 0.379
+87   87  pad4 ~~   pad4    0     2     2   74     NA   0        .p87. 0.746
+88   88  pad5 ~~   pad5    0     2     2   75     NA   0        .p88. 0.437
+89   89   bc1 ~~    bc1    0     2     2   76     NA   0        .p89. 0.446
+90   90   bc2 ~~    bc2    0     2     2   77     NA   0        .p90. 0.769
+91   91   bc3 ~~    bc3    0     2     2   78     NA   0        .p91. 0.697
+92   92   bc4 ~~    bc4    0     2     2   79     NA   0        .p92. 0.662
+93   93   bc5 ~~    bc5    0     2     2   80     NA   0        .p93. 0.808
+94   94   Ini ~~    Ini    0     2     2    0      0   0        .p94. 0.000
+95   95    pa ~~     pa    0     2     2   81     NA   0        .p95. 0.050
+96   96   pad ~~    pad    0     2     2   82     NA   0        .p96. 0.050
+97   97    bc ~~     bc    0     2     2   83     NA   0        .p97. 0.050
+98   98   ini ~~    ini    0     2     2   84     NA   0        .p98. 0.489
+99   99    pa ~~    pad    0     2     2   85     NA   0        .p99. 0.000
+100 100    pa ~~     bc    0     2     2   86     NA   0       .p100. 0.000
+101 101    pa ~~    ini    0     2     2   87     NA   0       .p101. 0.000
+102 102   pad ~~     bc    0     2     2   88     NA   0       .p102. 0.000
+103 103   pad ~~    ini    0     2     2   89     NA   0       .p103. 0.000
+104 104    bc ~~    ini    0     2     2   90     NA   0       .p104. 0.000
+105 105   pa1 ~1           0     2     2   91     NA   0 .p43. .p105. 2.974
+106 106   pa2 ~1           0     2     2   92     NA   0 .p44. .p106. 3.522
+107 107   pa3 ~1           0     2     2   93     NA   0 .p45. .p107. 3.003
+108 108   pa4 ~1           0     2     2   94     NA   0 .p46. .p108. 2.962
+109 109   pa5 ~1           0     2     2   95     NA   0 .p47. .p109. 2.842
+110 110  pad1 ~1           0     2     2   96     NA   0 .p48. .p110. 0.860
+111 111  pad2 ~1           0     2     2   97     NA   0 .p49. .p111. 0.726
+112 112  pad3 ~1           0     2     2   98     NA   0 .p50. .p112. 0.490
+113 113  pad4 ~1           0     2     2   99     NA   0 .p51. .p113. 0.809
+114 114  pad5 ~1           0     2     2  100     NA   0 .p52. .p114. 0.595
+115 115   bc1 ~1           0     2     2  101     NA   0 .p53. .p115. 3.762
+116 116   bc2 ~1           0     2     2  102     NA   0 .p54. .p116. 3.320
+117 117   bc3 ~1           0     2     2  103     NA   0 .p55. .p117. 3.487
+118 118   bc4 ~1           0     2     2  104     NA   0 .p56. .p118. 3.498
+119 119   bc5 ~1           0     2     2  105     NA   0 .p57. .p119. 3.042
+120 120   Ini ~1           0     2     2  106     NA   0 .p58. .p120. 3.788
+121 121    pa ~1           0     2     2  107     NA   0       .p121. 0.000
+122 122   pad ~1           0     2     2  108     NA   0       .p122. 0.000
+123 123    bc ~1           0     2     2  109     NA   0       .p123. 0.000
+124 124   ini ~1           0     2     2  110     NA   0       .p124. 0.000
+125 125  .p2. ==  .p64.    2     0     0    0     NA   0              0.000
+126 126  .p3. ==  .p65.    2     0     0    0     NA   0              0.000
+127 127  .p4. ==  .p66.    2     0     0    0     NA   0              0.000
+128 128  .p5. ==  .p67.    2     0     0    0     NA   0              0.000
+129 129  .p7. ==  .p69.    2     0     0    0     NA   0              0.000
+130 130  .p8. ==  .p70.    2     0     0    0     NA   0              0.000
+131 131  .p9. ==  .p71.    2     0     0    0     NA   0              0.000
+132 132 .p10. ==  .p72.    2     0     0    0     NA   0              0.000
+133 133 .p12. ==  .p74.    2     0     0    0     NA   0              0.000
+134 134 .p13. ==  .p75.    2     0     0    0     NA   0              0.000
+135 135 .p14. ==  .p76.    2     0     0    0     NA   0              0.000
+136 136 .p15. ==  .p77.    2     0     0    0     NA   0              0.000
+137 137 .p43. == .p105.    2     0     0    0     NA   0              0.000
+138 138 .p44. == .p106.    2     0     0    0     NA   0              0.000
+139 139 .p45. == .p107.    2     0     0    0     NA   0              0.000
+140 140 .p46. == .p108.    2     0     0    0     NA   0              0.000
+141 141 .p47. == .p109.    2     0     0    0     NA   0              0.000
+142 142 .p48. == .p110.    2     0     0    0     NA   0              0.000
+143 143 .p49. == .p111.    2     0     0    0     NA   0              0.000
+144 144 .p50. == .p112.    2     0     0    0     NA   0              0.000
+145 145 .p51. == .p113.    2     0     0    0     NA   0              0.000
+146 146 .p52. == .p114.    2     0     0    0     NA   0              0.000
+147 147 .p53. == .p115.    2     0     0    0     NA   0              0.000
+148 148 .p54. == .p116.    2     0     0    0     NA   0              0.000
+149 149 .p55. == .p117.    2     0     0    0     NA   0              0.000
+150 150 .p56. == .p118.    2     0     0    0     NA   0              0.000
+151 151 .p57. == .p119.    2     0     0    0     NA   0              0.000
+152 152 .p58. == .p120.    2     0     0    0     NA   0              0.000
+       est    se
+1    1.000 0.000
+2    0.713 0.024
+3    1.207 0.027
+4    1.230 0.028
+5    1.175 0.031
+6    1.000 0.000
+7    1.447 0.065
+8    1.261 0.057
+9    1.608 0.073
+10   1.433 0.065
+11   1.000 0.000
+12   1.837 0.060
+13   1.637 0.053
+14   1.412 0.052
+15   1.801 0.065
+16   1.000 0.000
+17   0.730 0.049
+18   0.828 0.052
+19   0.267 0.026
+20   0.307 0.028
+21   0.765 0.053
+22   0.960 0.062
+23   0.501 0.037
+24   0.271 0.022
+25   0.647 0.047
+26   0.273 0.024
+27   0.473 0.031
+28   0.315 0.029
+29   0.354 0.028
+30   0.618 0.042
+31   0.627 0.045
+32   0.000 0.000
+33   1.060 0.078
+34   0.316 0.034
+35   0.362 0.031
+36   1.864 0.111
+37   0.151 0.028
+38   0.010 0.028
+39   0.307 0.063
+40  -0.142 0.019
+41  -0.171 0.036
+42   0.328 0.040
+43   2.206 0.050
+44   3.018 0.039
+45   2.096 0.055
+46   2.023 0.056
+47   1.888 0.057
+48   1.091 0.035
+49   0.917 0.040
+50   0.597 0.034
+51   1.026 0.045
+52   0.705 0.038
+53   3.372 0.031
+54   2.612 0.050
+55   2.874 0.045
+56   2.972 0.042
+57   2.379 0.052
+58   2.948 0.058
+59   0.000 0.000
+60   0.000 0.000
+61   0.000 0.000
+62   0.000 0.000
+63   1.000 0.000
+64   0.713 0.024
+65   1.207 0.027
+66   1.230 0.028
+67   1.175 0.031
+68   1.000 0.000
+69   1.447 0.065
+70   1.261 0.057
+71   1.608 0.073
+72   1.433 0.065
+73   1.000 0.000
+74   1.837 0.060
+75   1.637 0.053
+76   1.412 0.052
+77   1.801 0.065
+78   1.000 0.000
+79   0.542 0.028
+80   0.457 0.023
+81   0.159 0.013
+82   0.223 0.015
+83   0.577 0.031
+84   0.761 0.038
+85   0.365 0.022
+86   0.183 0.012
+87   0.423 0.025
+88   0.213 0.015
+89   0.238 0.012
+90   0.270 0.018
+91   0.205 0.014
+92   0.341 0.019
+93   0.508 0.029
+94   0.000 0.000
+95   0.932 0.058
+96   0.396 0.038
+97   0.221 0.016
+98   0.489 0.023
+99  -0.011 0.021
+100  0.102 0.017
+101  0.112 0.023
+102 -0.052 0.011
+103 -0.077 0.016
+104  0.119 0.013
+105  2.206 0.050
+106  3.018 0.039
+107  2.096 0.055
+108  2.023 0.056
+109  1.888 0.057
+110  1.091 0.035
+111  0.917 0.040
+112  0.597 0.034
+113  1.026 0.045
+114  0.705 0.038
+115  3.372 0.031
+116  2.612 0.050
+117  2.874 0.045
+118  2.972 0.042
+119  2.379 0.052
+120  2.948 0.058
+121  0.761 0.057
+122 -0.107 0.034
+123  0.378 0.033
+124  0.840 0.062
+125  0.000 0.000
+126  0.000 0.000
+127  0.000 0.000
+128  0.000 0.000
+129  0.000 0.000
+130  0.000 0.000
+131  0.000 0.000
+132  0.000 0.000
+133  0.000 0.000
+134  0.000 0.000
+135  0.000 0.000
+136  0.000 0.000
+137  0.000 0.000
+138  0.000 0.000
+139  0.000 0.000
+140  0.000 0.000
+141  0.000 0.000
+142  0.000 0.000
+143  0.000 0.000
+144  0.000 0.000
+145  0.000 0.000
+146  0.000 0.000
+147  0.000 0.000
+148  0.000 0.000
+149  0.000 0.000
+150  0.000 0.000
+151  0.000 0.000
+152  0.000 0.000</code></pre>
+</div>
+</div>
+<p>The significant</p>
+</section>
+<section id="sustenance-of-quitting-gambling" class="level2">
+<h2 class="anchored" data-anchor-id="sustenance-of-quitting-gambling">Sustenance of quitting gambling</h2>
+<p>We now check for correlations between the items for sustenance of quitting gambling.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/corrsus-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.15 ended normally after 42 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        25
+
+  Number of observations                          1474
+
+Model Test User Model:
+                                                      
+  Test statistic                               162.262
+  Degrees of freedom                                30
+  P-value (Chi-square)                           0.000
+
+Model Test Baseline Model:
+
+  Test statistic                              9555.290
+  Degrees of freedom                                45
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.986
+  Tucker-Lewis Index (TLI)                       0.979
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)             -17740.238
+  Loglikelihood unrestricted model (H1)     -17659.107
+                                                      
+  Akaike (AIC)                               35530.477
+  Bayesian (BIC)                             35662.870
+  Sample-size adjusted Bayesian (SABIC)      35583.453
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.055
+  90 Percent confidence interval - lower         0.047
+  90 Percent confidence interval - upper         0.063
+  P-value H_0: RMSEA &lt;= 0.050                    0.165
+  P-value H_0: RMSEA &gt;= 0.080                    0.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.031
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  et =~                                               
+    et1               1.000                           
+    et2               0.936    0.019   49.987    0.000
+    et3               0.940    0.020   48.124    0.000
+  pfc =~                                              
+    pfc1              1.000                           
+    pfc2              0.998    0.032   30.769    0.000
+    pfc3              0.970    0.033   29.092    0.000
+  cse =~                                              
+    cse1              1.000                           
+    cse2              0.991    0.030   32.598    0.000
+    cse3              0.800    0.034   23.515    0.000
+  sus =~                                              
+    Sus               1.000                           
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  et ~~                                               
+    pfc               0.650    0.034   19.020    0.000
+    cse               0.509    0.032   16.090    0.000
+    sus               0.556    0.038   14.523    0.000
+  pfc ~~                                              
+    cse               0.549    0.035   15.562    0.000
+    sus               0.518    0.040   12.863    0.000
+  cse ~~                                              
+    sus               0.367    0.044    8.344    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .et1               0.259    0.012   21.632    0.000
+   .et2               0.117    0.007   16.258    0.000
+   .et3               0.152    0.008   18.625    0.000
+   .pfc1              0.845    0.034   24.787    0.000
+   .pfc2              0.160    0.011   14.187    0.000
+   .pfc3              0.295    0.014   20.368    0.000
+   .cse1              0.458    0.030   15.407    0.000
+   .cse2              0.322    0.027   12.100    0.000
+   .cse3              1.169    0.047   24.691    0.000
+   .Sus               0.000                           
+    et                0.762    0.037   20.546    0.000
+    pfc               0.751    0.052   14.509    0.000
+    cse               1.062    0.059   18.081    0.000
+    sus               2.146    0.079   27.148    0.000</code></pre>
+</div>
+</div>
+<p>All fit measures indicate a good fit, with the CLI close to 1, RMSEA &lt; 0.06, and SRMR &lt; 0.05.</p>
+</section>
+<section id="configural-invariance-1" class="level2">
+<h2 class="anchored" data-anchor-id="configural-invariance-1">Configural Invariance</h2>
+<p>Let us now see if we have configural invariance between the non-gambling and gambling groups.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.15 ended normally after 83 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        74
+  Number of equality constraints                    16
+
+  Number of observations per group:                   
+    1                                              562
+    0                                              912
+  Number of missing patterns per group:               
+    1                                                1
+    0                                                1
+
+Model Test User Model:
+                                                      
+  Test statistic                               224.813
+  Degrees of freedom                                72
+  P-value (Chi-square)                           0.000
+  Test statistic for each group:
+    1                                           70.579
+    0                                          154.234
+
+Model Test Baseline Model:
+
+  Test statistic                              9174.009
+  Degrees of freedom                                90
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.983
+  Tucker-Lewis Index (TLI)                       0.979
+                                                      
+  Robust Comparative Fit Index (CFI)             0.983
+  Robust Tucker-Lewis Index (TLI)                0.979
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)             -17350.743
+  Loglikelihood unrestricted model (H1)     -17238.337
+                                                      
+  Akaike (AIC)                               34817.486
+  Bayesian (BIC)                             35124.639
+  Sample-size adjusted Bayesian (SABIC)      34940.391
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.054
+  90 Percent confidence interval - lower         0.046
+  90 Percent confidence interval - upper         0.062
+  P-value H_0: RMSEA &lt;= 0.050                    0.215
+  P-value H_0: RMSEA &gt;= 0.080                    0.000
+                                                      
+  Robust RMSEA                                   0.054
+  90 Percent confidence interval - lower         0.046
+  90 Percent confidence interval - upper         0.062
+  P-value H_0: Robust RMSEA &lt;= 0.050             0.215
+  P-value H_0: Robust RMSEA &gt;= 0.080             0.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.040
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Observed
+  Observed information based on                Hessian
+
+
+Group 1 [1]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  et =~                                                                 
+    et1               1.000                               1.032    0.874
+    et2     (.p2.)    0.926    0.019   49.177    0.000    0.955    0.926
+    et3     (.p3.)    0.930    0.020   46.754    0.000    0.960    0.899
+  pfc =~                                                                
+    pfc1              1.000                               0.958    0.708
+    pfc2    (.p5.)    0.996    0.032   30.649    0.000    0.954    0.895
+    pfc3    (.p6.)    0.962    0.033   28.840    0.000    0.921    0.832
+  cse =~                                                                
+    cse1              1.000                               1.085    0.826
+    cse2    (.p8.)    0.994    0.030   33.297    0.000    1.079    0.894
+    cse3    (.p9.)    0.804    0.034   23.409    0.000    0.872    0.620
+  sus =~                                                                
+    Sus               1.000                               1.476    1.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  et ~~                                                                 
+    pfc               0.840    0.063   13.236    0.000    0.850    0.850
+    cse               0.664    0.062   10.753    0.000    0.593    0.593
+    sus               0.445    0.069    6.405    0.000    0.292    0.292
+  pfc ~~                                                                
+    cse               0.655    0.061   10.650    0.000    0.630    0.630
+    sus               0.358    0.066    5.408    0.000    0.254    0.254
+  cse ~~                                                                
+    sus               0.167    0.073    2.298    0.022    0.105    0.105
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .et1     (.31.)    3.044    0.047   65.077    0.000    3.044    2.578
+   .et2     (.32.)    3.205    0.042   75.687    0.000    3.205    3.107
+   .et3     (.33.)    3.183    0.043   74.115    0.000    3.183    2.981
+   .pfc1    (.34.)    2.851    0.049   58.462    0.000    2.851    2.106
+   .pfc2    (.35.)    3.135    0.044   71.919    0.000    3.135    2.941
+   .pfc3    (.36.)    3.112    0.043   72.108    0.000    3.112    2.813
+   .cse1    (.37.)    2.992    0.052   57.926    0.000    2.992    2.277
+   .cse2    (.38.)    3.001    0.050   60.501    0.000    3.001    2.488
+   .cse3    (.39.)    2.717    0.048   56.567    0.000    2.717    1.931
+   .Sus     (.40.)    1.781    0.062   28.611    0.000    1.781    1.207
+    et                0.000                               0.000    0.000
+    pfc               0.000                               0.000    0.000
+    cse               0.000                               0.000    0.000
+    sus               0.000                               0.000    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .et1               0.329    0.025   13.247    0.000    0.329    0.236
+   .et2               0.152    0.015    9.985    0.000    0.152    0.143
+   .et3               0.219    0.018   11.995    0.000    0.219    0.192
+   .pfc1              0.914    0.061   15.086    0.000    0.914    0.499
+   .pfc2              0.227    0.023    9.660    0.000    0.227    0.199
+   .pfc3              0.376    0.029   12.747    0.000    0.376    0.307
+   .cse1              0.549    0.048   11.336    0.000    0.549    0.318
+   .cse2              0.291    0.038    7.608    0.000    0.291    0.200
+   .cse3              1.220    0.079   15.367    0.000    1.220    0.616
+   .Sus               0.000                               0.000    0.000
+    et                1.064    0.074   14.317    0.000    1.000    1.000
+    pfc               0.918    0.079   11.568    0.000    1.000    1.000
+    cse               1.177    0.093   12.698    0.000    1.000    1.000
+    sus               2.178    0.130   16.763    0.000    1.000    1.000
+
+
+Group 2 [0]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  et =~                                                                 
+    et1               1.000                               0.706    0.835
+    et2     (.p2.)    0.926    0.019   49.177    0.000    0.653    0.905
+    et3     (.p3.)    0.930    0.020   46.754    0.000    0.657    0.892
+  pfc =~                                                                
+    pfc1              1.000                               0.776    0.655
+    pfc2    (.p5.)    0.996    0.032   30.649    0.000    0.773    0.914
+    pfc3    (.p6.)    0.962    0.033   28.840    0.000    0.746    0.833
+  cse =~                                                                
+    cse1              1.000                               0.975    0.838
+    cse2    (.p8.)    0.994    0.030   33.297    0.000    0.969    0.857
+    cse3    (.p9.)    0.804    0.034   23.409    0.000    0.783    0.592
+  sus =~                                                                
+    Sus               1.000                               1.178    1.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  et ~~                                                                 
+    pfc               0.472    0.030   15.907    0.000    0.861    0.861
+    cse               0.361    0.030   12.216    0.000    0.524    0.524
+    sus               0.364    0.032   11.476    0.000    0.438    0.438
+  pfc ~~                                                                
+    cse               0.440    0.036   12.380    0.000    0.581    0.581
+    sus               0.419    0.037   11.300    0.000    0.458    0.458
+  cse ~~                                                                
+    sus               0.337    0.043    7.830    0.000    0.294    0.294
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .et1     (.31.)    3.044    0.047   65.077    0.000    3.044    3.600
+   .et2     (.32.)    3.205    0.042   75.687    0.000    3.205    4.439
+   .et3     (.33.)    3.183    0.043   74.115    0.000    3.183    4.322
+   .pfc1    (.34.)    2.851    0.049   58.462    0.000    2.851    2.407
+   .pfc2    (.35.)    3.135    0.044   71.919    0.000    3.135    3.707
+   .pfc3    (.36.)    3.112    0.043   72.108    0.000    3.112    3.473
+   .cse1    (.37.)    2.992    0.052   57.926    0.000    2.992    2.571
+   .cse2    (.38.)    3.001    0.050   60.501    0.000    3.001    2.655
+   .cse3    (.39.)    2.717    0.048   56.567    0.000    2.717    2.053
+   .Sus     (.40.)    1.781    0.062   28.611    0.000    1.781    1.512
+    et                0.503    0.052    9.712    0.000    0.713    0.713
+    pfc               0.378    0.052    7.269    0.000    0.487    0.487
+    cse               0.279    0.061    4.591    0.000    0.286    0.286
+    sus               1.391    0.073   18.933    0.000    1.181    1.181
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .et1               0.216    0.013   17.253    0.000    0.216    0.303
+   .et2               0.094    0.007   13.621    0.000    0.094    0.181
+   .et3               0.111    0.008   14.620    0.000    0.111    0.204
+   .pfc1              0.800    0.041   19.745    0.000    0.800    0.570
+   .pfc2              0.118    0.011   10.612    0.000    0.118    0.165
+   .pfc3              0.246    0.015   16.649    0.000    0.246    0.306
+   .cse1              0.404    0.032   12.499    0.000    0.404    0.298
+   .cse2              0.339    0.031   10.997    0.000    0.339    0.265
+   .cse3              1.138    0.059   19.434    0.000    1.138    0.650
+   .Sus               0.000                               0.000    0.000
+    et                0.499    0.030   16.857    0.000    1.000    1.000
+    pfc               0.602    0.047   12.887    0.000    1.000    1.000
+    cse               0.950    0.061   15.659    0.000    1.000    1.000
+    sus               1.388    0.065   21.354    0.000    1.000    1.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp_sus</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp_sus,<span class="st">"sem_sus.png"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/configsus-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/configsus-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The fit still remains acceptable after including groups, which means that both groups have the same factors in their model.</p>
+</section>
+<section id="metric-invariance-1" class="level2">
+<h2 class="anchored" data-anchor-id="metric-invariance-1">Metric Invariance</h2>
+<p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in compareFit(cfa.config, cfa.metric): fitMeasures() returned vectors
+of different lengths for different models, probably because certain options are
+not the same. Check lavInspect(fit,
+"options")[c("estimator","test","meanstructure")] for each model, or run
+fitMeasures() on each model to investigate.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>################### Nested Model Comparison #########################
+
+Chi-Squared Difference Test
+
+           Df   AIC   BIC  Chisq Chisq diff    RMSEA Df diff Pr(&gt;Chisq)
+cfa.metric 66 34822 35161 217.13                                       
+cfa.config 72 34817 35125 224.81     7.6793 0.019487       6     0.2626
+
+####################### Model Fit Indices ###########################
+              chisq df pvalue rmsea   cfi   tli  srmr        aic        bic
+cfa.metric 217.133† 66   .000 .056  .983† .977  .037† 34821.807  35160.734 
+cfa.config 224.813  72   .000 .054† .983  .979† .040  34817.486† 35124.639†
+
+################## Differences in Fit Indices #######################
+                        df  rmsea cfi   tli  srmr    aic     bic
+cfa.config - cfa.metric  6 -0.002   0 0.002 0.002 -4.321 -36.095</code></pre>
+</div>
+</div>
+<p>Results show that the chi-square test is not significant, which means that the metric invariance is satisfied. The new model where we constrained the loadings to be equal for both groups does not differ in terms of performance. This means that the two groups have the same factors and factor loadings.</p>
+</section>
+<section id="scalar-invariance-strong-invariance" class="level2">
+<h2 class="anchored" data-anchor-id="scalar-invariance-strong-invariance">Scalar Invariance (strong invariance)</h2>
+<p>For scalar invariance, we also set the intercepts to be equal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scalar model</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod, <span class="at">data =</span> gambling, <span class="at">group =</span> <span class="st">"Gambled"</span>, <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"loadings"</span>,<span class="st">"intercepts"</span>))</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.15 ended normally after 82 iterations
+
+  Estimator                                         ML
+  Optimization method                           NLMINB
+  Number of model parameters                        74
+  Number of equality constraints                    16
+
+  Number of observations per group:                   
+    1                                              562
+    0                                              912
+
+Model Test User Model:
+                                                      
+  Test statistic                               224.813
+  Degrees of freedom                                72
+  P-value (Chi-square)                           0.000
+  Test statistic for each group:
+    1                                           70.579
+    0                                          154.234
+
+Model Test Baseline Model:
+
+  Test statistic                              9174.009
+  Degrees of freedom                                90
+  P-value                                        0.000
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.983
+  Tucker-Lewis Index (TLI)                       0.979
+
+Loglikelihood and Information Criteria:
+
+  Loglikelihood user model (H0)             -17350.743
+  Loglikelihood unrestricted model (H1)     -17238.337
+                                                      
+  Akaike (AIC)                               34817.486
+  Bayesian (BIC)                             35124.639
+  Sample-size adjusted Bayesian (SABIC)      34940.391
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.054
+  90 Percent confidence interval - lower         0.046
+  90 Percent confidence interval - upper         0.062
+  P-value H_0: RMSEA &lt;= 0.050                    0.215
+  P-value H_0: RMSEA &gt;= 0.080                    0.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.038
+
+Parameter Estimates:
+
+  Standard errors                             Standard
+  Information                                 Expected
+  Information saturated (h1) model          Structured
+
+
+Group 1 [1]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  et =~                                               
+    et1               1.000                           
+    et2     (.p2.)    0.926    0.019   49.192    0.000
+    et3     (.p3.)    0.930    0.020   47.377    0.000
+  pfc =~                                              
+    pfc1              1.000                           
+    pfc2    (.p5.)    0.996    0.032   30.754    0.000
+    pfc3    (.p6.)    0.962    0.033   29.004    0.000
+  cse =~                                              
+    cse1              1.000                           
+    cse2    (.p8.)    0.994    0.031   32.482    0.000
+    cse3    (.p9.)    0.804    0.034   23.465    0.000
+  sus =~                                              
+    Sus               1.000                           
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  et ~~                                               
+    pfc               0.840    0.063   13.225    0.000
+    cse               0.664    0.062   10.773    0.000
+    sus               0.445    0.069    6.405    0.000
+  pfc ~~                                              
+    cse               0.655    0.061   10.684    0.000
+    sus               0.358    0.066    5.424    0.000
+  cse ~~                                              
+    sus               0.167    0.073    2.300    0.021
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .et1     (.31.)    3.044    0.047   65.100    0.000
+   .et2     (.32.)    3.205    0.042   75.700    0.000
+   .et3     (.33.)    3.183    0.043   74.101    0.000
+   .pfc1    (.34.)    2.851    0.049   58.457    0.000
+   .pfc2    (.35.)    3.135    0.044   71.949    0.000
+   .pfc3    (.36.)    3.112    0.043   72.100    0.000
+   .cse1    (.37.)    2.992    0.051   58.132    0.000
+   .cse2    (.38.)    3.001    0.050   60.529    0.000
+   .cse3    (.39.)    2.717    0.048   56.641    0.000
+   .Sus     (.40.)    1.781    0.062   28.611    0.000
+    et                0.000                           
+    pfc               0.000                           
+    cse               0.000                           
+    sus               0.000                           
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .et1               0.329    0.025   13.188    0.000
+   .et2               0.152    0.015   10.089    0.000
+   .et3               0.219    0.018   12.032    0.000
+   .pfc1              0.914    0.061   15.070    0.000
+   .pfc2              0.227    0.023    9.700    0.000
+   .pfc3              0.376    0.029   12.822    0.000
+   .cse1              0.549    0.049   11.199    0.000
+   .cse2              0.291    0.039    7.430    0.000
+   .cse3              1.220    0.079   15.387    0.000
+   .Sus               0.000                           
+    et                1.064    0.075   14.280    0.000
+    pfc               0.918    0.079   11.544    0.000
+    cse               1.177    0.092   12.739    0.000
+    sus               2.178    0.130   16.763    0.000
+
+
+Group 2 [0]:
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  et =~                                               
+    et1               1.000                           
+    et2     (.p2.)    0.926    0.019   49.192    0.000
+    et3     (.p3.)    0.930    0.020   47.377    0.000
+  pfc =~                                              
+    pfc1              1.000                           
+    pfc2    (.p5.)    0.996    0.032   30.754    0.000
+    pfc3    (.p6.)    0.962    0.033   29.004    0.000
+  cse =~                                              
+    cse1              1.000                           
+    cse2    (.p8.)    0.994    0.031   32.482    0.000
+    cse3    (.p9.)    0.804    0.034   23.465    0.000
+  sus =~                                              
+    Sus               1.000                           
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+  et ~~                                               
+    pfc               0.472    0.030   15.949    0.000
+    cse               0.361    0.030   12.187    0.000
+    sus               0.364    0.032   11.498    0.000
+  pfc ~~                                              
+    cse               0.440    0.035   12.417    0.000
+    sus               0.419    0.037   11.347    0.000
+  cse ~~                                              
+    sus               0.337    0.043    7.827    0.000
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .et1     (.31.)    3.044    0.047   65.100    0.000
+   .et2     (.32.)    3.205    0.042   75.700    0.000
+   .et3     (.33.)    3.183    0.043   74.101    0.000
+   .pfc1    (.34.)    2.851    0.049   58.457    0.000
+   .pfc2    (.35.)    3.135    0.044   71.949    0.000
+   .pfc3    (.36.)    3.112    0.043   72.100    0.000
+   .cse1    (.37.)    2.992    0.051   58.132    0.000
+   .cse2    (.38.)    3.001    0.050   60.529    0.000
+   .cse3    (.39.)    2.717    0.048   56.641    0.000
+   .Sus     (.40.)    1.781    0.062   28.611    0.000
+    et                0.503    0.052    9.718    0.000
+    pfc               0.378    0.052    7.263    0.000
+    cse               0.279    0.061    4.612    0.000
+    sus               1.391    0.073   18.933    0.000
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .et1               0.216    0.012   17.495    0.000
+   .et2               0.094    0.007   13.591    0.000
+   .et3               0.111    0.008   14.646    0.000
+   .pfc1              0.800    0.040   19.865    0.000
+   .pfc2              0.118    0.011   10.725    0.000
+   .pfc3              0.246    0.015   16.535    0.000
+   .cse1              0.404    0.033   12.142    0.000
+   .cse2              0.339    0.031   10.850    0.000
+   .cse3              1.138    0.058   19.536    0.000
+   .Sus               0.000                           
+    et                0.499    0.029   16.978    0.000
+    pfc               0.602    0.046   12.953    0.000
+    cse               0.950    0.062   15.434    0.000
+    sus               1.388    0.065   21.354    0.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model comparison</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.metric, cfa.scalar) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>################### Nested Model Comparison #########################
+
+Chi-Squared Difference Test
+
+           Df   AIC   BIC  Chisq Chisq diff    RMSEA Df diff Pr(&gt;Chisq)
+cfa.metric 66 34822 35161 217.13                                       
+cfa.scalar 72 34817 35125 224.81     7.6793 0.019487       6     0.2626
+
+####################### Model Fit Indices ###########################
+              chisq df pvalue rmsea   cfi   tli  srmr        aic        bic
+cfa.metric 217.133† 66   .000 .056  .983† .977  .037† 34821.807  35160.734 
+cfa.scalar 224.813  72   .000 .054† .983  .979† .038  34817.486† 35124.639†
+
+################## Differences in Fit Indices #######################
+                        df  rmsea cfi   tli  srmr    aic     bic
+cfa.scalar - cfa.metric  6 -0.002   0 0.002 0.001 -4.321 -36.095</code></pre>
+</div>
+</div>
+<p>There is no significant difference in chi-square values as well as the other fit measures, which means that the constructs in the sustenance aspect of quitting gambling is also scalar invariant.</p>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>We have established scalar invariance of the construct validity in the sustenance response, which means the factor loadings and intercepts are the same for those who did and did not gamble in the past 30 days. This invariance was not observed in the initiation to quit gambling.</p>
 </section>
 
 </main>
