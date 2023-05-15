@@ -83,7 +83,10 @@ We check convergent and discriminant validity by looking at the AVE (average var
 
 ```{r,validity}
 
+
+CFAfit_ini |> compRelSEM()
 CFAfit_ini |> reliability()
+CFAfit_ini |> AVE()
 ```
 
 ## Configural Invariance
@@ -159,6 +162,18 @@ CFAfit |> summary(fit.measures=T)
 ```
 
 All fit measures indicate a good fit, with the CLI close to 1, RMSEA < 0.06, and SRMR < 0.05.
+
+## Construct Validity (Convergent and Discriminant Validity)
+
+We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity. 
+
+```{r,validitysus}
+
+CFAfit |> compRelSEM()
+CFAfit |> reliability()
+CFAfit |> AVE()
+
+```
 
 ## Configural Invariance
 
