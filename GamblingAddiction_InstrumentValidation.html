@@ -139,7 +139,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lavaanPlot)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidySEM)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(semPlot)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ltm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ltm)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(psych)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="testing-measurement-invariance" class="level2">
 <h2 class="anchored" data-anchor-id="testing-measurement-invariance">Testing Measurement Invariance</h2>
@@ -155,15 +156,95 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>I introduced a new variable named Gambled, where Gambled=0 corresponds to whether the participant gambled within the past 30 days. Else, Gambled=1.</p>
 </section>
+<section id="summary-statistics-of-the-scores" class="level2">
+<h2 class="anchored" data-anchor-id="summary-statistics-of-the-scores">Summary statistics of the scores</h2>
+<p>Let’s look at the summary statistics of the scores first.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> <span class="fu">summarize</span>(<span class="at">PA_mean =</span> <span class="fu">mean</span>(PA),</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PA_sd =</span> <span class="fu">sd</span>(PA),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PA_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(PA,<span class="fl">0.5</span>)),</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PAD_mean =</span> <span class="fu">mean</span>(PAD),</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PAD_sd =</span> <span class="fu">sd</span>(PAD),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PAD_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(PAD,<span class="fl">0.5</span>)),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PD_mean =</span> <span class="fu">mean</span>(PD),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PD_sd =</span> <span class="fu">sd</span>(PD),</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PD_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(PD,<span class="fl">0.5</span>)),</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">BC_mean =</span> <span class="fu">mean</span>(BC),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">BC_sd =</span> <span class="fu">sd</span>(BC),</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">BC_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(BC,<span class="fl">0.5</span>)),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">CPE_mean =</span> <span class="fu">mean</span>(CPE),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">CPE_sd =</span> <span class="fu">sd</span>(CPE),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                      <span class="at">CPE_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(CPE,<span class="fl">0.5</span>)),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ET_mean =</span> <span class="fu">mean</span>(ET),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ET_sd =</span> <span class="fu">sd</span>(ET),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                      <span class="at">ET_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(ET,<span class="fl">0.5</span>)),</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PfC_mean =</span> <span class="fu">mean</span>(PfC),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PfC_sd =</span> <span class="fu">sd</span>(PfC),</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                      <span class="at">PfC_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(PfC,<span class="fl">0.5</span>)),</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                      <span class="at">CSE_mean =</span> <span class="fu">mean</span>(CSE),</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                      <span class="at">CSE_sd =</span> <span class="fu">sd</span>(CSE),</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                      <span class="at">CSE_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(CSE,<span class="fl">0.5</span>)),</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Ini_mean =</span> <span class="fu">mean</span>(Ini),</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Ini_sd =</span> <span class="fu">sd</span>(Ini),</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Ini_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(Ini,<span class="fl">0.5</span>)),</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Sus_mean =</span> <span class="fu">mean</span>(Sus),</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Sus_sd =</span> <span class="fu">sd</span>(PA),</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>                      <span class="at">Sus_median=</span><span class="fu">as.numeric</span>(<span class="fu">quantile</span>(Sus,<span class="fl">0.5</span>))</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>                      ) <span class="sc">|&gt;</span> </span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_prefix =</span> <span class="fu">c</span>(<span class="st">"pa"</span>,<span class="st">"pad"</span>,<span class="st">"bc"</span>,<span class="st">"cpe"</span>,<span class="st">"Ini"</span>,</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to=</span> <span class="st">"SummaryStats"</span>,</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to=</span><span class="st">"Values"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Values=</span><span class="fu">round</span>(Values,<span class="dv">2</span>)) <span class="sc">|&gt;</span> <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in gsub(vec_paste0("^", names_prefix), "", cols): argument 'pattern'
+has length &gt; 1 and only the first element will be used</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   SummaryStats Values
+1       PA_mean  13.75
+2         PA_sd   5.83
+3     PA_median  15.00
+4      PAD_mean   3.92
+5        PAD_sd   4.38
+6    PAD_median   2.00
+7       PD_mean   9.83
+8         PD_sd   7.19
+9     PD_median  10.00
+10      BC_mean  16.01
+11        BC_sd   4.49
+12    BC_median  17.00
+13     CPE_mean   6.93
+14       CPE_sd   3.59
+15   CPE_median   7.00
+16      ET_mean  10.32
+17        ET_sd   2.61
+18    ET_median  12.00
+19     PfC_mean   9.79
+20       PfC_sd   2.81
+21   PfC_median  11.00
+22     CSE_mean   9.19
+23       CSE_sd   3.19
+24   CSE_median  10.00
+25     Ini_mean   3.47
+26       Ini_sd   1.09
+27   Ini_median   4.00
+28     Sus_mean   2.64
+29       Sus_sd   5.83
+30   Sus_median   3.00</code></pre>
+</div>
+</div>
+</section>
 <section id="cronbachs-alpha" class="level2">
 <h2 class="anchored" data-anchor-id="cronbachs-alpha">Cronbach’s alpha</h2>
 <p>We calculate Cronbach’s alpha for the responses using the <code>cronbach.alpha()</code> function in the package <code>ltm</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a> responses <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"pa"</span>,<span class="st">"pad"</span>,<span class="st">"bc"</span>,<span class="st">"cpe"</span>,<span class="st">"Ini"</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F))</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cronbach.alpha</span>(responses,<span class="at">CI=</span>T,<span class="at">standardized =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a> responses <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"pa"</span>,<span class="st">"pad"</span>,<span class="st">"bc"</span>,<span class="st">"cpe"</span>,<span class="st">"Ini"</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                               <span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F))</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cronbach.alpha</span>(responses,<span class="at">CI=</span>T,<span class="at">standardized =</span> T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Standardized Cronbach's alpha for the 'responses' data-set
@@ -174,42 +255,479 @@ alpha: 0.883
 
 Bootstrap 95% CI based on 1000 samples
  2.5% 97.5% 
-0.872 0.894 </code></pre>
+0.871 0.893 </code></pre>
 </div>
 </div>
 <p>Cronbach’s alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.</p>
+<p>We then look at the specific Cronbach’s alphas for each construct.</p>
+<section id="perceived-advantage" class="level3">
+<h3 class="anchored" data-anchor-id="perceived-advantage">Perceived Advantage</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"pa"</span>,<span class="at">ignore.case=</span>F) <span class="sc">&amp;!</span><span class="fu">starts_with</span>(<span class="st">"pad"</span>)) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with("pa", ignore.case = F) &amp; 
+    !starts_with("pad")))
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean  sd median_r
+      0.93      0.93    0.92      0.71  12 0.0029  2.7 1.2     0.73
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.92  0.93  0.93
+Duhachek  0.92  0.93  0.93
+
+ Reliability if an item is dropped:
+    raw_alpha std.alpha G6(smc) average_r  S/N alpha se  var.r med.r
+pa1      0.91      0.91    0.90      0.71  9.9   0.0037 0.0157  0.71
+pa2      0.93      0.93    0.92      0.77 13.8   0.0029 0.0039  0.76
+pa3      0.89      0.89    0.87      0.68  8.4   0.0043 0.0069  0.69
+pa4      0.90      0.90    0.88      0.69  8.8   0.0042 0.0062  0.70
+pa5      0.91      0.91    0.90      0.71  9.9   0.0038 0.0102  0.69
+
+ Item statistics 
+       n raw.r std.r r.cor r.drop mean  sd
+pa1 1474  0.88  0.88  0.84   0.81  2.7 1.3
+pa2 1474  0.77  0.79  0.71   0.68  3.4 1.1
+pa3 1474  0.93  0.93  0.92   0.88  2.7 1.4
+pa4 1474  0.92  0.91  0.91   0.87  2.6 1.4
+pa5 1474  0.89  0.88  0.84   0.81  2.4 1.5
+
+Non missing response frequency for each item
+       0    1    2    3    4 miss
+pa1 0.11 0.07 0.23 0.23 0.36    0
+pa2 0.04 0.03 0.10 0.16 0.66    0
+pa3 0.11 0.09 0.22 0.20 0.39    0
+pa4 0.12 0.10 0.21 0.18 0.38    0
+pa5 0.17 0.10 0.20 0.17 0.35    0</code></pre>
+</div>
+</div>
 </section>
+<section id="perceived-disadvantage" class="level3">
+<h3 class="anchored" data-anchor-id="perceived-disadvantage">Perceived Disadvantage</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"pad"</span>,<span class="at">ignore.case=</span>F) ) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with("pad", ignore.case = F)))
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+      0.88      0.89    0.88      0.61 7.7 0.0049 0.78 0.88     0.66
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.87  0.88  0.89
+Duhachek  0.87  0.88  0.89
+
+ Reliability if an item is dropped:
+     raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+pad1      0.90      0.90    0.88      0.70 9.1   0.0044 0.0028  0.68
+pad2      0.84      0.85    0.83      0.59 5.7   0.0068 0.0229  0.58
+pad3      0.85      0.85    0.82      0.59 5.7   0.0064 0.0127  0.60
+pad4      0.84      0.85    0.84      0.59 5.7   0.0068 0.0220  0.60
+pad5      0.84      0.85    0.82      0.58 5.5   0.0066 0.0111  0.59
+
+ Item statistics 
+        n raw.r std.r r.cor r.drop mean   sd
+pad1 1474  0.71  0.70  0.57   0.54 1.05 1.10
+pad2 1474  0.86  0.86  0.81   0.77 0.83 1.09
+pad3 1474  0.84  0.86  0.83   0.76 0.51 0.89
+pad4 1474  0.87  0.86  0.81   0.76 0.93 1.21
+pad5 1474  0.86  0.87  0.85   0.77 0.60 0.99
+
+Non missing response frequency for each item
+        0    1    2    3    4 miss
+pad1 0.42 0.24 0.24 0.07 0.03    0
+pad2 0.55 0.19 0.17 0.06 0.03    0
+pad3 0.69 0.16 0.10 0.03 0.02    0
+pad4 0.54 0.16 0.16 0.09 0.05    0
+pad5 0.66 0.16 0.11 0.04 0.02    0</code></pre>
+</div>
+</div>
+</section>
+<section id="behavioral-confidence" class="level3">
+<h3 class="anchored" data-anchor-id="behavioral-confidence">Behavioral Confidence</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"bc"</span>,<span class="at">ignore.case=</span>F) ) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with("bc", ignore.case = F)))
+
+  raw_alpha std.alpha G6(smc) average_r S/N   ase mean  sd median_r
+       0.9       0.9    0.89      0.65 9.1 0.004  3.2 0.9     0.64
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.89   0.9  0.91
+Duhachek  0.89   0.9  0.91
+
+ Reliability if an item is dropped:
+    raw_alpha std.alpha G6(smc) average_r S/N alpha se  var.r med.r
+bc1      0.90      0.90    0.88      0.69 8.9   0.0043 0.0039  0.67
+bc2      0.86      0.86    0.84      0.61 6.4   0.0058 0.0049  0.64
+bc3      0.86      0.87    0.84      0.62 6.5   0.0055 0.0073  0.62
+bc4      0.88      0.88    0.86      0.66 7.6   0.0047 0.0117  0.66
+bc5      0.88      0.88    0.86      0.65 7.5   0.0049 0.0045  0.63
+
+ Item statistics 
+       n raw.r std.r r.cor r.drop mean   sd
+bc1 1474  0.75  0.78  0.70   0.66  3.6 0.81
+bc2 1474  0.90  0.89  0.87   0.83  3.0 1.15
+bc3 1474  0.89  0.89  0.86   0.81  3.3 1.05
+bc4 1474  0.83  0.83  0.77   0.73  3.3 1.03
+bc5 1474  0.86  0.84  0.79   0.75  2.8 1.24
+
+Non missing response frequency for each item
+       0    1    2    3    4 miss
+bc1 0.01 0.02 0.06 0.16 0.74    0
+bc2 0.04 0.08 0.17 0.22 0.49    0
+bc3 0.03 0.06 0.11 0.23 0.57    0
+bc4 0.02 0.06 0.12 0.19 0.61    0
+bc5 0.06 0.10 0.23 0.20 0.41    0</code></pre>
+</div>
+</div>
+</section>
+<section id="changes-in-physical-environment" class="level3">
+<h3 class="anchored" data-anchor-id="changes-in-physical-environment">Changes in Physical Environment</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"cpe"</span>,<span class="at">ignore.case=</span>F) ) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with("cpe", ignore.case = F)))
+
+  raw_alpha std.alpha G6(smc) average_r S/N  ase mean  sd median_r
+      0.77      0.77    0.72      0.52 3.3 0.01  2.3 1.2     0.44
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.75  0.77  0.79
+Duhachek  0.75  0.77  0.79
+
+ Reliability if an item is dropped:
+     raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
+cpe1      0.60      0.61    0.44      0.44 1.5   0.0204    NA  0.44
+cpe2      0.56      0.57    0.40      0.40 1.3   0.0223    NA  0.40
+cpe3      0.84      0.84    0.73      0.73 5.4   0.0082    NA  0.73
+
+ Item statistics 
+        n raw.r std.r r.cor r.drop mean  sd
+cpe1 1474  0.88  0.86  0.79   0.68  2.1 1.6
+cpe2 1474  0.89  0.87  0.82   0.71  1.9 1.5
+cpe3 1474  0.71  0.74  0.49   0.45  2.9 1.3
+
+Non missing response frequency for each item
+        0    1    2    3    4 miss
+cpe1 0.26 0.11 0.19 0.14 0.30    0
+cpe2 0.26 0.15 0.23 0.15 0.22    0
+cpe3 0.08 0.08 0.16 0.24 0.45    0</code></pre>
+</div>
+</div>
+</section>
+<section id="entire-initiation-scale" class="level3">
+<h3 class="anchored" data-anchor-id="entire-initiation-scale">Entire Initiation Scale</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"pa"</span>,<span class="st">"pad"</span>,<span class="st">"bc"</span>,<span class="st">"cpe"</span>,<span class="st">"Ini"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in alpha(dplyr::select(gambling, starts_with(c("pa", "pad", "bc", : Some items were negatively correlated with the total scale and probably 
+should be reversed.  
+To do this, run the function again with the 'check.keys=TRUE' option</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Some items ( pad1 pad2 pad3 pad4 pad5 ) were negatively correlated with the total scale and 
+probably should be reversed.  
+To do this, run the function again with the 'check.keys=TRUE' option</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with(c("pa", "pad", 
+    "bc", "cpe", "Ini"), ignore.case = F)))
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+       0.8       0.8    0.91      0.17   4 0.0073  2.3 0.57     0.15
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.79   0.8  0.82
+Duhachek  0.79   0.8  0.82
+
+ Reliability if an item is dropped:
+     raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
+pa1       0.78      0.78    0.90      0.16 3.5   0.0082 0.091  0.14
+pa2       0.79      0.79    0.90      0.17 3.7   0.0078 0.094  0.15
+pa3       0.78      0.78    0.89      0.16 3.5   0.0083 0.090  0.14
+pa4       0.78      0.78    0.89      0.16 3.5   0.0083 0.090  0.14
+pa5       0.78      0.78    0.89      0.16 3.5   0.0084 0.091  0.14
+pad1      0.82      0.81    0.91      0.19 4.3   0.0069 0.087  0.16
+pad2      0.81      0.80    0.91      0.19 4.1   0.0070 0.085  0.16
+pad3      0.80      0.80    0.90      0.18 3.9   0.0073 0.089  0.16
+pad4      0.82      0.81    0.91      0.19 4.2   0.0068 0.083  0.16
+pad5      0.80      0.80    0.90      0.18 4.0   0.0072 0.088  0.16
+bc1       0.80      0.79    0.90      0.17 3.7   0.0076 0.089  0.13
+bc2       0.79      0.78    0.89      0.17 3.6   0.0079 0.087  0.14
+bc3       0.79      0.78    0.90      0.17 3.6   0.0078 0.087  0.14
+bc4       0.80      0.79    0.90      0.17 3.7   0.0076 0.087  0.14
+bc5       0.79      0.78    0.90      0.17 3.6   0.0079 0.089  0.14
+cpe1      0.80      0.79    0.90      0.17 3.8   0.0075 0.096  0.15
+cpe2      0.80      0.79    0.90      0.17 3.7   0.0077 0.096  0.14
+cpe3      0.79      0.78    0.90      0.17 3.6   0.0080 0.090  0.14
+Ini       0.80      0.79    0.90      0.17 3.8   0.0077 0.094  0.13
+
+ Item statistics 
+        n raw.r std.r r.cor r.drop mean   sd
+pa1  1474 0.649  0.62 0.613  0.569 2.68 1.32
+pa2  1474 0.521  0.51 0.482  0.444 3.37 1.06
+pa3  1474 0.678  0.65 0.659  0.601 2.67 1.35
+pa4  1474 0.684  0.65 0.662  0.605 2.60 1.40
+pa5  1474 0.691  0.66 0.656  0.609 2.43 1.48
+pad1 1474 0.084  0.11 0.038 -0.018 1.05 1.10
+pad2 1474 0.203  0.23 0.196  0.103 0.83 1.09
+pad3 1474 0.298  0.34 0.318  0.220 0.51 0.89
+pad4 1474 0.131  0.16 0.123  0.019 0.93 1.21
+pad5 1474 0.291  0.33 0.311  0.203 0.60 0.99
+bc1  1474 0.448  0.48 0.446  0.385 3.60 0.81
+bc2  1474 0.553  0.57 0.566  0.472 3.04 1.15
+bc3  1474 0.537  0.56 0.550  0.462 3.26 1.05
+bc4  1474 0.446  0.47 0.438  0.364 3.31 1.03
+bc5  1474 0.557  0.56 0.551  0.470 2.80 1.24
+cpe1 1474 0.481  0.44 0.410  0.357 2.11 1.57
+cpe2 1474 0.505  0.47 0.437  0.392 1.93 1.48
+cpe3 1474 0.578  0.57 0.538  0.492 2.89 1.27
+Ini  1474 0.454  0.46 0.407  0.369 3.47 1.09
+
+Non missing response frequency for each item
+        0    1    2    3    4 miss
+pa1  0.11 0.07 0.23 0.23 0.36    0
+pa2  0.04 0.03 0.10 0.16 0.66    0
+pa3  0.11 0.09 0.22 0.20 0.39    0
+pa4  0.12 0.10 0.21 0.18 0.38    0
+pa5  0.17 0.10 0.20 0.17 0.35    0
+pad1 0.42 0.24 0.24 0.07 0.03    0
+pad2 0.55 0.19 0.17 0.06 0.03    0
+pad3 0.69 0.16 0.10 0.03 0.02    0
+pad4 0.54 0.16 0.16 0.09 0.05    0
+pad5 0.66 0.16 0.11 0.04 0.02    0
+bc1  0.01 0.02 0.06 0.16 0.74    0
+bc2  0.04 0.08 0.17 0.22 0.49    0
+bc3  0.03 0.06 0.11 0.23 0.57    0
+bc4  0.02 0.06 0.12 0.19 0.61    0
+bc5  0.06 0.10 0.23 0.20 0.41    0
+cpe1 0.26 0.11 0.19 0.14 0.30    0
+cpe2 0.26 0.15 0.23 0.15 0.22    0
+cpe3 0.08 0.08 0.16 0.24 0.45    0
+Ini  0.05 0.03 0.06 0.11 0.75    0</code></pre>
+</div>
+</div>
+</section>
+<section id="emotional-transformation" class="level3">
+<h3 class="anchored" data-anchor-id="emotional-transformation">Emotional Transformation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"et"</span>,<span class="at">ignore.case=</span>F) ) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with("et", ignore.case = F)))
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+      0.92      0.92    0.89       0.8  12 0.0035  3.4 0.87     0.81
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.91  0.92  0.93
+Duhachek  0.91  0.92  0.93
+
+ Reliability if an item is dropped:
+    raw_alpha std.alpha G6(smc) average_r  S/N alpha se var.r med.r
+et1      0.91      0.91    0.84      0.84 10.2   0.0047    NA  0.84
+et2      0.86      0.87    0.77      0.77  6.5   0.0070    NA  0.77
+et3      0.89      0.89    0.81      0.81  8.3   0.0057    NA  0.81
+
+ Item statistics 
+       n raw.r std.r r.cor r.drop mean   sd
+et1 1474  0.93  0.92  0.85   0.82  3.4 1.01
+et2 1474  0.94  0.94  0.91   0.87  3.5 0.89
+et3 1474  0.93  0.93  0.88   0.84  3.5 0.91
+
+Non missing response frequency for each item
+       0    1    2    3    4 miss
+et1 0.03 0.04 0.11 0.19 0.63    0
+et2 0.02 0.02 0.08 0.19 0.68    0
+et3 0.02 0.03 0.09 0.18 0.68    0</code></pre>
+</div>
+</div>
+</section>
+<section id="practice-for-change" class="level3">
+<h3 class="anchored" data-anchor-id="practice-for-change">Practice for Change</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"pfc"</span>,<span class="at">ignore.case=</span>F) ) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with("pfc", ignore.case = F)))
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+      0.83      0.85     0.8      0.65 5.6 0.0076  3.3 0.94     0.62
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.82  0.83  0.85
+Duhachek  0.82  0.83  0.85
+
+ Reliability if an item is dropped:
+     raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
+pfc1      0.87      0.87    0.77      0.77 6.5   0.0069    NA  0.77
+pfc2      0.71      0.72    0.57      0.57 2.6   0.0145    NA  0.57
+pfc3      0.75      0.77    0.62      0.62 3.3   0.0123    NA  0.62
+
+ Item statistics 
+        n raw.r std.r r.cor r.drop mean   sd
+pfc1 1474  0.86  0.83  0.68   0.63  3.1 1.26
+pfc2 1474  0.89  0.91  0.86   0.77  3.4 0.95
+pfc3 1474  0.87  0.89  0.82   0.72  3.3 1.00
+
+Non missing response frequency for each item
+        0    1    2    3    4 miss
+pfc1 0.08 0.06 0.13 0.18 0.56    0
+pfc2 0.02 0.04 0.12 0.22 0.61    0
+pfc3 0.02 0.04 0.12 0.20 0.61    0</code></pre>
+</div>
+</div>
+</section>
+<section id="changes-in-the-social-environment" class="level3">
+<h3 class="anchored" data-anchor-id="changes-in-the-social-environment">Changes in the social environment</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"cse"</span>,<span class="at">ignore.case=</span>F) ) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with("cse", ignore.case = F)))
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean  sd median_r
+       0.8      0.81    0.76      0.58 4.2 0.0092  3.1 1.1     0.52
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.78   0.8  0.82
+Duhachek  0.78   0.8  0.82
+
+ Reliability if an item is dropped:
+     raw_alpha std.alpha G6(smc) average_r S/N alpha se var.r med.r
+cse1      0.68      0.68    0.52      0.52 2.2   0.0164    NA  0.52
+cse2      0.66      0.66    0.50      0.50 2.0   0.0175    NA  0.50
+cse3      0.85      0.85    0.74      0.74 5.6   0.0079    NA  0.74
+
+ Item statistics 
+        n raw.r std.r r.cor r.drop mean  sd
+cse1 1474  0.87  0.88  0.81   0.70  3.2 1.2
+cse2 1474  0.87  0.88  0.82   0.72  3.2 1.2
+cse3 1474  0.81  0.79  0.59   0.55  2.9 1.4
+
+Non missing response frequency for each item
+        0    1    2    3    4 miss
+cse1 0.07 0.05 0.12 0.16 0.59    0
+cse2 0.05 0.06 0.14 0.18 0.57    0
+cse3 0.09 0.09 0.18 0.15 0.49    0</code></pre>
+</div>
+</div>
+</section>
+<section id="overall-sustenance" class="level3">
+<h3 class="anchored" data-anchor-id="overall-sustenance">Overall sustenance</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span> <span class="fu">alpha</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Reliability analysis   
+Call: alpha(x = dplyr::select(gambling, starts_with(c("et", "pfc", 
+    "cse", "Sus"), ignore.case = F)))
+
+  raw_alpha std.alpha G6(smc) average_r S/N    ase mean   sd median_r
+      0.89       0.9    0.92      0.49 9.5 0.0044  3.2 0.81     0.43
+
+    95% confidence boundaries 
+         lower alpha upper
+Feldt     0.88  0.89   0.9
+Duhachek  0.88  0.89   0.9
+
+ Reliability if an item is dropped:
+     raw_alpha std.alpha G6(smc) average_r  S/N alpha se var.r med.r
+et1       0.87      0.89    0.91      0.47  8.0   0.0051 0.025  0.43
+et2       0.87      0.89    0.90      0.47  7.9   0.0051 0.023  0.43
+et3       0.87      0.89    0.90      0.47  7.8   0.0051 0.024  0.42
+pfc1      0.88      0.90    0.91      0.49  8.6   0.0050 0.031  0.43
+pfc2      0.87      0.89    0.90      0.47  7.8   0.0052 0.025  0.43
+pfc3      0.87      0.89    0.91      0.47  8.1   0.0051 0.027  0.43
+cse1      0.88      0.90    0.91      0.50  8.9   0.0048 0.029  0.44
+cse2      0.88      0.90    0.91      0.49  8.8   0.0049 0.029  0.42
+cse3      0.89      0.90    0.92      0.51  9.5   0.0045 0.027  0.45
+Sus       0.90      0.91    0.93      0.53 10.2   0.0040 0.022  0.48
+
+ Item statistics 
+        n raw.r std.r r.cor r.drop mean   sd
+et1  1474  0.79  0.81  0.80   0.73  3.4 1.01
+et2  1474  0.81  0.83  0.84   0.76  3.5 0.89
+et3  1474  0.81  0.84  0.84   0.77  3.5 0.91
+pfc1 1474  0.73  0.72  0.68   0.65  3.1 1.26
+pfc2 1474  0.82  0.84  0.83   0.77  3.4 0.95
+pfc3 1474  0.78  0.80  0.78   0.72  3.3 1.00
+cse1 1474  0.70  0.68  0.65   0.60  3.2 1.23
+cse2 1474  0.71  0.70  0.67   0.63  3.2 1.17
+cse3 1474  0.63  0.60  0.53   0.51  2.9 1.36
+Sus  1474  0.55  0.52  0.42   0.40  2.6 1.47
+
+Non missing response frequency for each item
+        0    1    2    3    4 miss
+et1  0.03 0.04 0.11 0.19 0.63    0
+et2  0.02 0.02 0.08 0.19 0.68    0
+et3  0.02 0.03 0.09 0.18 0.68    0
+pfc1 0.08 0.06 0.13 0.18 0.56    0
+pfc2 0.02 0.04 0.12 0.22 0.61    0
+pfc3 0.02 0.04 0.12 0.20 0.61    0
+cse1 0.07 0.05 0.12 0.16 0.59    0
+cse2 0.05 0.06 0.14 0.18 0.57    0
+cse3 0.09 0.09 0.18 0.15 0.49    0
+Sus  0.16 0.08 0.14 0.22 0.41    0</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="cfa-and-sem-analysis" class="level1">
+<h1>CFA and SEM Analysis</h1>
 <section id="initiation-of-quitting-gambling" class="level2">
 <h2 class="anchored" data-anchor-id="initiation-of-quitting-gambling">Initiation of quitting gambling</h2>
 <p>We now check for correlations between the items for initiation of quitting gambling.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| echo: false</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"pa"</span>,<span class="st">"pad"</span>,<span class="st">"bc"</span>,<span class="st">"cpe"</span>,<span class="st">"Ini"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># #| echo: false</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"pa"</span>,<span class="st">"pad"</span>,<span class="st">"bc"</span>,<span class="st">"cpe"</span>,<span class="st">"Ini"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/corr-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>inimod <span class="ot">&lt;-</span> <span class="st">'pa =~ pa1 + pa2 +pa3+pa4 + pa5</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pad =~ pad1 + pad2 + pad3 + pad4 + pad5</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="st">                bc =~ bc1 + bc2 + bc3 + bc4 + bc5</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="st">                ini=~ Ini'</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>inimod <span class="ot">&lt;-</span> <span class="st">'pa =~ pa1 + pa2 +pa3+pa4 + pa5</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pad =~ pad1 + pad2 + pad3 + pad4 + pad5</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">                bc =~ bc1 + bc2 + bc3 + bc4 + bc5</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">                ini=~ Ini'</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">meanstructure=</span>T,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 40 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
-  Number of model parameters                        37
+  Number of model parameters                        53
 
   Number of observations                          1474
+  Number of missing patterns                         1
 
 Model Test User Model:
                                                       
@@ -227,15 +745,18 @@ User Model versus Baseline Model:
 
   Comparative Fit Index (CFI)                    0.933
   Tucker-Lewis Index (TLI)                       0.919
+                                                      
+  Robust Comparative Fit Index (CFI)             0.933
+  Robust Tucker-Lewis Index (TLI)                0.919
 
 Loglikelihood and Information Criteria:
 
   Loglikelihood user model (H0)             -28649.358
   Loglikelihood unrestricted model (H1)     -28055.226
                                                       
-  Akaike (AIC)                               57372.716
-  Bayesian (BIC)                             57568.659
-  Sample-size adjusted Bayesian (SABIC)      57451.121
+  Akaike (AIC)                               57404.716
+  Bayesian (BIC)                             57685.390
+  Sample-size adjusted Bayesian (SABIC)      57517.025
 
 Root Mean Square Error of Approximation:
 
@@ -244,73 +765,102 @@ Root Mean Square Error of Approximation:
   90 Percent confidence interval - upper         0.091
   P-value H_0: RMSEA &lt;= 0.050                    0.000
   P-value H_0: RMSEA &gt;= 0.080                    0.992
+                                                      
+  Robust RMSEA                                   0.086
+  90 Percent confidence interval - lower         0.082
+  90 Percent confidence interval - upper         0.091
+  P-value H_0: Robust RMSEA &lt;= 0.050             0.000
+  P-value H_0: Robust RMSEA &gt;= 0.080             0.992
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.057
+  SRMR                                           0.054
 
 Parameter Estimates:
 
   Standard errors                             Standard
-  Information                                 Expected
-  Information saturated (h1) model          Structured
+  Information                                 Observed
+  Observed information based on                Hessian
 
 Latent Variables:
                    Estimate  Std.Err  z-value  P(&gt;|z|)
   pa =~                                               
     pa1               1.000                           
-    pa2               0.691    0.024   28.886    0.000
-    pa3               1.207    0.027   44.943    0.000
-    pa4               1.233    0.028   44.224    0.000
-    pa5               1.174    0.031   37.747    0.000
+    pa2               0.691    0.024   29.087    0.000
+    pa3               1.207    0.027   44.579    0.000
+    pa4               1.233    0.028   43.732    0.000
+    pa5               1.174    0.031   37.971    0.000
   pad =~                                              
     pad1              1.000                           
-    pad2              1.433    0.065   21.950    0.000
-    pad3              1.241    0.055   22.600    0.000
-    pad4              1.595    0.073   21.995    0.000
-    pad5              1.406    0.062   22.810    0.000
+    pad2              1.433    0.065   22.133    0.000
+    pad3              1.241    0.056   22.047    0.000
+    pad4              1.595    0.072   22.117    0.000
+    pad5              1.406    0.063   22.191    0.000
   bc =~                                               
     bc1               1.000                           
-    bc2               1.790    0.056   31.901    0.000
-    bc3               1.606    0.051   31.562    0.000
-    bc4               1.370    0.050   27.654    0.000
-    bc5               1.739    0.060   29.042    0.000
+    bc2               1.790    0.057   31.430    0.000
+    bc3               1.606    0.051   31.637    0.000
+    bc4               1.370    0.049   27.857    0.000
+    bc5               1.739    0.061   28.439    0.000
   ini =~                                              
     Ini               1.000                           
 
 Covariances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)
   pa ~~                                               
-    pad               0.032    0.018    1.741    0.082
-    bc                0.137    0.018    7.729    0.000
-    ini               0.336    0.033   10.327    0.000
+    pad               0.032    0.018    1.742    0.082
+    bc                0.137    0.018    7.715    0.000
+    ini               0.336    0.033   10.302    0.000
   pad ~~                                              
-    bc               -0.100    0.011   -8.809    0.000
-    ini              -0.136    0.019   -7.032    0.000
+    bc               -0.100    0.012   -8.575    0.000
+    ini              -0.136    0.020   -6.936    0.000
   bc ~~                                               
-    ini               0.282    0.020   14.232    0.000
+    ini               0.282    0.020   14.076    0.000
+
+Intercepts:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)
+   .pa1               2.676    0.034   78.027    0.000
+   .pa2               3.373    0.028  121.712    0.000
+   .pa3               2.669    0.035   75.816    0.000
+   .pa4               2.602    0.036   71.471    0.000
+   .pa5               2.429    0.039   63.017    0.000
+   .pad1              1.045    0.029   36.464    0.000
+   .pad2              0.830    0.028   29.150    0.000
+   .pad3              0.505    0.023   21.702    0.000
+   .pad4              0.934    0.032   29.597    0.000
+   .pad5              0.603    0.026   23.308    0.000
+   .bc1               3.599    0.021  171.393    0.000
+   .bc2               3.040    0.030  101.251    0.000
+   .bc3               3.259    0.027  119.467    0.000
+   .bc4               3.307    0.027  123.505    0.000
+   .bc5               2.803    0.032   86.751    0.000
+   .Ini               3.468    0.028  122.586    0.000
+    pa                0.000                           
+    pad               0.000                           
+    bc                0.000                           
+    ini               0.000                           
 
 Variances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)
-   .pa1               0.615    0.025   24.623    0.000
-   .pa2               0.598    0.023   25.926    0.000
-   .pa3               0.199    0.013   15.054    0.000
-   .pa4               0.253    0.015   16.948    0.000
-   .pa5               0.651    0.027   23.832    0.000
-   .pad1              0.833    0.032   25.924    0.000
-   .pad2              0.417    0.019   21.995    0.000
-   .pad3              0.217    0.011   19.617    0.000
-   .pad4              0.506    0.023   21.876    0.000
-   .pad5              0.239    0.013   18.374    0.000
-   .bc1               0.325    0.013   24.710    0.000
-   .bc2               0.289    0.016   18.082    0.000
-   .bc3               0.259    0.014   18.995    0.000
-   .bc4               0.447    0.019   23.794    0.000
-   .bc5               0.556    0.024   22.772    0.000
+   .pa1               0.615    0.025   24.244    0.000
+   .pa2               0.598    0.023   25.837    0.000
+   .pa3               0.199    0.013   15.566    0.000
+   .pa4               0.253    0.014   17.664    0.000
+   .pa5               0.651    0.028   23.482    0.000
+   .pad1              0.833    0.032   25.706    0.000
+   .pad2              0.417    0.020   21.130    0.000
+   .pad3              0.217    0.012   18.787    0.000
+   .pad4              0.506    0.024   21.049    0.000
+   .pad5              0.239    0.014   17.472    0.000
+   .bc1               0.325    0.013   24.480    0.000
+   .bc2               0.289    0.016   17.913    0.000
+   .bc3               0.259    0.014   19.024    0.000
+   .bc4               0.447    0.019   23.485    0.000
+   .bc5               0.556    0.025   22.551    0.000
    .Ini               0.000                           
-    pa                1.118    0.061   18.445    0.000
-    pad               0.378    0.034   11.204    0.000
-    bc                0.325    0.021   15.151    0.000
+    pa                1.118    0.061   18.395    0.000
+    pad               0.378    0.034   11.118    0.000
+    bc                0.325    0.022   15.097    0.000
     ini               1.180    0.043   27.148    0.000</code></pre>
 </div>
 </div>
@@ -320,8 +870,8 @@ Variances:
 <h2 class="anchored" data-anchor-id="configural-invariance">Configural Invariance</h2>
 <p>Let us now see if we have configural invariance between the non-gambling and gambling groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 72 iterations
 
@@ -561,7 +1111,7 @@ Variances:
     bc                0.221    0.016   13.465    0.000    1.000    1.000
     ini               0.489    0.023   21.354    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        npar                         fmin 
                       82.000                        0.487 
@@ -620,10 +1170,10 @@ rmsea.notclose.pvalue.robust                          rmr
                         ecvi 
                        1.085 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp,<span class="st">"sem_ini.png"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp,<span class="st">"sem_ini.png"</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/config-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -632,14 +1182,38 @@ rmsea.notclose.pvalue.robust                          rmr
 </div>
 </div>
 <p>The results show that the fit is good between the groups. CFI and TLI are close to 1,and the SRMR is close to 0.8. The RMSEA is slightly higher than 0.06. We can conclude that the two groups have the same factor structure.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(CFAfit_ini,cfa.config) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>################### Nested Model Comparison #########################
+
+Chi-Squared Difference Test
+
+            Df   AIC   BIC  Chisq Chisq diff    RMSEA Df diff Pr(&gt;Chisq)    
+CFAfit_ini  99 57405 57685 1188.3                                           
+cfa.config 222 56286 56720 1435.4      247.1 0.026163     123  2.365e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+####################### Model Fit Indices ###########################
+               chisq  df pvalue rmsea   cfi   tli  srmr        aic        bic
+CFAfit_ini 1188.264†  99   .000 .086  .933† .919† .054† 57404.716  57685.390 
+cfa.config 1435.360  222   .000 .086† .922  .915  .060  56285.750† 56720.001†
+
+################## Differences in Fit Indices #######################
+                         df rmsea    cfi    tli  srmr       aic     bic
+cfa.config - CFAfit_ini 123     0 -0.012 -0.004 0.006 -1118.966 -965.39</code></pre>
+</div>
+</div>
+<p>We can compare this result with the model that does not consider groups. The AIC and BIC are significantly lower than the general model, which means the model that accounts for the recently gambled grouping performs better. Bear in mind that even if the CFI and TLI slightly decreased, it did not decrease significantly. The same can be said about the RMSEA and SRMR.</p>
 </section>
 <section id="metric-invariance" class="level2">
 <h2 class="anchored" data-anchor-id="metric-invariance">Metric Invariance</h2>
 <p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 47 iterations
 
@@ -867,13 +1441,13 @@ Variances:
     bc                0.214    0.017   12.971    0.000
     ini               0.489    0.023   21.354    0.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cfa.metric |&gt; fitmeasures()</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.metric,</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.config,</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cfa.metric |&gt; fitmeasures()</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.metric,</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.config,</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in compareFit(cfa.config, cfa.metric): fitMeasures() returned vectors
 of different lengths for different models, probably because certain options are
@@ -904,7 +1478,7 @@ cfa.config - cfa.metric 12 0.003 -0.01 -0.007 0.006 144.884 81.335</code></pre>
 </div>
 <p>Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards quitting gambling.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestScore</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestScore</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$test
 
@@ -950,7 +1524,7 @@ univariate score tests:
 </div>
 <p>The significant score tests shows which questions between groups have different loadings. We can look at which relations/loadings are significantly different in the table below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parTable</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parTable</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     id   lhs op    rhs user block group free ustart exo label plabel start
 1     1    pa =~    pa1    1     1     1    0      1   0         .p1. 1.000
@@ -1266,24 +1840,24 @@ univariate score tests:
 <h2 class="anchored" data-anchor-id="sustenance-of-quitting-gambling">Sustenance of quitting gambling</h2>
 <p>We now check for correlations between the items for sustenance of quitting gambling.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/corrsus-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling)</span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 42 iterations
 
@@ -1390,8 +1964,8 @@ Variances:
 <h2 class="anchored" data-anchor-id="configural-invariance-1">Configural Invariance</h2>
 <p>Let us now see if we have configural invariance between the non-gambling and gambling groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 83 iterations
 
@@ -1595,10 +2169,10 @@ Variances:
     cse               0.950    0.061   15.659    0.000    1.000    1.000
     sus               1.388    0.065   21.354    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp_sus</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp_sus,<span class="st">"sem_sus.png"</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp_sus</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp_sus,<span class="st">"sem_sus.png"</span>)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/configsus-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1612,9 +2186,9 @@ Variances:
 <h2 class="anchored" data-anchor-id="metric-invariance-1">Metric Invariance</h2>
 <p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in compareFit(cfa.config, cfa.metric): fitMeasures() returned vectors
 of different lengths for different models, probably because certain options are
@@ -1647,10 +2221,10 @@ cfa.config - cfa.metric  6 -0.002   0 0.002 0.002 -4.321 -36.095</code></pre>
 <h2 class="anchored" data-anchor-id="scalar-invariance-strong-invariance">Scalar Invariance (strong invariance)</h2>
 <p>For scalar invariance, we also set the intercepts to be equal.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scalar model</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod, <span class="at">data =</span> gambling, <span class="at">group =</span> <span class="st">"Gambled"</span>, <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"loadings"</span>,<span class="st">"intercepts"</span>))</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scalar model</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod, <span class="at">data =</span> gambling, <span class="at">group =</span> <span class="st">"Gambled"</span>, <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"loadings"</span>,<span class="st">"intercepts"</span>))</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 82 iterations
 
@@ -1842,8 +2416,8 @@ Variances:
     cse               0.950    0.062   15.434    0.000
     sus               1.388    0.065   21.354    0.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model comparison</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.metric, cfa.scalar) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model comparison</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.metric, cfa.scalar) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>################### Nested Model Comparison #########################
 
@@ -1868,6 +2442,7 @@ cfa.scalar - cfa.metric  6 -0.002   0 0.002 0.001 -4.321 -36.095</code></pre>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>We have established scalar invariance of the construct validity in the sustenance response, which means the factor loadings and intercepts are the same for those who did and did not gamble in the past 30 days. This invariance was not observed in the initiation to quit gambling.</p>
+</section>
 </section>
 
 </main>

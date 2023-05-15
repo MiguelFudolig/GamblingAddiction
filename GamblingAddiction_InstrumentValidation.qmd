@@ -15,7 +15,9 @@ library(lavaanPlot)
 library(tidySEM)
 library(semPlot)
 library(ltm)
+library(psych)
 ```
+
 
 ## Testing Measurement Invariance
 
@@ -34,6 +36,52 @@ gambling <- gambling |> mutate(Gambled = ifelse(GambleD==0,0,1))
 
 I introduced a new variable named Gambled, where Gambled=0 corresponds to whether the participant gambled within the past 30 days. Else, Gambled=1.
 
+## Summary statistics of the scores
+
+Let's look at the summary statistics of the scores first.
+
+```{r, summary}
+
+gambling |> summarize(PA_mean = mean(PA),
+                      PA_sd = sd(PA),
+                      PA_median=as.numeric(quantile(PA,0.5)),
+                      PAD_mean = mean(PAD),
+                      PAD_sd = sd(PAD),
+                      PAD_median=as.numeric(quantile(PAD,0.5)),
+                      PD_mean = mean(PD),
+                      PD_sd = sd(PD),
+                      PD_median=as.numeric(quantile(PD,0.5)),
+                      BC_mean = mean(BC),
+                      BC_sd = sd(BC),
+                      BC_median=as.numeric(quantile(BC,0.5)),
+                      CPE_mean = mean(CPE),
+                      CPE_sd = sd(CPE),
+                      CPE_median=as.numeric(quantile(CPE,0.5)),
+                      ET_mean = mean(ET),
+                      ET_sd = sd(ET),
+                      ET_median=as.numeric(quantile(ET,0.5)),
+                      PfC_mean = mean(PfC),
+                      PfC_sd = sd(PfC),
+                      PfC_median=as.numeric(quantile(PfC,0.5)),
+                      CSE_mean = mean(CSE),
+                      CSE_sd = sd(CSE),
+                      CSE_median=as.numeric(quantile(CSE,0.5)),
+                      Ini_mean = mean(Ini),
+                      Ini_sd = sd(Ini),
+                      Ini_median=as.numeric(quantile(Ini,0.5)),
+                      Sus_mean = mean(Sus),
+                      Sus_sd = sd(PA),
+                      Sus_median=as.numeric(quantile(Sus,0.5))
+                      ) |> 
+  pivot_longer(cols=1:30,
+               names_prefix = c("pa","pad","bc","cpe","Ini",
+                               "et","pfc","cse","Sus"),
+               names_to= "SummaryStats",
+               values_to="Values") |>
+  mutate(Values=round(Values,2)) |> as.data.frame()
+```
+
+
 ## Cronbach's alpha
 
 We calculate Cronbach's alpha for the responses using the ```cronbach.alpha()``` function in the package ```ltm```.
@@ -48,6 +96,68 @@ cronbach.alpha(responses,CI=T,standardized = T)
 
 Cronbach's alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.
 
+We then look at the specific Cronbach's alphas for each construct.
+
+### Perceived Advantage
+
+```{r, pa}
+gambling |> dplyr::select(starts_with("pa",ignore.case=F) &!starts_with("pad")) |> alpha()
+```
+
+
+### Perceived Disadvantage
+
+```{r, pad}
+gambling |> dplyr::select(starts_with("pad",ignore.case=F) ) |> alpha()
+```
+
+
+### Behavioral Confidence
+
+```{r, bc}
+gambling |> dplyr::select(starts_with("bc",ignore.case=F) ) |> alpha()
+```
+
+### Changes in Physical Environment
+
+```{r, cpe}
+gambling |> dplyr::select(starts_with("cpe",ignore.case=F) ) |> alpha()
+```
+
+### Entire Initiation Scale
+
+```{r, inialpha}
+gambling |> dplyr::select(starts_with(c("pa","pad","bc","cpe","Ini"),ignore.case=F)) |> alpha()
+```
+
+
+
+### Emotional Transformation
+
+```{r, et}
+gambling |> dplyr::select(starts_with("et",ignore.case=F) ) |> alpha()
+```
+
+### Practice for Change
+
+```{r, pfc}
+gambling |> dplyr::select(starts_with("pfc",ignore.case=F) ) |> alpha()
+```
+
+### Changes in the social environment
+
+```{r, cse}
+gambling |> dplyr::select(starts_with("cse",ignore.case=F) ) |> alpha()
+```
+
+
+### Overall sustenance
+
+```{r, susalpha}
+gambling |>  dplyr::select(starts_with(c("et","pfc","cse","Sus"),ignore.case=F)) |> alpha()
+```
+
+# CFA and SEM Analysis 
 ## Initiation of quitting gambling
 
 
@@ -69,7 +179,7 @@ inimod <- 'pa =~ pa1 + pa2 +pa3+pa4 + pa5
                 bc =~ bc1 + bc2 + bc3 + bc4 + bc5
                 ini=~ Ini'
 
-CFAfit_ini <- cfa(inimod,data=gambling)
+CFAfit_ini <- cfa(inimod,data=gambling,meanstructure=T,mimic="Mplus")
 
 CFAfit_ini |> summary(fit.measures=T)
 ```
@@ -89,10 +199,15 @@ cfasem <- sem(inimod,data=gambling,group="Gambled")
 lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05) -> lp
 save_png(lp,"sem_ini.png")
 semPaths(cfasem,"std",layout="tree")
-
 ```
 
 The results show that the fit is good between the groups. CFI and TLI are close to 1,and the SRMR is close to 0.8. The RMSEA is slightly higher than 0.06. We can conclude that the two groups have the same factor structure.
+
+```{r,configvsgen}
+compareFit(CFAfit_ini,cfa.config) |> summary()
+```
+
+We can compare this result with the model that does not consider groups. The AIC and BIC are significantly lower than the general model, which means the model that accounts for the recently gambled grouping performs better. Bear in mind that even if the CFI and TLI slightly decreased, it did not decrease significantly. The same can be said about the RMSEA and SRMR. 
 
 ## Metric Invariance
 
