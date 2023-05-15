@@ -46,7 +46,8 @@ We calculate Cronbach's alpha for the responses using the ```cronbach.alpha()```
 cronbach.alpha(responses,CI=T,standardized = T)
 ```
 
-Cronbach's alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.
+Overall Cronbach's alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.
+
 
 ## Initiation of quitting gambling
 
@@ -76,6 +77,14 @@ CFAfit_ini |> summary(fit.measures=T)
 
 The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of $\leq$ 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable. 
 
+## Construct Validity (Convergent and Discriminant Validity)
+
+We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity. 
+
+```{r,validity}
+
+CFAfit_ini |> reliability()
+```
 
 ## Configural Invariance
 

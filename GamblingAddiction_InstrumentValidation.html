@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.2.475">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -174,10 +174,10 @@ alpha: 0.883
 
 Bootstrap 95% CI based on 1000 samples
  2.5% 97.5% 
-0.872 0.894 </code></pre>
+0.871 0.892 </code></pre>
 </div>
 </div>
-<p>Cronbach’s alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.</p>
+<p>Overall Cronbach’s alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.</p>
 </section>
 <section id="initiation-of-quitting-gambling" class="level2">
 <h2 class="anchored" data-anchor-id="initiation-of-quitting-gambling">Initiation of quitting gambling</h2>
@@ -316,12 +316,27 @@ Variances:
 </div>
 <p>The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of <span class="math inline">\(\leq\)</span> 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable.</p>
 </section>
+<section id="construct-validity-convergent-and-discriminant-validity" class="level2">
+<h2 class="anchored" data-anchor-id="construct-validity-convergent-and-discriminant-validity">Construct Validity (Convergent and Discriminant Validity)</h2>
+<p>We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              pa       pad        bc
+alpha  0.9251719 0.8807793 0.8983117
+omega  0.9313660 0.8840525 0.9069719
+omega2 0.9313660 0.8840525 0.9069719
+omega3 0.9249504 0.8798350 0.9075453
+avevar 0.7377028 0.6093313 0.6691427</code></pre>
+</div>
+</div>
+</section>
 <section id="configural-invariance" class="level2">
 <h2 class="anchored" data-anchor-id="configural-invariance">Configural Invariance</h2>
 <p>Let us now see if we have configural invariance between the non-gambling and gambling groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 72 iterations
 
@@ -561,7 +576,7 @@ Variances:
     bc                0.221    0.016   13.465    0.000    1.000    1.000
     ini               0.489    0.023   21.354    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                        npar                         fmin 
                       82.000                        0.487 
@@ -620,10 +635,10 @@ rmsea.notclose.pvalue.robust                          rmr
                         ecvi 
                        1.085 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp,<span class="st">"sem_ini.png"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp,<span class="st">"sem_ini.png"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/config-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -637,9 +652,9 @@ rmsea.notclose.pvalue.robust                          rmr
 <h2 class="anchored" data-anchor-id="metric-invariance">Metric Invariance</h2>
 <p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 47 iterations
 
@@ -867,13 +882,13 @@ Variances:
     bc                0.214    0.017   12.971    0.000
     ini               0.489    0.023   21.354    0.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cfa.metric |&gt; fitmeasures()</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.metric,</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.config,</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cfa.metric |&gt; fitmeasures()</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.metric,</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.config,</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in compareFit(cfa.config, cfa.metric): fitMeasures() returned vectors
 of different lengths for different models, probably because certain options are
@@ -904,7 +919,7 @@ cfa.config - cfa.metric 12 0.003 -0.01 -0.007 0.006 144.884 81.335</code></pre>
 </div>
 <p>Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards quitting gambling.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestScore</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestScore</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$test
 
@@ -950,7 +965,7 @@ univariate score tests:
 </div>
 <p>The significant score tests shows which questions between groups have different loadings. We can look at which relations/loadings are significantly different in the table below.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parTable</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parTable</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     id   lhs op    rhs user block group free ustart exo label plabel start
 1     1    pa =~    pa1    1     1     1    0      1   0         .p1. 1.000
@@ -1266,24 +1281,24 @@ univariate score tests:
 <h2 class="anchored" data-anchor-id="sustenance-of-quitting-gambling">Sustenance of quitting gambling</h2>
 <p>We now check for correlations between the items for sustenance of quitting gambling.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/corrsus-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 42 iterations
 
@@ -1390,8 +1405,8 @@ Variances:
 <h2 class="anchored" data-anchor-id="configural-invariance-1">Configural Invariance</h2>
 <p>Let us now see if we have configural invariance between the non-gambling and gambling groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 83 iterations
 
@@ -1595,10 +1610,10 @@ Variances:
     cse               0.950    0.061   15.659    0.000    1.000    1.000
     sus               1.388    0.065   21.354    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp_sus</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp_sus,<span class="st">"sem_sus.png"</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp_sus</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp_sus,<span class="st">"sem_sus.png"</span>)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/configsus-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1612,9 +1627,9 @@ Variances:
 <h2 class="anchored" data-anchor-id="metric-invariance-1">Metric Invariance</h2>
 <p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in compareFit(cfa.config, cfa.metric): fitMeasures() returned vectors
 of different lengths for different models, probably because certain options are
@@ -1647,10 +1662,10 @@ cfa.config - cfa.metric  6 -0.002   0 0.002 0.002 -4.321 -36.095</code></pre>
 <h2 class="anchored" data-anchor-id="scalar-invariance-strong-invariance">Scalar Invariance (strong invariance)</h2>
 <p>For scalar invariance, we also set the intercepts to be equal.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scalar model</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod, <span class="at">data =</span> gambling, <span class="at">group =</span> <span class="st">"Gambled"</span>, <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"loadings"</span>,<span class="st">"intercepts"</span>))</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scalar model</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod, <span class="at">data =</span> gambling, <span class="at">group =</span> <span class="st">"Gambled"</span>, <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"loadings"</span>,<span class="st">"intercepts"</span>))</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 82 iterations
 
@@ -1842,8 +1857,8 @@ Variances:
     cse               0.950    0.062   15.434    0.000
     sus               1.388    0.065   21.354    0.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model comparison</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.metric, cfa.scalar) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model comparison</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.metric, cfa.scalar) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>################### Nested Model Comparison #########################
 
