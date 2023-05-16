@@ -255,7 +255,7 @@ alpha: 0.883
 
 Bootstrap 95% CI based on 1000 samples
  2.5% 97.5% 
-0.871 0.893 </code></pre>
+0.872 0.893 </code></pre>
 </div>
 </div>
 <p>Overall Cronbach’s alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.</p>
@@ -866,6 +866,13 @@ Variances:
     bc                0.325    0.035    9.312    0.000
     ini               1.180    0.064   18.446    0.000</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>cfasem_ini <span class="ot">&lt;-</span> <span class="fu">sem</span>(inimod,<span class="at">data=</span>gambling)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem_ini,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lpsem</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lpsem,<span class="st">"sem_ini_nogroups.png"</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit_ini,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/construct-1.png" class="img-fluid" width="672"></p>
+</div>
 </div>
 <p>The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of <span class="math inline">\(\leq\)</span> 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable.</p>
 </section>
@@ -873,12 +880,12 @@ Variances:
 <h2 class="anchored" data-anchor-id="construct-validity-convergent-and-discriminant-validity">Construct Validity (Convergent and Discriminant Validity)</h2>
 <p>We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   pa   pad    bc 
 0.925 0.880 0.908 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              pa       pad        bc
 alpha  0.9251719 0.8807793 0.8983117
@@ -887,7 +894,7 @@ omega2 0.9313660 0.8840525 0.9069719
 omega3 0.9249504 0.8798350 0.9075453
 avevar 0.7377028 0.6093313 0.6691427</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   pa   pad    bc 
 0.738 0.609 0.669 </code></pre>
@@ -898,9 +905,9 @@ avevar 0.7377028 0.6093313 0.6691427</code></pre>
 <h2 class="anchored" data-anchor-id="configural-invariance">Configural Invariance</h2>
 <p>Let us now see if we have configural invariance between the non-gambling and gambling groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>,</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 72 iterations
 
@@ -1140,7 +1147,7 @@ Variances:
     bc                0.221    0.031    7.180    0.000    1.000    1.000
     ini               0.489    0.065    7.564    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">fitMeasures</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                         npar                          fmin 
                        82.000                         0.487 
@@ -1219,10 +1226,10 @@ Variances:
                           mfi                          ecvi 
                         0.663                         1.085 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp</span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp,<span class="st">"sem_ini.png"</span>)</span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp,<span class="st">"sem_ini.png"</span>)</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/config-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1232,7 +1239,7 @@ Variances:
 </div>
 <p>The results show that the fit is good between the groups. CFI and TLI are close to 1,and the SRMR is close to 0.8. The RMSEA is slightly higher than 0.06. We can conclude that the two groups have the same factor structure.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(CFAfit_ini,cfa.config) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(CFAfit_ini,cfa.config) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>################### Nested Model Comparison #########################
 
@@ -1265,676 +1272,88 @@ cfa.config - CFAfit_ini -1118.966 -965.39</code></pre>
 </div>
 </div>
 <p>We can compare this result with the model that does not consider groups. The AIC and BIC are significantly lower than the general model, which means the model that accounts for the recently gambled grouping performs better. Bear in mind that even if the CFI and TLI slightly decreased, it did not decrease significantly. The same can be said about the RMSEA and SRMR.</p>
+<section id="construct-validity" class="level3">
+<h3 class="anchored" data-anchor-id="construct-validity">Construct validity</h3>
+<p>We now check validity through CR and AVE for the model with groupings:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  group    pa   pad    bc
+1     1 0.936 0.820 0.906
+2     0 0.916 0.918 0.879</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$`1`
+              pa       pad        bc
+alpha  0.9027377 0.8529072 0.8924518
+omega  0.9120156 0.8445193 0.8997432
+omega2 0.9120156 0.8445193 0.8997432
+omega3 0.9357924 0.8198547 0.9057177
+avevar 0.6817116 0.5264624 0.6511756
+
+$`0`
+              pa       pad        bc
+alpha  0.9286513 0.8969229 0.8840554
+omega  0.9310100 0.9025939 0.8929531
+omega2 0.9310100 0.9025939 0.8929531
+omega3 0.9158805 0.9180497 0.8792080
+avevar 0.7360347 0.6547729 0.6343916</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  group    pa   pad    bc
+1     1 0.696 0.528 0.659
+2     0 0.736 0.665 0.625</code></pre>
+</div>
+</div>
+<!-- ## Metric Invariance -->
+<!-- Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions. -->
+<!-- ```{r,metric} -->
+<!-- cfa.metric <- cfa(inimod,data=gambling,group="Gambled",group.equal="loadings",estimator="MLM") -->
+<!-- cfa.metric |> summary(fit.measures=T) -->
+<!-- # cfa.metric |> fitmeasures() -->
+<!-- # lavInspect(cfa.metric, -->
+<!-- # "options")[c("estimator","test","meanstructure")] -->
+<!-- #  -->
+<!-- # lavInspect(cfa.config, -->
+<!-- # "options")[c("estimator","test","meanstructure")] -->
+<!-- compareFit(cfa.config,cfa.metric) |> summary() -->
+<!-- ``` -->
+<!-- Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards quitting gambling. -->
+<!-- ```{r, lavtestscore} -->
+<!-- lavTestScore(cfa.config) -->
+<!-- ``` -->
+
+<!-- The significant score tests shows which questions between groups have different loadings. We can look at which relations/loadings are significantly different in the table below. -->
+<!-- ```{r,parameters} -->
+
+<!-- parTable(cfa.config) -->
+<!-- ``` -->
 </section>
-<section id="metric-invariance" class="level2">
-<h2 class="anchored" data-anchor-id="metric-invariance">Metric Invariance</h2>
-<p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>,<span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>lavaan 0.6.15 ended normally after 47 iterations
-
-  Estimator                                         ML
-  Optimization method                           NLMINB
-  Number of model parameters                       106
-  Number of equality constraints                    12
-
-  Number of observations per group:                   
-    1                                              562
-    0                                              912
-
-Model Test User Model:
-                                              Standard      Scaled
-  Test Statistic                              1266.477     966.434
-  Degrees of freedom                               210         210
-  P-value (Chi-square)                           0.000       0.000
-  Scaling correction factor                                  1.310
-    Satorra-Bentler correction                                    
-  Test statistic for each group:
-    1                                          577.051     440.341
-    0                                          689.426     526.093
-
-Model Test Baseline Model:
-
-  Test statistic                             15718.522   10979.088
-  Degrees of freedom                               240         240
-  P-value                                        0.000       0.000
-  Scaling correction factor                                  1.432
-
-User Model versus Baseline Model:
-
-  Comparative Fit Index (CFI)                    0.932       0.930
-  Tucker-Lewis Index (TLI)                       0.922       0.920
-                                                                  
-  Robust Comparative Fit Index (CFI)                         0.936
-  Robust Tucker-Lewis Index (TLI)                            0.926
-
-Loglikelihood and Information Criteria:
-
-  Loglikelihood user model (H0)             -27976.433  -27976.433
-  Loglikelihood unrestricted model (H1)     -27343.195  -27343.195
-                                                                  
-  Akaike (AIC)                               56140.867   56140.867
-  Bayesian (BIC)                             56638.666   56638.666
-  Sample-size adjusted Bayesian (SABIC)      56340.056   56340.056
-
-Root Mean Square Error of Approximation:
-
-  RMSEA                                          0.083       0.070
-  90 Percent confidence interval - lower         0.078       0.066
-  90 Percent confidence interval - upper         0.087       0.074
-  P-value H_0: RMSEA &lt;= 0.050                    0.000       0.000
-  P-value H_0: RMSEA &gt;= 0.080                    0.841       0.000
-                                                                  
-  Robust RMSEA                                               0.080
-  90 Percent confidence interval - lower                     0.075
-  90 Percent confidence interval - upper                     0.085
-  P-value H_0: Robust RMSEA &lt;= 0.050                         0.000
-  P-value H_0: Robust RMSEA &gt;= 0.080                         0.510
-
-Standardized Root Mean Square Residual:
-
-  SRMR                                           0.054       0.054
-
-Parameter Estimates:
-
-  Standard errors                           Robust.sem
-  Information                                 Expected
-  Information saturated (h1) model          Structured
-
-
-Group 1 [1]:
-
-Latent Variables:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-  pa =~                                               
-    pa1               1.000                           
-    pa2     (.p2.)    0.740    0.030   25.072    0.000
-    pa3     (.p3.)    1.219    0.029   42.583    0.000
-    pa4     (.p4.)    1.233    0.030   40.660    0.000
-    pa5     (.p5.)    1.145    0.029   39.962    0.000
-  pad =~                                              
-    pad1              1.000                           
-    pad2    (.p7.)    1.473    0.074   19.815    0.000
-    pad3    (.p8.)    1.303    0.067   19.333    0.000
-    pad4    (.p9.)    1.636    0.080   20.564    0.000
-    pad5    (.10.)    1.484    0.078   19.010    0.000
-  bc =~                                               
-    bc1               1.000                           
-    bc2     (.12.)    1.849    0.112   16.525    0.000
-    bc3     (.13.)    1.668    0.095   17.545    0.000
-    bc4     (.14.)    1.445    0.082   17.542    0.000
-    bc5     (.15.)    1.849    0.123   15.062    0.000
-  ini =~                                              
-    Ini               1.000                           
-
-Covariances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-  pa ~~                                               
-    pad               0.146    0.026    5.624    0.000
-    bc                0.009    0.029    0.325    0.745
-    ini               0.305    0.061    5.031    0.000
-  pad ~~                                              
-    bc               -0.135    0.020   -6.783    0.000
-    ini              -0.165    0.034   -4.836    0.000
-  bc ~~                                               
-    ini               0.323    0.046    6.984    0.000
-
-Intercepts:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-   .pa1               2.192    0.057   38.742    0.000
-   .pa2               3.132    0.047   66.796    0.000
-   .pa3               2.126    0.057   37.162    0.000
-   .pa4               2.018    0.059   34.070    0.000
-   .pa5               1.760    0.061   28.981    0.000
-   .pad1              1.347    0.047   28.423    0.000
-   .pad2              0.998    0.046   21.625    0.000
-   .pad3              0.530    0.037   14.438    0.000
-   .pad4              1.137    0.052   22.068    0.000
-   .pad5              0.616    0.039   15.615    0.000
-   .bc1               3.335    0.040   83.715    0.000
-   .bc2               2.585    0.052   49.421    0.000
-   .bc3               2.890    0.050   58.031    0.000
-   .bc4               2.996    0.049   61.739    0.000
-   .bc5               2.415    0.054   45.024    0.000
-   .Ini               2.948    0.058   51.197    0.000
-    pa                0.000                           
-    pad               0.000                           
-    bc                0.000                           
-    ini               0.000                           
-
-Variances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-   .pa1               0.731    0.057   12.841    0.000
-   .pa2               0.817    0.052   15.626    0.000
-   .pa3               0.262    0.036    7.339    0.000
-   .pa4               0.309    0.040    7.699    0.000
-   .pa5               0.749    0.059   12.656    0.000
-   .pad1              0.896    0.059   15.255    0.000
-   .pad2              0.500    0.049   10.266    0.000
-   .pad3              0.262    0.030    8.852    0.000
-   .pad4              0.639    0.056   11.445    0.000
-   .pad5              0.256    0.043    5.878    0.000
-   .bc1               0.473    0.048    9.807    0.000
-   .bc2               0.316    0.032    9.780    0.000
-   .bc3               0.352    0.039    9.092    0.000
-   .bc4               0.616    0.047   12.988    0.000
-   .bc5               0.625    0.063    9.986    0.000
-   .Ini               0.000                           
-    pa                1.053    0.065   16.208    0.000
-    pad               0.301    0.036    8.284    0.000
-    bc                0.352    0.045    7.892    0.000
-    ini               1.864    0.104   17.958    0.000
-
-
-Group 2 [0]:
-
-Latent Variables:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-  pa =~                                               
-    pa1               1.000                           
-    pa2     (.p2.)    0.740    0.030   25.072    0.000
-    pa3     (.p3.)    1.219    0.029   42.583    0.000
-    pa4     (.p4.)    1.233    0.030   40.660    0.000
-    pa5     (.p5.)    1.145    0.029   39.962    0.000
-  pad =~                                              
-    pad1              1.000                           
-    pad2    (.p7.)    1.473    0.074   19.815    0.000
-    pad3    (.p8.)    1.303    0.067   19.333    0.000
-    pad4    (.p9.)    1.636    0.080   20.564    0.000
-    pad5    (.10.)    1.484    0.078   19.010    0.000
-  bc =~                                               
-    bc1               1.000                           
-    bc2     (.12.)    1.849    0.112   16.525    0.000
-    bc3     (.13.)    1.668    0.095   17.545    0.000
-    bc4     (.14.)    1.445    0.082   17.542    0.000
-    bc5     (.15.)    1.849    0.123   15.062    0.000
-  ini =~                                              
-    Ini               1.000                           
-
-Covariances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-  pa ~~                                               
-    pad              -0.011    0.018   -0.605    0.545
-    bc                0.101    0.022    4.548    0.000
-    ini               0.112    0.033    3.386    0.001
-  pad ~~                                              
-    bc               -0.049    0.011   -4.539    0.000
-    ini              -0.075    0.020   -3.733    0.000
-  bc ~~                                               
-    ini               0.117    0.027    4.376    0.000
-
-Intercepts:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-   .pa1               2.974    0.040   74.326    0.000
-   .pa2               3.522    0.033  105.807    0.000
-   .pa3               3.003    0.041   73.440    0.000
-   .pa4               2.962    0.042   70.648    0.000
-   .pa5               2.842    0.045   63.671    0.000
-   .pad1              0.860    0.035   24.867    0.000
-   .pad2              0.726    0.036   20.319    0.000
-   .pad3              0.490    0.030   16.301    0.000
-   .pad4              0.809    0.039   20.557    0.000
-   .pad5              0.595    0.034   17.492    0.000
-   .bc1               3.762    0.022  172.990    0.000
-   .bc2               3.320    0.033  100.570    0.000
-   .bc3               3.487    0.029  119.357    0.000
-   .bc4               3.498    0.030  118.392    0.000
-   .bc5               3.042    0.038   79.341    0.000
-   .Ini               3.788    0.023  163.570    0.000
-    pa                0.000                           
-    pad               0.000                           
-    bc                0.000                           
-    ini               0.000                           
-
-Variances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-   .pa1               0.543    0.042   12.853    0.000
-   .pa2               0.451    0.029   15.467    0.000
-   .pa3               0.156    0.021    7.591    0.000
-   .pa4               0.224    0.034    6.523    0.000
-   .pa5               0.578    0.055   10.559    0.000
-   .pad1              0.747    0.055   13.692    0.000
-   .pad2              0.368    0.042    8.815    0.000
-   .pad3              0.180    0.022    8.128    0.000
-   .pad4              0.425    0.041   10.393    0.000
-   .pad5              0.205    0.027    7.469    0.000
-   .bc1               0.238    0.025    9.541    0.000
-   .bc2               0.271    0.033    8.345    0.000
-   .bc3               0.205    0.023    9.008    0.000
-   .bc4               0.340    0.030   11.371    0.000
-   .bc5               0.504    0.036   13.854    0.000
-   .Ini               0.000                           
-    pa                0.924    0.069   13.317    0.000
-    pad               0.376    0.040    9.350    0.000
-    bc                0.214    0.033    6.522    0.000
-    ini               0.489    0.071    6.903    0.000</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># cfa.metric |&gt; fitmeasures()</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.metric,</span></span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a><span class="co"># </span></span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a><span class="co"># lavInspect(cfa.config,</span></span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a><span class="co"># "options")[c("estimator","test","meanstructure")]</span></span>
-<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>################### Nested Model Comparison #########################
-
-Scaled Chi-Squared Difference Test (method = "satorra.bentler.2001")
-
-lavaan NOTE:
-    The "Chisq" column contains standard test statistics, not the
-    robust test that should be reported per model. A robust difference
-    test is a function of two standard (not robust) statistics.
- 
-            Df   AIC   BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
-cfa.metric 210 56141 56639 1266.5                                  
-cfa.config 222 56286 56720 1435.4     183.47      12  &lt; 2.2e-16 ***
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-####################### Model Fit Indices ###########################
-           chisq.scaled df.scaled pvalue.scaled rmsea.robust cfi.robust
-cfa.metric     966.434†       210          .000        .080†      .936†
-cfa.config    1113.215        222          .000        .084       .925 
-           tli.robust  srmr        aic        bic
-cfa.metric      .926† .054† 56140.867† 56638.666†
-cfa.config      .919  .057  56285.750  56720.001 
-
-################## Differences in Fit Indices #######################
-                        df.scaled rmsea.robust cfi.robust tli.robust  srmr
-cfa.config - cfa.metric        12        0.004      -0.01     -0.007 0.003
-                            aic    bic
-cfa.config - cfa.metric 144.884 81.335</code></pre>
-</div>
-</div>
-<p>Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards quitting gambling.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">lavTestScore</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in lavTestScore(cfa.config): lavaan WARNING: se is not `standard'; not
-implemented yet; falling back to ordinary score test</code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>$test
-
-total score test:
-
-   test      X2 df p.value
-1 score 216.191 28       0
-
-$uni
-
-univariate score tests:
-
-     lhs op    rhs     X2 df p.value
-1   .p2. ==  .p64.  6.567  1   0.010
-2   .p3. ==  .p65.  0.881  1   0.348
-3   .p4. ==  .p66.  2.623  1   0.105
-4   .p5. ==  .p67.  4.317  1   0.038
-5   .p7. ==  .p69.  1.371  1   0.242
-6   .p8. ==  .p70.  0.331  1   0.565
-7   .p9. ==  .p71.  0.802  1   0.370
-8  .p10. ==  .p72.  3.522  1   0.061
-9  .p12. ==  .p74.  0.003  1   0.958
-10 .p13. ==  .p75.  4.835  1   0.028
-11 .p14. ==  .p76.  0.167  1   0.683
-12 .p15. ==  .p77. 15.085  1   0.000
-13 .p43. == .p105.  0.269  1   0.604
-14 .p44. == .p106. 13.809  1   0.000
-15 .p45. == .p107.  5.095  1   0.024
-16 .p46. == .p108.  0.111  1   0.739
-17 .p47. == .p109. 23.001  1   0.000
-18 .p48. == .p110. 60.123  1   0.000
-19 .p49. == .p111. 13.329  1   0.000
-20 .p50. == .p112. 17.806  1   0.000
-21 .p51. == .p113. 18.657  1   0.000
-22 .p52. == .p114. 36.397  1   0.000
-23 .p53. == .p115.  2.689  1   0.101
-24 .p54. == .p116.  3.326  1   0.068
-25 .p55. == .p117.  0.868  1   0.352
-26 .p56. == .p118.  0.929  1   0.335
-27 .p57. == .p119.  2.392  1   0.122
-28 .p58. == .p120.  0.000  1   1.000</code></pre>
-</div>
-</div>
-<p>The significant score tests shows which questions between groups have different loadings. We can look at which relations/loadings are significantly different in the table below.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">parTable</span>(cfa.config)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     id   lhs op    rhs user block group free ustart exo label plabel start
-1     1    pa =~    pa1    1     1     1    0      1   0         .p1. 1.000
-2     2    pa =~    pa2    1     1     1    1     NA   0  .p2.   .p2. 0.604
-3     3    pa =~    pa3    1     1     1    2     NA   0  .p3.   .p3. 1.107
-4     4    pa =~    pa4    1     1     1    3     NA   0  .p4.   .p4. 1.137
-5     5    pa =~    pa5    1     1     1    4     NA   0  .p5.   .p5. 1.050
-6     6   pad =~   pad1    1     1     1    0      1   0         .p6. 1.000
-7     7   pad =~   pad2    1     1     1    5     NA   0  .p7.   .p7. 1.330
-8     8   pad =~   pad3    1     1     1    6     NA   0  .p8.   .p8. 1.023
-9     9   pad =~   pad4    1     1     1    7     NA   0  .p9.   .p9. 1.480
-10   10   pad =~   pad5    1     1     1    8     NA   0 .p10.  .p10. 1.128
-11   11    bc =~    bc1    1     1     1    0      1   0        .p11. 1.000
-12   12    bc =~    bc2    1     1     1    9     NA   0 .p12.  .p12. 1.501
-13   13    bc =~    bc3    1     1     1   10     NA   0 .p13.  .p13. 1.462
-14   14    bc =~    bc4    1     1     1   11     NA   0 .p14.  .p14. 1.225
-15   15    bc =~    bc5    1     1     1   12     NA   0 .p15.  .p15. 1.435
-16   16   ini =~    Ini    1     1     1    0      1   0        .p16. 1.000
-17   17   pa1 ~~    pa1    0     1     1   13     NA   0        .p17. 0.900
-18   18   pa2 ~~    pa2    0     1     1   14     NA   0        .p18. 0.618
-19   19   pa3 ~~    pa3    0     1     1   15     NA   0        .p19. 0.920
-20   20   pa4 ~~    pa4    0     1     1   16     NA   0        .p20. 0.986
-21   21   pa5 ~~    pa5    0     1     1   17     NA   0        .p21. 1.036
-22   22  pad1 ~~   pad1    0     1     1   18     NA   0        .p22. 0.631
-23   23  pad2 ~~   pad2    0     1     1   19     NA   0        .p23. 0.599
-24   24  pad3 ~~   pad3    0     1     1   20     NA   0        .p24. 0.379
-25   25  pad4 ~~   pad4    0     1     1   21     NA   0        .p25. 0.746
-26   26  pad5 ~~   pad5    0     1     1   22     NA   0        .p26. 0.437
-27   27   bc1 ~~    bc1    0     1     1   23     NA   0        .p27. 0.446
-28   28   bc2 ~~    bc2    0     1     1   24     NA   0        .p28. 0.769
-29   29   bc3 ~~    bc3    0     1     1   25     NA   0        .p29. 0.697
-30   30   bc4 ~~    bc4    0     1     1   26     NA   0        .p30. 0.662
-31   31   bc5 ~~    bc5    0     1     1   27     NA   0        .p31. 0.808
-32   32   Ini ~~    Ini    0     1     1    0      0   0        .p32. 0.000
-33   33    pa ~~     pa    0     1     1   28     NA   0        .p33. 0.050
-34   34   pad ~~    pad    0     1     1   29     NA   0        .p34. 0.050
-35   35    bc ~~     bc    0     1     1   30     NA   0        .p35. 0.050
-36   36   ini ~~    ini    0     1     1   31     NA   0        .p36. 1.864
-37   37    pa ~~    pad    0     1     1   32     NA   0        .p37. 0.000
-38   38    pa ~~     bc    0     1     1   33     NA   0        .p38. 0.000
-39   39    pa ~~    ini    0     1     1   34     NA   0        .p39. 0.000
-40   40   pad ~~     bc    0     1     1   35     NA   0        .p40. 0.000
-41   41   pad ~~    ini    0     1     1   36     NA   0        .p41. 0.000
-42   42    bc ~~    ini    0     1     1   37     NA   0        .p42. 0.000
-43   43   pa1 ~1           0     1     1   38     NA   0 .p43.  .p43. 2.192
-44   44   pa2 ~1           0     1     1   39     NA   0 .p44.  .p44. 3.132
-45   45   pa3 ~1           0     1     1   40     NA   0 .p45.  .p45. 2.126
-46   46   pa4 ~1           0     1     1   41     NA   0 .p46.  .p46. 2.018
-47   47   pa5 ~1           0     1     1   42     NA   0 .p47.  .p47. 1.760
-48   48  pad1 ~1           0     1     1   43     NA   0 .p48.  .p48. 1.347
-49   49  pad2 ~1           0     1     1   44     NA   0 .p49.  .p49. 0.998
-50   50  pad3 ~1           0     1     1   45     NA   0 .p50.  .p50. 0.530
-51   51  pad4 ~1           0     1     1   46     NA   0 .p51.  .p51. 1.137
-52   52  pad5 ~1           0     1     1   47     NA   0 .p52.  .p52. 0.616
-53   53   bc1 ~1           0     1     1   48     NA   0 .p53.  .p53. 3.335
-54   54   bc2 ~1           0     1     1   49     NA   0 .p54.  .p54. 2.585
-55   55   bc3 ~1           0     1     1   50     NA   0 .p55.  .p55. 2.890
-56   56   bc4 ~1           0     1     1   51     NA   0 .p56.  .p56. 2.996
-57   57   bc5 ~1           0     1     1   52     NA   0 .p57.  .p57. 2.415
-58   58   Ini ~1           0     1     1   53     NA   0 .p58.  .p58. 2.948
-59   59    pa ~1           0     1     1    0      0   0        .p59. 0.000
-60   60   pad ~1           0     1     1    0      0   0        .p60. 0.000
-61   61    bc ~1           0     1     1    0      0   0        .p61. 0.000
-62   62   ini ~1           0     1     1    0      0   0        .p62. 0.000
-63   63    pa =~    pa1    1     2     2    0      1   0        .p63. 1.000
-64   64    pa =~    pa2    1     2     2   54     NA   0  .p2.  .p64. 0.749
-65   65    pa =~    pa3    1     2     2   55     NA   0  .p3.  .p65. 1.109
-66   66    pa =~    pa4    1     2     2   56     NA   0  .p4.  .p66. 1.121
-67   67    pa =~    pa5    1     2     2   57     NA   0  .p5.  .p67. 1.098
-68   68   pad =~   pad1    1     2     2    0      1   0        .p68. 1.000
-69   69   pad =~   pad2    1     2     2   58     NA   0  .p7.  .p69. 1.531
-70   70   pad =~   pad3    1     2     2   59     NA   0  .p8.  .p70. 1.201
-71   71   pad =~   pad4    1     2     2   60     NA   0  .p9.  .p71. 1.601
-72   72   pad =~   pad5    1     2     2   61     NA   0 .p10.  .p72. 1.409
-73   73    bc =~    bc1    1     2     2    0      1   0        .p73. 1.000
-74   74    bc =~    bc2    1     2     2   62     NA   0 .p12.  .p74. 1.783
-75   75    bc =~    bc3    1     2     2   63     NA   0 .p13.  .p75. 1.648
-76   76    bc =~    bc4    1     2     2   64     NA   0 .p14.  .p76. 1.479
-77   77    bc =~    bc5    1     2     2   65     NA   0 .p15.  .p77. 2.088
-78   78   ini =~    Ini    1     2     2    0      1   0        .p78. 1.000
-79   79   pa1 ~~    pa1    0     2     2   66     NA   0        .p79. 0.900
-80   80   pa2 ~~    pa2    0     2     2   67     NA   0        .p80. 0.618
-81   81   pa3 ~~    pa3    0     2     2   68     NA   0        .p81. 0.920
-82   82   pa4 ~~    pa4    0     2     2   69     NA   0        .p82. 0.986
-83   83   pa5 ~~    pa5    0     2     2   70     NA   0        .p83. 1.036
-84   84  pad1 ~~   pad1    0     2     2   71     NA   0        .p84. 0.631
-85   85  pad2 ~~   pad2    0     2     2   72     NA   0        .p85. 0.599
-86   86  pad3 ~~   pad3    0     2     2   73     NA   0        .p86. 0.379
-87   87  pad4 ~~   pad4    0     2     2   74     NA   0        .p87. 0.746
-88   88  pad5 ~~   pad5    0     2     2   75     NA   0        .p88. 0.437
-89   89   bc1 ~~    bc1    0     2     2   76     NA   0        .p89. 0.446
-90   90   bc2 ~~    bc2    0     2     2   77     NA   0        .p90. 0.769
-91   91   bc3 ~~    bc3    0     2     2   78     NA   0        .p91. 0.697
-92   92   bc4 ~~    bc4    0     2     2   79     NA   0        .p92. 0.662
-93   93   bc5 ~~    bc5    0     2     2   80     NA   0        .p93. 0.808
-94   94   Ini ~~    Ini    0     2     2    0      0   0        .p94. 0.000
-95   95    pa ~~     pa    0     2     2   81     NA   0        .p95. 0.050
-96   96   pad ~~    pad    0     2     2   82     NA   0        .p96. 0.050
-97   97    bc ~~     bc    0     2     2   83     NA   0        .p97. 0.050
-98   98   ini ~~    ini    0     2     2   84     NA   0        .p98. 0.489
-99   99    pa ~~    pad    0     2     2   85     NA   0        .p99. 0.000
-100 100    pa ~~     bc    0     2     2   86     NA   0       .p100. 0.000
-101 101    pa ~~    ini    0     2     2   87     NA   0       .p101. 0.000
-102 102   pad ~~     bc    0     2     2   88     NA   0       .p102. 0.000
-103 103   pad ~~    ini    0     2     2   89     NA   0       .p103. 0.000
-104 104    bc ~~    ini    0     2     2   90     NA   0       .p104. 0.000
-105 105   pa1 ~1           0     2     2   91     NA   0 .p43. .p105. 2.974
-106 106   pa2 ~1           0     2     2   92     NA   0 .p44. .p106. 3.522
-107 107   pa3 ~1           0     2     2   93     NA   0 .p45. .p107. 3.003
-108 108   pa4 ~1           0     2     2   94     NA   0 .p46. .p108. 2.962
-109 109   pa5 ~1           0     2     2   95     NA   0 .p47. .p109. 2.842
-110 110  pad1 ~1           0     2     2   96     NA   0 .p48. .p110. 0.860
-111 111  pad2 ~1           0     2     2   97     NA   0 .p49. .p111. 0.726
-112 112  pad3 ~1           0     2     2   98     NA   0 .p50. .p112. 0.490
-113 113  pad4 ~1           0     2     2   99     NA   0 .p51. .p113. 0.809
-114 114  pad5 ~1           0     2     2  100     NA   0 .p52. .p114. 0.595
-115 115   bc1 ~1           0     2     2  101     NA   0 .p53. .p115. 3.762
-116 116   bc2 ~1           0     2     2  102     NA   0 .p54. .p116. 3.320
-117 117   bc3 ~1           0     2     2  103     NA   0 .p55. .p117. 3.487
-118 118   bc4 ~1           0     2     2  104     NA   0 .p56. .p118. 3.498
-119 119   bc5 ~1           0     2     2  105     NA   0 .p57. .p119. 3.042
-120 120   Ini ~1           0     2     2  106     NA   0 .p58. .p120. 3.788
-121 121    pa ~1           0     2     2  107     NA   0       .p121. 0.000
-122 122   pad ~1           0     2     2  108     NA   0       .p122. 0.000
-123 123    bc ~1           0     2     2  109     NA   0       .p123. 0.000
-124 124   ini ~1           0     2     2  110     NA   0       .p124. 0.000
-125 125  .p2. ==  .p64.    2     0     0    0     NA   0              0.000
-126 126  .p3. ==  .p65.    2     0     0    0     NA   0              0.000
-127 127  .p4. ==  .p66.    2     0     0    0     NA   0              0.000
-128 128  .p5. ==  .p67.    2     0     0    0     NA   0              0.000
-129 129  .p7. ==  .p69.    2     0     0    0     NA   0              0.000
-130 130  .p8. ==  .p70.    2     0     0    0     NA   0              0.000
-131 131  .p9. ==  .p71.    2     0     0    0     NA   0              0.000
-132 132 .p10. ==  .p72.    2     0     0    0     NA   0              0.000
-133 133 .p12. ==  .p74.    2     0     0    0     NA   0              0.000
-134 134 .p13. ==  .p75.    2     0     0    0     NA   0              0.000
-135 135 .p14. ==  .p76.    2     0     0    0     NA   0              0.000
-136 136 .p15. ==  .p77.    2     0     0    0     NA   0              0.000
-137 137 .p43. == .p105.    2     0     0    0     NA   0              0.000
-138 138 .p44. == .p106.    2     0     0    0     NA   0              0.000
-139 139 .p45. == .p107.    2     0     0    0     NA   0              0.000
-140 140 .p46. == .p108.    2     0     0    0     NA   0              0.000
-141 141 .p47. == .p109.    2     0     0    0     NA   0              0.000
-142 142 .p48. == .p110.    2     0     0    0     NA   0              0.000
-143 143 .p49. == .p111.    2     0     0    0     NA   0              0.000
-144 144 .p50. == .p112.    2     0     0    0     NA   0              0.000
-145 145 .p51. == .p113.    2     0     0    0     NA   0              0.000
-146 146 .p52. == .p114.    2     0     0    0     NA   0              0.000
-147 147 .p53. == .p115.    2     0     0    0     NA   0              0.000
-148 148 .p54. == .p116.    2     0     0    0     NA   0              0.000
-149 149 .p55. == .p117.    2     0     0    0     NA   0              0.000
-150 150 .p56. == .p118.    2     0     0    0     NA   0              0.000
-151 151 .p57. == .p119.    2     0     0    0     NA   0              0.000
-152 152 .p58. == .p120.    2     0     0    0     NA   0              0.000
-       est    se
-1    1.000 0.000
-2    0.713 0.026
-3    1.207 0.026
-4    1.230 0.027
-5    1.175 0.027
-6    1.000 0.000
-7    1.447 0.066
-8    1.261 0.059
-9    1.608 0.071
-10   1.433 0.068
-11   1.000 0.000
-12   1.837 0.093
-13   1.637 0.076
-14   1.412 0.066
-15   1.801 0.101
-16   1.000 0.000
-17   0.730 0.049
-18   0.828 0.048
-19   0.267 0.033
-20   0.307 0.036
-21   0.765 0.052
-22   0.960 0.053
-23   0.501 0.042
-24   0.271 0.027
-25   0.647 0.051
-26   0.273 0.039
-27   0.473 0.040
-28   0.315 0.029
-29   0.354 0.038
-30   0.618 0.045
-31   0.627 0.051
-32   0.000 0.000
-33   1.060 0.063
-34   0.316 0.037
-35   0.362 0.042
-36   1.864 0.095
-37   0.151 0.025
-38   0.010 0.028
-39   0.307 0.054
-40  -0.142 0.021
-41  -0.171 0.034
-42   0.328 0.045
-43   2.206 0.050
-44   3.018 0.044
-45   2.096 0.055
-46   2.023 0.056
-47   1.888 0.055
-48   1.091 0.034
-49   0.917 0.040
-50   0.597 0.034
-51   1.026 0.044
-52   0.705 0.037
-53   3.372 0.037
-54   2.612 0.049
-55   2.874 0.046
-56   2.972 0.043
-57   2.379 0.048
-58   2.948 0.056
-59   0.000 0.000
-60   0.000 0.000
-61   0.000 0.000
-62   0.000 0.000
-63   1.000 0.000
-64   0.713 0.026
-65   1.207 0.026
-66   1.230 0.027
-67   1.175 0.027
-68   1.000 0.000
-69   1.447 0.066
-70   1.261 0.059
-71   1.608 0.071
-72   1.433 0.068
-73   1.000 0.000
-74   1.837 0.093
-75   1.637 0.076
-76   1.412 0.066
-77   1.801 0.101
-78   1.000 0.000
-79   0.542 0.036
-80   0.457 0.027
-81   0.159 0.020
-82   0.223 0.033
-83   0.577 0.050
-84   0.761 0.052
-85   0.365 0.037
-86   0.183 0.022
-87   0.423 0.035
-88   0.213 0.027
-89   0.238 0.025
-90   0.270 0.028
-91   0.205 0.022
-92   0.341 0.025
-93   0.508 0.035
-94   0.000 0.000
-95   0.932 0.065
-96   0.396 0.039
-97   0.221 0.031
-98   0.489 0.065
-99  -0.011 0.018
-100  0.102 0.021
-101  0.112 0.029
-102 -0.052 0.011
-103 -0.077 0.020
-104  0.119 0.025
-105  2.206 0.050
-106  3.018 0.044
-107  2.096 0.055
-108  2.023 0.056
-109  1.888 0.055
-110  1.091 0.034
-111  0.917 0.040
-112  0.597 0.034
-113  1.026 0.044
-114  0.705 0.037
-115  3.372 0.037
-116  2.612 0.049
-117  2.874 0.046
-118  2.972 0.043
-119  2.379 0.048
-120  2.948 0.056
-121  0.761 0.057
-122 -0.107 0.033
-123  0.378 0.035
-124  0.840 0.059
-125  0.000 0.000
-126  0.000 0.000
-127  0.000 0.000
-128  0.000 0.000
-129  0.000 0.000
-130  0.000 0.000
-131  0.000 0.000
-132  0.000 0.000
-133  0.000 0.000
-134  0.000 0.000
-135  0.000 0.000
-136  0.000 0.000
-137  0.000 0.000
-138  0.000 0.000
-139  0.000 0.000
-140  0.000 0.000
-141  0.000 0.000
-142  0.000 0.000
-143  0.000 0.000
-144  0.000 0.000
-145  0.000 0.000
-146  0.000 0.000
-147  0.000 0.000
-148  0.000 0.000
-149  0.000 0.000
-150  0.000 0.000
-151  0.000 0.000
-152  0.000 0.000</code></pre>
-</div>
-</div>
 </section>
 <section id="sustenance-of-quitting-gambling" class="level2">
 <h2 class="anchored" data-anchor-id="sustenance-of-quitting-gambling">Sustenance of quitting gambling</h2>
 <p>We now check for correlations between the items for sustenance of quitting gambling.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
+<span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
+<span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb51-4"><a href="#cb51-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/corrsus-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
-<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
-<span id="cb54-7"><a href="#cb54-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-8"><a href="#cb54-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 42 iterations
 
@@ -2053,12 +1472,12 @@ Variances:
 <h2 class="anchored" data-anchor-id="construct-validity-convergent-and-discriminant-validity-1">Construct Validity (Convergent and Discriminant Validity)</h2>
 <p>We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   et   pfc   cse 
 0.924 0.838 0.813 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              et       pfc       cse
 alpha  0.9215844 0.8341404 0.8023436
@@ -2067,7 +1486,7 @@ omega2 0.9227681 0.8359028 0.8093057
 omega3 0.9239706 0.8380182 0.8128010
 avevar 0.7994544 0.6293982 0.5882261</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   et   pfc   cse 
 0.799 0.629 0.588 </code></pre>
@@ -2078,9 +1497,9 @@ avevar 0.7994544 0.6293982 0.5882261</code></pre>
 <h2 class="anchored" data-anchor-id="configural-invariance-1">Configural Invariance</h2>
 <p>Let us now see if we have configural invariance between the non-gambling and gambling groups.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>,</span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">mimic=</span><span class="st">"Mplus"</span>,</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 83 iterations
 
@@ -2284,10 +1703,10 @@ Variances:
     cse               0.950    0.072   13.262    0.000    1.000    1.000
     sus               1.388    0.080   17.340    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp_sus</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp_sus,<span class="st">"sem_sus.png"</span>)</span>
-<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>cfasem <span class="ot">&lt;-</span> <span class="fu">sem</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>)</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">lavaanPlot</span>(<span class="at">model=</span>cfasem,<span class="at">coefs =</span> <span class="cn">TRUE</span>, <span class="at">stand =</span> <span class="cn">TRUE</span>, <span class="at">sig =</span> <span class="fl">0.05</span>) <span class="ot">-&gt;</span> lp_sus</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">save_png</span>(lp_sus,<span class="st">"sem_sus.png"</span>)</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(cfasem,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/configsus-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -2296,289 +1715,60 @@ Variances:
 </div>
 </div>
 <p>The fit still remains acceptable after including groups, which means that both groups have the same factors in their model.</p>
-</section>
-<section id="metric-invariance-1" class="level2">
-<h2 class="anchored" data-anchor-id="metric-invariance-1">Metric Invariance</h2>
-<p>Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.</p>
+<section id="construct-validity-1" class="level3">
+<h3 class="anchored" data-anchor-id="construct-validity-1">Construct Validity</h3>
+<p>We now check validity through CR and AVE for the model with groupings:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>cfa.metric <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">group=</span><span class="st">"Gambled"</span>,<span class="at">group.equal=</span><span class="st">"loadings"</span>,<span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.config,cfa.metric) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>################### Nested Model Comparison #########################
+<pre><code>  group    et  pfc   cse
+1     1 0.940 0.85 0.829
+2     0 0.896 0.81 0.796</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$`1`
+              et       pfc       cse
+alpha  0.9238064 0.8385190 0.8067198
+omega  0.9253484 0.8410702 0.8172798
+omega2 0.9253484 0.8410702 0.8172798
+omega3 0.9401681 0.8504862 0.8289934
+avevar 0.8053386 0.6382792 0.6008344
 
-Scaled Chi-Squared Difference Test (method = "satorra.bentler.2001")
-
-lavaan NOTE:
-    The "Chisq" column contains standard test statistics, not the
-    robust test that should be reported per model. A robust difference
-    test is a function of two standard (not robust) statistics.
- 
-           Df   AIC   BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)
-cfa.metric 66 34822 35161 217.13                              
-cfa.config 72 34817 35125 224.81     9.0024       6     0.1734
-
-####################### Model Fit Indices ###########################
-           chisq.scaled df.scaled pvalue.scaled rmsea.robust cfi.robust
-cfa.metric     139.421†        66          .000        .048       .987†
-cfa.config     150.005         72          .000        .047†      .987 
-           tli.robust  srmr        aic        bic
-cfa.metric      .983  .037† 34821.807  35160.734 
-cfa.config      .984† .038  34817.486† 35124.639†
-
-################## Differences in Fit Indices #######################
-                        df.scaled rmsea.robust cfi.robust tli.robust  srmr
-cfa.config - cfa.metric         6       -0.002          0      0.001 0.001
-                           aic     bic
-cfa.config - cfa.metric -4.321 -36.095</code></pre>
+$`0`
+              et       pfc       cse
+alpha  0.9054528 0.8191770 0.7941791
+omega  0.9060441 0.8190452 0.7980944
+omega2 0.9060441 0.8190452 0.7980944
+omega3 0.8958845 0.8099514 0.7955887
+avevar 0.7629509 0.6014673 0.5708559</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>cfa.config <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  group    et   pfc   cse
+1     1 0.817 0.643 0.604
+2     0 0.754 0.595 0.569</code></pre>
 </div>
 </div>
-<p>Results show that the chi-square test is not significant, which means that the metric invariance is satisfied. The new model where we constrained the loadings to be equal for both groups does not differ in terms of performance. This means that the two groups have the same factors and factor loadings.</p>
+<!-- ## Metric Invariance -->
+<!-- Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions. -->
+<!-- ```{r,metricsus} -->
+<!-- cfa.metric <- cfa(susmod,data=gambling,group="Gambled",group.equal="loadings",estimator="MLM") -->
+<!-- compareFit(cfa.config,cfa.metric) |> summary() -->
+<!-- ``` -->
+<!-- Results show that the chi-square test is not significant, which means that the metric invariance is satisfied. The new model where we constrained the loadings to be equal for both groups does not differ in terms of performance. This means that the two groups have the same factors and factor loadings.  -->
+<!-- ## Scalar Invariance (strong invariance) -->
+<!-- For scalar invariance, we also set the intercepts to be equal. -->
+<!-- ```{r, scalarsus} -->
+<!-- # Scalar model -->
+<!-- cfa.scalar <- cfa(susmod, data = gambling,  -->
+<!--                   estimator="MLM",group = "Gambled", group.equal = c("loadings","intercepts")) -->
+<!-- cfa.scalar |> summary(fit.measures=T) -->
+<!-- # Model comparison -->
+<!-- compareFit(cfa.metric, cfa.scalar) |> summary() -->
+<!-- ``` -->
+<!-- There is no significant difference in chi-square values as well as the other fit measures, which means that the constructs in the sustenance aspect of quitting gambling is also scalar invariant.  -->
 </section>
-<section id="scalar-invariance-strong-invariance" class="level2">
-<h2 class="anchored" data-anchor-id="scalar-invariance-strong-invariance">Scalar Invariance (strong invariance)</h2>
-<p>For scalar invariance, we also set the intercepts to be equal.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scalar model</span></span>
-<span id="cb67-2"><a href="#cb67-2" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod, <span class="at">data =</span> gambling, </span>
-<span id="cb67-3"><a href="#cb67-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimator=</span><span class="st">"MLM"</span>,<span class="at">group =</span> <span class="st">"Gambled"</span>, <span class="at">group.equal =</span> <span class="fu">c</span>(<span class="st">"loadings"</span>,<span class="st">"intercepts"</span>))</span>
-<span id="cb67-4"><a href="#cb67-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb67-5"><a href="#cb67-5" aria-hidden="true" tabindex="-1"></a>cfa.scalar <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>lavaan 0.6.15 ended normally after 82 iterations
-
-  Estimator                                         ML
-  Optimization method                           NLMINB
-  Number of model parameters                        74
-  Number of equality constraints                    16
-
-  Number of observations per group:                   
-    1                                              562
-    0                                              912
-
-Model Test User Model:
-                                              Standard      Scaled
-  Test Statistic                               224.813     148.500
-  Degrees of freedom                                72          72
-  P-value (Chi-square)                           0.000       0.000
-  Scaling correction factor                                  1.514
-    Satorra-Bentler correction                                    
-  Test statistic for each group:
-    1                                           70.579      46.621
-    0                                          154.234     101.879
-
-Model Test Baseline Model:
-
-  Test statistic                              9174.009    4359.832
-  Degrees of freedom                                90          90
-  P-value                                        0.000       0.000
-  Scaling correction factor                                  2.104
-
-User Model versus Baseline Model:
-
-  Comparative Fit Index (CFI)                    0.983       0.982
-  Tucker-Lewis Index (TLI)                       0.979       0.978
-                                                                  
-  Robust Comparative Fit Index (CFI)                         0.987
-  Robust Tucker-Lewis Index (TLI)                            0.984
-
-Loglikelihood and Information Criteria:
-
-  Loglikelihood user model (H0)             -17350.743  -17350.743
-  Loglikelihood unrestricted model (H1)     -17238.337  -17238.337
-                                                                  
-  Akaike (AIC)                               34817.486   34817.486
-  Bayesian (BIC)                             35124.639   35124.639
-  Sample-size adjusted Bayesian (SABIC)      34940.391   34940.391
-
-Root Mean Square Error of Approximation:
-
-  RMSEA                                          0.054       0.038
-  90 Percent confidence interval - lower         0.046       0.031
-  90 Percent confidence interval - upper         0.062       0.045
-  P-value H_0: RMSEA &lt;= 0.050                    0.215       0.998
-  P-value H_0: RMSEA &gt;= 0.080                    0.000       0.000
-                                                                  
-  Robust RMSEA                                               0.047
-  90 Percent confidence interval - lower                     0.036
-  90 Percent confidence interval - upper                     0.057
-  P-value H_0: Robust RMSEA &lt;= 0.050                         0.681
-  P-value H_0: Robust RMSEA &gt;= 0.080                         0.000
-
-Standardized Root Mean Square Residual:
-
-  SRMR                                           0.038       0.038
-
-Parameter Estimates:
-
-  Standard errors                           Robust.sem
-  Information                                 Expected
-  Information saturated (h1) model          Structured
-
-
-Group 1 [1]:
-
-Latent Variables:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-  et =~                                               
-    et1               1.000                           
-    et2     (.p2.)    0.926    0.024   38.205    0.000
-    et3     (.p3.)    0.930    0.027   34.775    0.000
-  pfc =~                                              
-    pfc1              1.000                           
-    pfc2    (.p5.)    0.996    0.032   31.325    0.000
-    pfc3    (.p6.)    0.962    0.033   29.533    0.000
-  cse =~                                              
-    cse1              1.000                           
-    cse2    (.p8.)    0.994    0.033   29.735    0.000
-    cse3    (.p9.)    0.804    0.036   22.182    0.000
-  sus =~                                              
-    Sus               1.000                           
-
-Covariances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-  et ~~                                               
-    pfc               0.840    0.066   12.666    0.000
-    cse               0.664    0.069    9.688    0.000
-    sus               0.445    0.065    6.869    0.000
-  pfc ~~                                              
-    cse               0.655    0.064   10.222    0.000
-    sus               0.358    0.062    5.798    0.000
-  cse ~~                                              
-    sus               0.167    0.073    2.294    0.022
-
-Intercepts:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-   .et1     (.31.)    3.044    0.046   66.220    0.000
-   .et2     (.32.)    3.205    0.043   73.689    0.000
-   .et3     (.33.)    3.183    0.044   71.889    0.000
-   .pfc1    (.34.)    2.851    0.048   59.129    0.000
-   .pfc2    (.35.)    3.135    0.044   71.604    0.000
-   .pfc3    (.36.)    3.112    0.044   70.403    0.000
-   .cse1    (.37.)    2.992    0.052   57.344    0.000
-   .cse2    (.38.)    3.001    0.050   60.348    0.000
-   .cse3    (.39.)    2.717    0.047   57.201    0.000
-   .Sus     (.40.)    1.781    0.062   28.611    0.000
-    et                0.000                           
-    pfc               0.000                           
-    cse               0.000                           
-    sus               0.000                           
-
-Variances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-   .et1               0.329    0.045    7.303    0.000
-   .et2               0.152    0.029    5.293    0.000
-   .et3               0.219    0.030    7.345    0.000
-   .pfc1              0.914    0.089   10.242    0.000
-   .pfc2              0.227    0.030    7.519    0.000
-   .pfc3              0.376    0.062    6.080    0.000
-   .cse1              0.549    0.076    7.208    0.000
-   .cse2              0.291    0.060    4.848    0.000
-   .cse3              1.220    0.100   12.147    0.000
-   .Sus               0.000                           
-    et                1.064    0.082   13.026    0.000
-    pfc               0.918    0.077   11.916    0.000
-    cse               1.177    0.092   12.770    0.000
-    sus               2.178    0.071   30.789    0.000
-
-
-Group 2 [0]:
-
-Latent Variables:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-  et =~                                               
-    et1               1.000                           
-    et2     (.p2.)    0.926    0.024   38.205    0.000
-    et3     (.p3.)    0.930    0.027   34.775    0.000
-  pfc =~                                              
-    pfc1              1.000                           
-    pfc2    (.p5.)    0.996    0.032   31.325    0.000
-    pfc3    (.p6.)    0.962    0.033   29.533    0.000
-  cse =~                                              
-    cse1              1.000                           
-    cse2    (.p8.)    0.994    0.033   29.735    0.000
-    cse3    (.p9.)    0.804    0.036   22.182    0.000
-  sus =~                                              
-    Sus               1.000                           
-
-Covariances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-  et ~~                                               
-    pfc               0.472    0.049    9.613    0.000
-    cse               0.361    0.044    8.177    0.000
-    sus               0.364    0.044    8.238    0.000
-  pfc ~~                                              
-    cse               0.440    0.045    9.731    0.000
-    sus               0.419    0.045    9.362    0.000
-  cse ~~                                              
-    sus               0.337    0.050    6.689    0.000
-
-Intercepts:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-   .et1     (.31.)    3.044    0.046   66.220    0.000
-   .et2     (.32.)    3.205    0.043   73.689    0.000
-   .et3     (.33.)    3.183    0.044   71.889    0.000
-   .pfc1    (.34.)    2.851    0.048   59.129    0.000
-   .pfc2    (.35.)    3.135    0.044   71.604    0.000
-   .pfc3    (.36.)    3.112    0.044   70.403    0.000
-   .cse1    (.37.)    2.992    0.052   57.344    0.000
-   .cse2    (.38.)    3.001    0.050   60.348    0.000
-   .cse3    (.39.)    2.717    0.047   57.201    0.000
-   .Sus     (.40.)    1.781    0.062   28.611    0.000
-    et                0.503    0.051    9.890    0.000
-    pfc               0.378    0.051    7.340    0.000
-    cse               0.279    0.061    4.590    0.000
-    sus               1.391    0.073   18.933    0.000
-
-Variances:
-                   Estimate  Std.Err  z-value  P(&gt;|z|)
-   .et1               0.216    0.031    6.952    0.000
-   .et2               0.094    0.014    6.599    0.000
-   .et3               0.111    0.019    5.924    0.000
-   .pfc1              0.800    0.072   11.165    0.000
-   .pfc2              0.118    0.019    6.075    0.000
-   .pfc3              0.246    0.034    7.322    0.000
-   .cse1              0.404    0.050    8.130    0.000
-   .cse2              0.339    0.052    6.507    0.000
-   .cse3              1.138    0.075   15.220    0.000
-   .Sus               0.000                           
-    et                0.499    0.054    9.295    0.000
-    pfc               0.602    0.057   10.608    0.000
-    cse               0.950    0.077   12.336    0.000
-    sus               1.388    0.081   17.109    0.000</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Model comparison</span></span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(cfa.metric, cfa.scalar) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>################### Nested Model Comparison #########################
-
-Scaled Chi-Squared Difference Test (method = "satorra.bentler.2001")
-
-lavaan NOTE:
-    The "Chisq" column contains standard test statistics, not the
-    robust test that should be reported per model. A robust difference
-    test is a function of two standard (not robust) statistics.
- 
-           Df   AIC   BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)
-cfa.metric 66 34822 35161 217.13                              
-cfa.scalar 72 34817 35125 224.81     7.4174       6      0.284
-
-####################### Model Fit Indices ###########################
-           chisq.scaled df.scaled pvalue.scaled rmsea.robust cfi.robust
-cfa.metric     139.421†        66          .000        .048       .987†
-cfa.scalar     148.500         72          .000        .047†      .987 
-           tli.robust  srmr        aic        bic
-cfa.metric      .983  .037† 34821.807  35160.734 
-cfa.scalar      .984† .038  34817.486† 35124.639†
-
-################## Differences in Fit Indices #######################
-                        df.scaled rmsea.robust cfi.robust tli.robust  srmr
-cfa.scalar - cfa.metric         6       -0.002          0      0.001 0.001
-                           aic     bic
-cfa.scalar - cfa.metric -4.321 -36.095</code></pre>
-</div>
-</div>
-<p>There is no significant difference in chi-square values as well as the other fit measures, which means that the constructs in the sustenance aspect of quitting gambling is also scalar invariant.</p>
 </section>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
