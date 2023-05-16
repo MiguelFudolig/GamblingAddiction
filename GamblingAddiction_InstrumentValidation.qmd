@@ -157,6 +157,8 @@ gambling |> dplyr::select(starts_with("cse",ignore.case=F) ) |> alpha()
 gambling |>  dplyr::select(starts_with(c("et","pfc","cse","Sus"),ignore.case=F)) |> alpha()
 ```
 
+
+
 # CFA and SEM Analysis 
 ## Initiation of quitting gambling
 
@@ -179,12 +181,25 @@ inimod <- 'pa =~ pa1 + pa2 +pa3+pa4 + pa5
                 bc =~ bc1 + bc2 + bc3 + bc4 + bc5
                 ini=~ Ini'
 
-CFAfit_ini <- cfa(inimod,data=gambling,meanstructure=T,mimic="Mplus")
+CFAfit_ini <- cfa(inimod,data=gambling,meanstructure=T,mimic="Mplus",
+                  estimator="MLM")
 
 CFAfit_ini |> summary(fit.measures=T)
 ```
 
 The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of $\leq$ 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable. 
+
+## Construct Validity (Convergent and Discriminant Validity)
+
+We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity. 
+
+```{r,validity}
+
+
+CFAfit_ini |> compRelSEM()
+CFAfit_ini |> semTools::reliability()
+CFAfit_ini |> AVE()
+```
 
 
 ## Configural Invariance
@@ -192,7 +207,8 @@ The important fit measures are the following: RMSEA, SRMR, and CFI. For an accet
 Let us now see if we have configural invariance between the non-gambling and gambling groups.
 
 ```{r,config}
-cfa.config <- cfa(inimod,data=gambling,group="Gambled",mimic="Mplus")
+cfa.config <- cfa(inimod,data=gambling,group="Gambled",mimic="Mplus",
+                  estimator="MLM")
 cfa.config |> summary(fit.measures=T,standardized=T)
 cfa.config |> fitMeasures()
 cfasem <- sem(inimod,data=gambling,group="Gambled")
@@ -214,7 +230,7 @@ We can compare this result with the model that does not consider groups. The AIC
 Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.
 
 ```{r,metric}
-cfa.metric <- cfa(inimod,data=gambling,group="Gambled",group.equal="loadings")
+cfa.metric <- cfa(inimod,data=gambling,group="Gambled",group.equal="loadings",estimator="MLM")
 
 cfa.metric |> summary(fit.measures=T)
 # cfa.metric |> fitmeasures()
@@ -237,7 +253,7 @@ The significant score tests shows which questions between groups have different 
 parTable(cfa.config)
 ```
 
-The significant 
+ 
 
 ## Sustenance of quitting gambling
 
@@ -259,19 +275,33 @@ susmod <- 'et =~ et1 + et2 + et3
                 cse =~ cse1 + cse2 + cse3
                 sus=~ Sus'
 
-CFAfit <- cfa(susmod,data=gambling)
+CFAfit <- cfa(susmod,data=gambling,estimator="MLM")
 
 CFAfit |> summary(fit.measures=T)
 ```
 
 All fit measures indicate a good fit, with the CLI close to 1, RMSEA < 0.06, and SRMR < 0.05.
 
+
+## Construct Validity (Convergent and Discriminant Validity)
+
+We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity. 
+
+```{r,validitysus}
+
+CFAfit |> compRelSEM()
+CFAfit |> semTools::reliability()
+CFAfit |> AVE()
+
+```
+
 ## Configural Invariance
 
 Let us now see if we have configural invariance between the non-gambling and gambling groups.
 
 ```{r,configsus}
-cfa.config <- cfa(susmod,data=gambling,group="Gambled",mimic="Mplus")
+cfa.config <- cfa(susmod,data=gambling,group="Gambled",mimic="Mplus",
+                  estimator="MLM")
 cfa.config |> summary(fit.measures=T,standardized=T)
 cfasem <- sem(susmod,data=gambling,group="Gambled")
 lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05) -> lp_sus
@@ -287,7 +317,7 @@ The fit still remains acceptable after including groups, which means that both g
 Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions.
 
 ```{r,metricsus}
-cfa.metric <- cfa(susmod,data=gambling,group="Gambled",group.equal="loadings")
+cfa.metric <- cfa(susmod,data=gambling,group="Gambled",group.equal="loadings",estimator="MLM")
 
 compareFit(cfa.config,cfa.metric) |> summary()
 ```
@@ -302,7 +332,8 @@ For scalar invariance, we also set the intercepts to be equal.
 
 ```{r, scalarsus}
 # Scalar model
-cfa.scalar <- cfa(susmod, data = gambling, group = "Gambled", group.equal = c("loadings","intercepts"))
+cfa.scalar <- cfa(susmod, data = gambling, 
+                  estimator="MLM",group = "Gambled", group.equal = c("loadings","intercepts"))
 
 cfa.scalar |> summary(fit.measures=T)
 # Model comparison
