@@ -94,7 +94,7 @@ We calculate Cronbach's alpha for the responses using the ```cronbach.alpha()```
 cronbach.alpha(responses,CI=T,standardized = T)
 ```
 
-Cronbach's alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.
+Overall Cronbach's alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.
 
 We then look at the specific Cronbach's alphas for each construct.
 
