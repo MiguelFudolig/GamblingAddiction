@@ -373,6 +373,8 @@ cfa.config |> AVE()
 
 <!-- There is no significant difference in chi-square values as well as the other fit measures, which means that the constructs in the sustenance aspect of quitting gambling is also scalar invariant.  -->
 
+
+
 ## Conclusions
 
 We have established scalar invariance of the construct validity in the sustenance response, which means the factor loadings and intercepts are the same for those who did and did not gamble in the past 30 days. This invariance was not observed in the initiation to quit gambling.  
