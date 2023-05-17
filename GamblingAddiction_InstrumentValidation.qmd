@@ -373,7 +373,18 @@ cfa.config |> AVE()
 
 <!-- There is no significant difference in chi-square values as well as the other fit measures, which means that the constructs in the sustenance aspect of quitting gambling is also scalar invariant.  -->
 
+## T-test for different items
 
+```{r, ttest}
+gambling |> 
+  summarize_at(vars(pa1:Sus),
+               list(pvalue=~t.test(.~Gambled)$p.value)) |> 
+  pivot_longer(cols=ends_with("value"),
+               names_to = "Item",
+               values_to = "p.value") |> 
+  mutate(p.value=round(p.value,3)) |> 
+  as.data.frame()
+```
 
 ## Conclusions
 

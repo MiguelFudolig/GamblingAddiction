@@ -255,7 +255,7 @@ alpha: 0.883
 
 Bootstrap 95% CI based on 1000 samples
  2.5% 97.5% 
-0.871 0.894 </code></pre>
+0.871 0.893 </code></pre>
 </div>
 </div>
 <p>Overall Cronbach’s alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.</p>
@@ -1769,6 +1769,59 @@ avevar 0.7629509 0.6014673 0.5708559</code></pre>
 <!-- ``` -->
 <!-- There is no significant difference in chi-square values as well as the other fit measures, which means that the constructs in the sustenance aspect of quitting gambling is also scalar invariant.  -->
 </section>
+</section>
+<section id="t-test-for-different-items" class="level2">
+<h2 class="anchored" data-anchor-id="t-test-for-different-items">T-test for different items</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> </span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_at</span>(<span class="fu">vars</span>(pa1<span class="sc">:</span>Sus),</span>
+<span id="cb69-3"><a href="#cb69-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">pvalue=</span><span class="sc">~</span><span class="fu">t.test</span>(.<span class="sc">~</span>Gambled)<span class="sc">$</span>p.value)) <span class="sc">|&gt;</span> </span>
+<span id="cb69-4"><a href="#cb69-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">ends_with</span>(<span class="st">"value"</span>),</span>
+<span id="cb69-5"><a href="#cb69-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Item"</span>,</span>
+<span id="cb69-6"><a href="#cb69-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"p.value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb69-7"><a href="#cb69-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value=</span><span class="fu">round</span>(p.value,<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb69-8"><a href="#cb69-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>          Item p.value
+1   pa1_pvalue   0.000
+2   pa2_pvalue   0.000
+3   pa3_pvalue   0.000
+4   pa4_pvalue   0.000
+5   pa5_pvalue   0.000
+6    PA_pvalue   0.000
+7  pad1_pvalue   0.000
+8  pad2_pvalue   0.000
+9  pad3_pvalue   0.398
+10 pad4_pvalue   0.000
+11 pad5_pvalue   0.698
+12  PAD_pvalue   0.000
+13   PD_pvalue   0.000
+14  bc1_pvalue   0.000
+15  bc2_pvalue   0.000
+16  bc3_pvalue   0.000
+17  bc4_pvalue   0.000
+18  bc5_pvalue   0.000
+19   BC_pvalue   0.000
+20 cpe1_pvalue   0.126
+21 cpe2_pvalue   0.000
+22 cpe3_pvalue   0.000
+23  CPE_pvalue   0.000
+24  et1_pvalue   0.000
+25  et2_pvalue   0.000
+26  et3_pvalue   0.000
+27   ET_pvalue   0.000
+28 pfc1_pvalue   0.000
+29 pfc2_pvalue   0.000
+30 pfc3_pvalue   0.000
+31  PfC_pvalue   0.000
+32 cse1_pvalue   0.000
+33 cse2_pvalue   0.000
+34 cse3_pvalue   0.001
+35  CSE_pvalue   0.000
+36  Ini_pvalue   0.000
+37  Sus_pvalue   0.000</code></pre>
+</div>
+</div>
 </section>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
