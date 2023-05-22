@@ -711,137 +711,143 @@ Sus  0.16 0.08 0.14 0.22 0.41    0</code></pre>
 </div>
 <p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>inimod <span class="ot">&lt;-</span> <span class="st">'pa =~ pa1 + pa2 +pa3+pa4 + pa5</span></span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>inimod <span class="ot">&lt;-</span> <span class="st">'pa =~ pa1 + pa2 +pa3 + pa4 + pa5</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pad =~ pad1 + pad2 + pad3 + pad4 + pad5</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="st">                bc =~ bc1 + bc2 + bc3 + bc4 + bc5</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">                ini=~ Ini'</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="st">                cpe =~ cpe1 + cpe2 + cpe3</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="st">                ini=~ Ini'</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimator=</span><span class="st">"WLSMV"</span>)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>lavaan 0.6.15 ended normally after 40 iterations
+<pre><code>lavaan 0.6.15 ended normally after 57 iterations
 
-  Estimator                                         ML
+  Estimator                                       DWLS
   Optimization method                           NLMINB
-  Number of model parameters                        37
+  Number of model parameters                        47
 
   Number of observations                          1474
 
 Model Test User Model:
                                               Standard      Scaled
-  Test Statistic                              1188.264     875.552
-  Degrees of freedom                                99          99
+  Test Statistic                              1011.032    1463.511
+  Degrees of freedom                               143         143
   P-value (Chi-square)                           0.000       0.000
-  Scaling correction factor                                  1.357
-    Satorra-Bentler correction                                    
+  Scaling correction factor                                  0.724
+  Shift parameter                                           66.447
+    simple second-order correction                                
 
 Model Test Baseline Model:
 
-  Test statistic                             16484.666   12372.233
-  Degrees of freedom                               120         120
+  Test statistic                             20389.248    6423.736
+  Degrees of freedom                               171         171
   P-value                                        0.000       0.000
-  Scaling correction factor                                  1.332
+  Scaling correction factor                                  3.234
 
 User Model versus Baseline Model:
 
-  Comparative Fit Index (CFI)                    0.933       0.937
-  Tucker-Lewis Index (TLI)                       0.919       0.923
+  Comparative Fit Index (CFI)                    0.957       0.789
+  Tucker-Lewis Index (TLI)                       0.949       0.747
                                                                   
-  Robust Comparative Fit Index (CFI)                         0.935
-  Robust Tucker-Lewis Index (TLI)                            0.922
-
-Loglikelihood and Information Criteria:
-
-  Loglikelihood user model (H0)             -28649.358  -28649.358
-  Loglikelihood unrestricted model (H1)     -28055.226  -28055.226
-                                                                  
-  Akaike (AIC)                               57372.716   57372.716
-  Bayesian (BIC)                             57568.659   57568.659
-  Sample-size adjusted Bayesian (SABIC)      57451.121   57451.121
+  Robust Comparative Fit Index (CFI)                         0.953
+  Robust Tucker-Lewis Index (TLI)                            0.943
 
 Root Mean Square Error of Approximation:
 
-  RMSEA                                          0.086       0.073
-  90 Percent confidence interval - lower         0.082       0.069
-  90 Percent confidence interval - upper         0.091       0.077
+  RMSEA                                          0.064       0.079
+  90 Percent confidence interval - lower         0.060       0.076
+  90 Percent confidence interval - upper         0.068       0.083
   P-value H_0: RMSEA &lt;= 0.050                    0.000       0.000
-  P-value H_0: RMSEA &gt;= 0.080                    0.992       0.001
+  P-value H_0: RMSEA &gt;= 0.080                    0.000       0.361
                                                                   
-  Robust RMSEA                                               0.085
-  90 Percent confidence interval - lower                     0.080
-  90 Percent confidence interval - upper                     0.090
+  Robust RMSEA                                               0.067
+  90 Percent confidence interval - lower                     0.064
+  90 Percent confidence interval - upper                     0.071
   P-value H_0: Robust RMSEA &lt;= 0.050                         0.000
-  P-value H_0: Robust RMSEA &gt;= 0.080                         0.945
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.000
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.057       0.057
+  SRMR                                           0.064       0.064
 
 Parameter Estimates:
 
   Standard errors                           Robust.sem
   Information                                 Expected
-  Information saturated (h1) model          Structured
+  Information saturated (h1) model        Unstructured
 
 Latent Variables:
                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
   pa =~                                                                 
-    pa1               1.000                               1.057    0.803
-    pa2               0.691    0.026   26.594    0.000    0.731    0.687
-    pa3               1.207    0.027   44.453    0.000    1.276    0.944
-    pa4               1.233    0.028   43.946    0.000    1.304    0.933
-    pa5               1.174    0.027   42.903    0.000    1.241    0.838
+    pa1               1.000                               1.092    0.829
+    pa2               0.645    0.026   24.666    0.000    0.705    0.662
+    pa3               1.136    0.026   43.911    0.000    1.240    0.917
+    pa4               1.169    0.027   43.403    0.000    1.277    0.913
+    pa5               1.197    0.029   40.703    0.000    1.307    0.882
   pad =~                                                                
-    pad1              1.000                               0.615    0.559
-    pad2              1.433    0.071   20.313    0.000    0.881    0.807
-    pad3              1.241    0.064   19.336    0.000    0.763    0.854
-    pad4              1.595    0.075   21.264    0.000    0.981    0.810
-    pad5              1.406    0.073   19.367    0.000    0.865    0.871
+    pad1              1.000                               0.704    0.639
+    pad2              1.345    0.067   20.128    0.000    0.946    0.865
+    pad3              0.879    0.053   16.638    0.000    0.619    0.692
+    pad4              1.560    0.079   19.784    0.000    1.097    0.905
+    pad5              1.013    0.059   17.059    0.000    0.712    0.717
   bc =~                                                                 
-    bc1               1.000                               0.570    0.707
-    bc2               1.790    0.084   21.352    0.000    1.020    0.885
-    bc3               1.606    0.072   22.325    0.000    0.915    0.874
-    bc4               1.370    0.063   21.684    0.000    0.781    0.760
-    bc5               1.739    0.093   18.708    0.000    0.991    0.799
+    bc1               1.000                               0.597    0.740
+    bc2               1.648    0.072   22.885    0.000    0.983    0.852
+    bc3               1.490    0.062   23.869    0.000    0.889    0.848
+    bc4               1.368    0.061   22.291    0.000    0.816    0.794
+    bc5               1.656    0.087   18.977    0.000    0.988    0.796
+  cpe =~                                                                
+    cpe1              1.000                               0.883    0.563
+    cpe2              0.986    0.042   23.321    0.000    0.871    0.588
+    cpe3              1.417    0.080   17.751    0.000    1.252    0.985
   ini =~                                                                
-    Ini               1.000                               1.086    1.000
+    Ini               1.000                               1.087    1.000
 
 Covariances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
   pa ~~                                                                 
-    pad               0.032    0.016    1.964    0.050    0.049    0.049
-    bc                0.137    0.020    6.795    0.000    0.228    0.228
-    ini               0.336    0.035    9.463    0.000    0.292    0.292
+    pad               0.033    0.020    1.659    0.097    0.043    0.043
+    bc                0.152    0.022    7.002    0.000    0.234    0.234
+    cpe               0.246    0.034    7.317    0.000    0.255    0.255
+    ini               0.368    0.037    9.848    0.000    0.310    0.310
   pad ~~                                                                
-    bc               -0.100    0.013   -7.612    0.000   -0.286   -0.286
-    ini              -0.136    0.021   -6.527    0.000   -0.204   -0.204
+    bc               -0.147    0.016   -9.089    0.000   -0.351   -0.351
+    cpe              -0.102    0.020   -5.018    0.000   -0.165   -0.165
+    ini              -0.182    0.025   -7.257    0.000   -0.238   -0.238
   bc ~~                                                                 
-    ini               0.282    0.032    8.913    0.000    0.455    0.455
+    cpe               0.308    0.027   11.580    0.000    0.584    0.584
+    ini               0.295    0.032    9.152    0.000    0.456    0.456
+  cpe ~~                                                                
+    ini               0.353    0.036    9.691    0.000    0.368    0.368
 
 Variances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-   .pa1               0.615    0.035   17.667    0.000    0.615    0.355
-   .pa2               0.598    0.028   21.621    0.000    0.598    0.529
-   .pa3               0.199    0.020   10.077    0.000    0.199    0.109
-   .pa4               0.253    0.027    9.489    0.000    0.253    0.130
-   .pa5               0.651    0.042   15.553    0.000    0.651    0.297
-   .pad1              0.833    0.042   20.037    0.000    0.833    0.688
-   .pad2              0.417    0.033   12.648    0.000    0.417    0.349
-   .pad3              0.217    0.018   12.204    0.000    0.217    0.271
-   .pad4              0.506    0.035   14.607    0.000    0.506    0.344
-   .pad5              0.239    0.024    9.881    0.000    0.239    0.242
-   .bc1               0.325    0.024   13.637    0.000    0.325    0.500
-   .bc2               0.289    0.025   11.742    0.000    0.289    0.217
-   .bc3               0.259    0.021   12.158    0.000    0.259    0.237
-   .bc4               0.447    0.027   16.807    0.000    0.447    0.423
-   .bc5               0.556    0.034   16.371    0.000    0.556    0.361
+   .pa1               0.543    0.036   15.175    0.000    0.543    0.313
+   .pa2               0.636    0.033   19.002    0.000    0.636    0.562
+   .pa3               0.290    0.028   10.503    0.000    0.290    0.159
+   .pa4               0.325    0.033    9.785    0.000    0.325    0.166
+   .pa5               0.485    0.045   10.669    0.000    0.485    0.221
+   .pad1              0.718    0.047   15.356    0.000    0.718    0.592
+   .pad2              0.300    0.034    8.792    0.000    0.300    0.251
+   .pad3              0.417    0.031   13.577    0.000    0.417    0.522
+   .pad4              0.265    0.046    5.815    0.000    0.265    0.181
+   .pad5              0.480    0.037   13.096    0.000    0.480    0.486
+   .bc1               0.294    0.025   11.654    0.000    0.294    0.453
+   .bc2               0.364    0.029   12.654    0.000    0.364    0.273
+   .bc3               0.308    0.024   12.707    0.000    0.308    0.280
+   .bc4               0.391    0.027   14.460    0.000    0.391    0.370
+   .bc5               0.563    0.039   14.437    0.000    0.563    0.366
+   .cpe1              1.684    0.062   27.329    0.000    1.684    0.683
+   .cpe2              1.436    0.054   26.469    0.000    1.436    0.654
+   .cpe3              0.048    0.069    0.691    0.490    0.048    0.030
    .Ini               0.000                               0.000    0.000
-    pa                1.118    0.060   18.672    0.000    1.000    1.000
-    pad               0.378    0.036   10.543    0.000    1.000    1.000
-    bc                0.325    0.035    9.380    0.000    1.000    1.000
-    ini               1.180    0.072   16.418    0.000    1.000    1.000</code></pre>
+    pa                1.192    0.062   19.338    0.000    1.000    1.000
+    pad               0.495    0.045   11.120    0.000    1.000    1.000
+    bc                0.356    0.036   10.009    0.000    1.000    1.000
+    cpe               0.780    0.065   11.936    0.000    1.000    1.000
+    ini               1.181    0.072   16.423    0.000    1.000    1.000</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit_ini,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>, <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -857,30 +863,108 @@ Variances:
 <pre><code>Output stored in C:/Users/migsf/Documents/GitHub/GamblingAddiction/CFA_ini.png</code></pre>
 </div>
 </div>
-<p>The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of <span class="math inline">\(\leq\)</span> 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable.</p>
+<p>The important fit measures are the following: RMSEA, SRMR, and CFI. We interpret the Robust RMSEA and CFI estimates to account for the Weighted Least Squares with Mean and Variance Adjustments (WLSMV) estimator.</p>
+<p>For an accetable fit, the following conditions should be satisfied: RMSEA values of <span class="math inline">\(\leq\)</span> 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable.</p>
+<p>The matrix that shows the factor loadings are shown below in the lambda matrix</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> lavaan<span class="sc">::</span><span class="fu">inspect</span>(<span class="at">what=</span><span class="st">"std"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$lambda
+        pa   pad    bc   cpe ini
+pa1  0.829 0.000 0.000 0.000   0
+pa2  0.662 0.000 0.000 0.000   0
+pa3  0.917 0.000 0.000 0.000   0
+pa4  0.913 0.000 0.000 0.000   0
+pa5  0.882 0.000 0.000 0.000   0
+pad1 0.000 0.639 0.000 0.000   0
+pad2 0.000 0.865 0.000 0.000   0
+pad3 0.000 0.692 0.000 0.000   0
+pad4 0.000 0.905 0.000 0.000   0
+pad5 0.000 0.717 0.000 0.000   0
+bc1  0.000 0.000 0.740 0.000   0
+bc2  0.000 0.000 0.852 0.000   0
+bc3  0.000 0.000 0.848 0.000   0
+bc4  0.000 0.000 0.794 0.000   0
+bc5  0.000 0.000 0.796 0.000   0
+cpe1 0.000 0.000 0.000 0.563   0
+cpe2 0.000 0.000 0.000 0.588   0
+cpe3 0.000 0.000 0.000 0.985   0
+Ini  0.000 0.000 0.000 0.000   1
+
+$theta
+       pa1   pa2   pa3   pa4   pa5  pad1  pad2  pad3  pad4  pad5   bc1   bc2
+pa1  0.313                                                                  
+pa2  0.000 0.562                                                            
+pa3  0.000 0.000 0.159                                                      
+pa4  0.000 0.000 0.000 0.166                                                
+pa5  0.000 0.000 0.000 0.000 0.221                                          
+pad1 0.000 0.000 0.000 0.000 0.000 0.592                                    
+pad2 0.000 0.000 0.000 0.000 0.000 0.000 0.251                              
+pad3 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.522                        
+pad4 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.181                  
+pad5 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.486            
+bc1  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.453      
+bc2  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.273
+bc3  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+bc4  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+bc5  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+cpe1 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+cpe2 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+cpe3 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+Ini  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+       bc3   bc4   bc5  cpe1  cpe2  cpe3   Ini
+pa1                                           
+pa2                                           
+pa3                                           
+pa4                                           
+pa5                                           
+pad1                                          
+pad2                                          
+pad3                                          
+pad4                                          
+pad5                                          
+bc1                                           
+bc2                                           
+bc3  0.280                                    
+bc4  0.000 0.370                              
+bc5  0.000 0.000 0.366                        
+cpe1 0.000 0.000 0.000 0.683                  
+cpe2 0.000 0.000 0.000 0.000 0.654            
+cpe3 0.000 0.000 0.000 0.000 0.000 0.030      
+Ini  0.000 0.000 0.000 0.000 0.000 0.000 0.000
+
+$psi
+        pa    pad     bc    cpe    ini
+pa   1.000                            
+pad  0.043  1.000                     
+bc   0.234 -0.351  1.000              
+cpe  0.255 -0.165  0.584  1.000       
+ini  0.310 -0.238  0.456  0.368  1.000</code></pre>
+</div>
+</div>
 </section>
 <section id="construct-validity-convergent-and-discriminant-validity" class="level2">
 <h2 class="anchored" data-anchor-id="construct-validity-convergent-and-discriminant-validity">Construct Validity (Convergent and Discriminant Validity)</h2>
 <p>We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   pa   pad    bc 
-0.925 0.880 0.908 </code></pre>
+<pre><code>   pa   pad    bc   cpe 
+0.928 0.867 0.905 0.701 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>              pa       pad        bc
-alpha  0.9251719 0.8807793 0.8983117
-omega  0.9313660 0.8840525 0.9069719
-omega2 0.9313660 0.8840525 0.9069719
-omega3 0.9249504 0.8798350 0.9075453
-avevar 0.7377028 0.6093313 0.6691427</code></pre>
+<pre><code>              pa       pad        bc       cpe
+alpha  0.9251719 0.8807793 0.8983117 0.7701384
+omega  0.9326725 0.8840933 0.9048613 0.7404453
+omega2 0.9326725 0.8840933 0.9048613 0.7404453
+omega3 0.9280533 0.8671547 0.9052186 0.7008800
+avevar 0.7421940 0.6151151 0.6617169 0.4950705</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   pa   pad    bc 
-0.738 0.609 0.669 </code></pre>
+<pre><code>   pa   pad    bc   cpe 
+0.742 0.615 0.662 0.495 </code></pre>
 </div>
 </div>
 <!--# This is testing measurement invariance which we will not look at for this paper. -->
@@ -936,28 +1020,28 @@ avevar 0.7377028 0.6093313 0.6691427</code></pre>
 <h2 class="anchored" data-anchor-id="sustenance-of-quitting-gambling">Sustenance of quitting gambling</h2>
 <p>We now check for correlations between the items for sustenance of quitting gambling.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/corrsus-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
-<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
-<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">estimator=</span><span class="st">"MLM"</span>)</span>
-<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T, <span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">estimator=</span><span class="st">"WLSMV"</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T, <span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>lavaan 0.6.15 ended normally after 42 iterations
+<pre><code>lavaan 0.6.15 ended normally after 38 iterations
 
-  Estimator                                         ML
+  Estimator                                       DWLS
   Optimization method                           NLMINB
   Number of model parameters                        25
 
@@ -965,144 +1049,174 @@ avevar 0.7377028 0.6093313 0.6691427</code></pre>
 
 Model Test User Model:
                                               Standard      Scaled
-  Test Statistic                               162.262     101.075
+  Test Statistic                                28.015     123.325
   Degrees of freedom                                30          30
-  P-value (Chi-square)                           0.000       0.000
-  Scaling correction factor                                  1.605
-    Satorra-Bentler correction                                    
+  P-value (Chi-square)                           0.570       0.000
+  Scaling correction factor                                  0.244
+  Shift parameter                                            8.331
+    simple second-order correction                                
 
 Model Test Baseline Model:
 
-  Test statistic                              9555.290    4740.691
+  Test statistic                              8036.939    2188.391
   Degrees of freedom                                45          45
   P-value                                        0.000       0.000
-  Scaling correction factor                                  2.016
+  Scaling correction factor                                  3.729
 
 User Model versus Baseline Model:
 
-  Comparative Fit Index (CFI)                    0.986       0.985
-  Tucker-Lewis Index (TLI)                       0.979       0.977
+  Comparative Fit Index (CFI)                    1.000       0.956
+  Tucker-Lewis Index (TLI)                       1.000       0.935
                                                                   
-  Robust Comparative Fit Index (CFI)                         0.988
-  Robust Tucker-Lewis Index (TLI)                            0.982
-
-Loglikelihood and Information Criteria:
-
-  Loglikelihood user model (H0)             -17740.238  -17740.238
-  Loglikelihood unrestricted model (H1)     -17659.107  -17659.107
-                                                                  
-  Akaike (AIC)                               35530.477   35530.477
-  Bayesian (BIC)                             35662.870   35662.870
-  Sample-size adjusted Bayesian (SABIC)      35583.453   35583.453
+  Robust Comparative Fit Index (CFI)                         0.997
+  Robust Tucker-Lewis Index (TLI)                            0.996
 
 Root Mean Square Error of Approximation:
 
-  RMSEA                                          0.055       0.040
-  90 Percent confidence interval - lower         0.047       0.033
-  90 Percent confidence interval - upper         0.063       0.047
-  P-value H_0: RMSEA &lt;= 0.050                    0.165       0.992
+  RMSEA                                          0.000       0.046
+  90 Percent confidence interval - lower         0.000       0.038
+  90 Percent confidence interval - upper         0.018       0.055
+  P-value H_0: RMSEA &lt;= 0.050                    1.000       0.773
   P-value H_0: RMSEA &gt;= 0.080                    0.000       0.000
                                                                   
-  Robust RMSEA                                               0.051
-  90 Percent confidence interval - lower                     0.040
-  90 Percent confidence interval - upper                     0.062
-  P-value H_0: Robust RMSEA &lt;= 0.050                         0.432
+  Robust RMSEA                                               0.023
+  90 Percent confidence interval - lower                     0.019
+  90 Percent confidence interval - upper                     0.027
+  P-value H_0: Robust RMSEA &lt;= 0.050                         1.000
   P-value H_0: Robust RMSEA &gt;= 0.080                         0.000
 
 Standardized Root Mean Square Residual:
 
-  SRMR                                           0.031       0.031
+  SRMR                                           0.025       0.025
 
 Parameter Estimates:
 
   Standard errors                           Robust.sem
   Information                                 Expected
-  Information saturated (h1) model          Structured
+  Information saturated (h1) model        Unstructured
 
 Latent Variables:
                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
   et =~                                                                 
-    et1               1.000                               0.873    0.864
-    et2               0.936    0.024   39.158    0.000    0.817    0.923
-    et3               0.940    0.026   36.749    0.000    0.820    0.903
+    et1               1.000                               0.881    0.872
+    et2               0.908    0.025   36.886    0.000    0.800    0.903
+    et3               0.937    0.029   32.602    0.000    0.826    0.909
   pfc =~                                                                
-    pfc1              1.000                               0.867    0.686
-    pfc2              0.998    0.033   30.323    0.000    0.865    0.908
-    pfc3              0.970    0.033   29.328    0.000    0.840    0.840
+    pfc1              1.000                               0.906    0.717
+    pfc2              0.926    0.032   29.150    0.000    0.839    0.880
+    pfc3              0.909    0.033   27.563    0.000    0.824    0.823
   cse =~                                                                
-    cse1              1.000                               1.030    0.836
-    cse2              0.991    0.033   29.736    0.000    1.021    0.874
-    cse3              0.800    0.036   22.277    0.000    0.825    0.606
+    cse1              1.000                               0.988    0.801
+    cse2              0.986    0.035   28.590    0.000    0.974    0.834
+    cse3              0.908    0.043   20.903    0.000    0.897    0.659
   sus =~                                                                
     Sus               1.000                               1.465    1.000
 
 Covariances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
   et ~~                                                                 
-    pfc               0.650    0.041   15.830    0.000    0.859    0.859
-    cse               0.509    0.040   12.858    0.000    0.565    0.565
-    sus               0.556    0.041   13.671    0.000    0.435    0.435
+    pfc               0.684    0.041   16.494    0.000    0.857    0.857
+    cse               0.509    0.040   12.740    0.000    0.585    0.585
+    sus               0.566    0.041   13.874    0.000    0.438    0.438
   pfc ~~                                                                
-    cse               0.549    0.040   13.786    0.000    0.614    0.614
-    sus               0.518    0.040   12.928    0.000    0.408    0.408
+    cse               0.606    0.041   14.610    0.000    0.677    0.677
+    sus               0.561    0.042   13.437    0.000    0.423    0.423
   cse ~~                                                                
-    sus               0.367    0.046    7.919    0.000    0.243    0.243
+    sus               0.371    0.046    8.087    0.000    0.256    0.256
 
 Variances:
                    Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
-   .et1               0.259    0.026    9.930    0.000    0.259    0.254
-   .et2               0.117    0.015    7.769    0.000    0.117    0.149
-   .et3               0.152    0.017    9.096    0.000    0.152    0.184
-   .pfc1              0.845    0.057   14.941    0.000    0.845    0.529
-   .pfc2              0.160    0.017    9.150    0.000    0.160    0.176
-   .pfc3              0.295    0.032    9.223    0.000    0.295    0.294
-   .cse1              0.458    0.045   10.145    0.000    0.458    0.301
-   .cse2              0.322    0.043    7.425    0.000    0.322    0.236
-   .cse3              1.169    0.062   18.797    0.000    1.169    0.632
+   .et1               0.245    0.027    9.087    0.000    0.245    0.240
+   .et2               0.145    0.016    9.213    0.000    0.145    0.185
+   .et3               0.144    0.016    8.760    0.000    0.144    0.174
+   .pfc1              0.776    0.053   14.621    0.000    0.776    0.486
+   .pfc2              0.205    0.020   10.451    0.000    0.205    0.226
+   .pfc3              0.323    0.032   10.017    0.000    0.323    0.322
+   .cse1              0.545    0.051   10.656    0.000    0.545    0.359
+   .cse2              0.416    0.045    9.205    0.000    0.416    0.305
+   .cse3              1.047    0.066   15.968    0.000    1.047    0.566
    .Sus               0.000                               0.000    0.000
-    et                0.762    0.048   15.732    0.000    1.000    1.000
-    pfc               0.751    0.052   14.473    0.000    1.000    1.000
-    cse               1.062    0.066   16.189    0.000    1.000    1.000
-    sus               2.146    0.058   36.768    0.000    1.000    1.000</code></pre>
+    et                0.777    0.050   15.683    0.000    1.000    1.000
+    pfc               0.821    0.053   15.431    0.000    1.000    1.000
+    cse               0.976    0.067   14.560    0.000    1.000    1.000
+    sus               2.147    0.058   36.781    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>, <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>, <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/constructsus-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>,</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">filetype=</span><span class="st">"png"</span>,</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">filename=</span><span class="st">"CFA_sus"</span>,</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">width=</span><span class="dv">12</span>,</span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">height=</span><span class="dv">9</span>,</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>,</span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">filetype=</span><span class="st">"png"</span>,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">filename=</span><span class="st">"CFA_sus"</span>,</span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">width=</span><span class="dv">12</span>,</span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">height=</span><span class="dv">9</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Output stored in C:/Users/migsf/Documents/GitHub/GamblingAddiction/CFA_sus.png</code></pre>
 </div>
 </div>
 <p>All fit measures indicate a good fit, with the CLI close to 1, RMSEA &lt; 0.06, and SRMR &lt; 0.05.</p>
+<p>The matrix that shows the factor loadings are shown below in the lambda matrix</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> lavaan<span class="sc">::</span><span class="fu">inspect</span>(<span class="at">what=</span><span class="st">"std"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$lambda
+        et   pfc   cse sus
+et1  0.872 0.000 0.000   0
+et2  0.903 0.000 0.000   0
+et3  0.909 0.000 0.000   0
+pfc1 0.000 0.717 0.000   0
+pfc2 0.000 0.880 0.000   0
+pfc3 0.000 0.823 0.000   0
+cse1 0.000 0.000 0.801   0
+cse2 0.000 0.000 0.834   0
+cse3 0.000 0.000 0.659   0
+Sus  0.000 0.000 0.000   1
+
+$theta
+       et1   et2   et3  pfc1  pfc2  pfc3  cse1  cse2  cse3   Sus
+et1  0.240                                                      
+et2  0.000 0.185                                                
+et3  0.000 0.000 0.174                                          
+pfc1 0.000 0.000 0.000 0.486                                    
+pfc2 0.000 0.000 0.000 0.000 0.226                              
+pfc3 0.000 0.000 0.000 0.000 0.000 0.322                        
+cse1 0.000 0.000 0.000 0.000 0.000 0.000 0.359                  
+cse2 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.305            
+cse3 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.566      
+Sus  0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000 0.000
+
+$psi
+       et   pfc   cse   sus
+et  1.000                  
+pfc 0.857 1.000            
+cse 0.585 0.677 1.000      
+sus 0.438 0.423 0.256 1.000</code></pre>
+</div>
+</div>
 </section>
 <section id="construct-validity-convergent-and-discriminant-validity-1" class="level2">
 <h2 class="anchored" data-anchor-id="construct-validity-convergent-and-discriminant-validity-1">Construct Validity (Convergent and Discriminant Validity)</h2>
 <p>We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   et   pfc   cse 
-0.924 0.838 0.813 </code></pre>
+0.921 0.835 0.802 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              et       pfc       cse
 alpha  0.9215844 0.8341404 0.8023436
-omega  0.9227681 0.8359028 0.8093057
-omega2 0.9227681 0.8359028 0.8093057
-omega3 0.9239706 0.8380182 0.8128010
-avevar 0.7994544 0.6293982 0.5882261</code></pre>
+omega  0.9217674 0.8349993 0.8027466
+omega2 0.9217674 0.8349993 0.8027466
+omega3 0.9208446 0.8351677 0.8023924
+avevar 0.7973230 0.6282236 0.5760814</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   et   pfc   cse 
-0.799 0.629 0.588 </code></pre>
+0.797 0.628 0.576 </code></pre>
 </div>
 </div>
 <!-- ## Configural Invariance -->
@@ -1147,14 +1261,14 @@ avevar 0.7994544 0.6293982 0.5882261</code></pre>
 <section id="t-test-for-different-items" class="level2">
 <h2 class="anchored" data-anchor-id="t-test-for-different-items">T-test for different items</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> </span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_at</span>(<span class="fu">vars</span>(pa1<span class="sc">:</span>Sus),</span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">pvalue=</span><span class="sc">~</span><span class="fu">t.test</span>(.<span class="sc">~</span>Gambled)<span class="sc">$</span>p.value)) <span class="sc">|&gt;</span> </span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">ends_with</span>(<span class="st">"value"</span>),</span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Item"</span>,</span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"p.value"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value=</span><span class="fu">round</span>(p.value,<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> </span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_at</span>(<span class="fu">vars</span>(pa1<span class="sc">:</span>Sus),</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">pvalue=</span><span class="sc">~</span><span class="fu">t.test</span>(.<span class="sc">~</span>Gambled)<span class="sc">$</span>p.value)) <span class="sc">|&gt;</span> </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">ends_with</span>(<span class="st">"value"</span>),</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Item"</span>,</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"p.value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value=</span><span class="fu">round</span>(p.value,<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Item p.value
 1   pa1_pvalue   0.000
@@ -1200,6 +1314,21 @@ avevar 0.7994544 0.6293982 0.5882261</code></pre>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>We have established construct validity for our instrument as used in this data set. All Cronbach <span class="math inline">\(\alpha\)</span>’s were calculated to be above 0.7, and the composite reliability values were all above 0.7 as well. Convergent validity was also shown by the average variance explained (AVE) where all of the AVE values were above 0.5.</p>
+</section>
+</section>
+<section id="added-analysis" class="level1">
+<h1>Added Analysis</h1>
+<section id="changes-in-physical-environment-1" class="level2">
+<h2 class="anchored" data-anchor-id="changes-in-physical-environment-1">Changes in Physical Environment</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"cpe"</span>,<span class="at">ignore.case=</span>F),Gambled) <span class="sc">|&gt;</span> </span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>cpe1<span class="sc">:</span>cpe3,<span class="at">names_to=</span><span class="st">"CPE"</span>,<span class="at">values_to=</span><span class="st">"Values"</span>) <span class="ot">-&gt;</span> cpe</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>cpe <span class="sc">|&gt;</span> </span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>CPE,<span class="at">y=</span>Values, <span class="at">fill=</span>Gambled)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">position=</span><span class="st">"jitter"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 </section>
 </section>
 

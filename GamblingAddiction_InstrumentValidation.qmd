@@ -167,13 +167,14 @@ corrplot(cormat)
 We now use the `lavaan` package to estimate a multi-group CFA by grouping each construct.
 
 ```{r,construct}
-inimod <- 'pa =~ pa1 + pa2 +pa3+pa4 + pa5
+inimod <- 'pa =~ pa1 + pa2 +pa3 + pa4 + pa5
                 pad =~ pad1 + pad2 + pad3 + pad4 + pad5
                 bc =~ bc1 + bc2 + bc3 + bc4 + bc5
+                cpe =~ cpe1 + cpe2 + cpe3
                 ini=~ Ini'
 
 CFAfit_ini <- cfa(inimod,data=gambling,
-                  estimator="MLM")
+                  estimator="WLSMV")
 
 CFAfit_ini |> summary(fit.measures=T,standardized=T)
 
@@ -189,15 +190,23 @@ semPaths(CFAfit_ini,what="diagram","std",layout="tree",
 
 ```
 
-The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of $\leq$ 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable.
+The important fit measures are the following: RMSEA, SRMR, and CFI. We interpret the Robust RMSEA and CFI estimates to account for the Weighted Least Squares with Mean and Variance Adjustments (WLSMV) estimator. 
+
+For an accetable fit, the following conditions should be satisfied: RMSEA values of $\leq$ 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable.
+
+
+The matrix that shows the factor loadings are shown below in the lambda matrix
+
+```{r, loadingini}
+CFAfit_ini |> lavaan::inspect(what="std")
+
+```
 
 ## Construct Validity (Convergent and Discriminant Validity)
 
 We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.
 
 ```{r,validity}
-
-
 CFAfit_ini |> compRelSEM()
 CFAfit_ini |> semTools::reliability()
 CFAfit_ini |> AVE()
@@ -301,9 +310,10 @@ susmod <- 'et =~ et1 + et2 + et3
                 cse =~ cse1 + cse2 + cse3
                 sus=~ Sus'
 
-CFAfit <- cfa(susmod,data=gambling,estimator="MLM")
+CFAfit <- cfa(susmod,data=gambling,estimator="WLSMV")
 
 CFAfit |> summary(fit.measures=T, standardized=T)
+
 
 semPaths(CFAfit,"std",what="diagram",layout="tree", rotation=2)
 semPaths(CFAfit,"std",what="diagram",layout="tree",
@@ -315,6 +325,13 @@ semPaths(CFAfit,"std",what="diagram",layout="tree",
 ```
 
 All fit measures indicate a good fit, with the CLI close to 1, RMSEA \< 0.06, and SRMR \< 0.05.
+
+The matrix that shows the factor loadings are shown below in the lambda matrix
+
+```{r, loadingsus}
+CFAfit |> lavaan::inspect(what="std")
+
+```
 
 ## Construct Validity (Convergent and Discriminant Validity)
 
@@ -410,3 +427,15 @@ gambling |>
 ## Conclusions
 
 We have established construct validity for our instrument as used in this data set. All Cronbach $\alpha$'s were calculated to be above 0.7, and the composite reliability values were all above 0.7 as well. Convergent validity was also shown by the average variance explained (AVE) where all of the AVE values were above 0.5.
+
+
+# Added Analysis
+
+## Changes in Physical Environment
+
+```{r}
+gambling |> dplyr::select(starts_with("cpe",ignore.case=F),Gambled) |> 
+  pivot_longer(cols=cpe1:cpe3,names_to="CPE",values_to="Values") -> cpe
+cpe |> 
+  ggplot(aes(x=CPE,y=Values, fill=Gambled)) + geom_point(position="jitter") 
+```
