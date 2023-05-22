@@ -18,10 +18,9 @@ library(ltm)
 library(psych)
 ```
 
+## Testing Construct Validity
 
-## Testing Measurement Invariance
-
-We implement a measurement invariance analysis using the Confirmatory Factor Analysis to show that the instrument is valid across problem and non-problem gamblers. The CFA is related to the measurement side of the Structural Equation Modeling framework and is sufficient in proving instrument validity.
+We test the construct validity using the Confirmatory Factor Analysis to show that the instrument is valid across problem and non-problem gamblers. The CFA is related to the measurement side of the Structural Equation Modeling framework and is sufficient in proving instrument validity.
 
 ## Loading in the Dataset
 
@@ -81,10 +80,9 @@ gambling |> summarize(PA_mean = mean(PA),
   mutate(Values=round(Values,2)) |> as.data.frame()
 ```
 
-
 ## Cronbach's alpha
 
-We calculate Cronbach's alpha for the responses using the ```cronbach.alpha()``` function in the package ```ltm```.
+We calculate Cronbach's alpha for the responses using the `cronbach.alpha()` function in the package `ltm`.
 
 ```{r, ca}
  responses <- gambling |>
@@ -104,13 +102,11 @@ We then look at the specific Cronbach's alphas for each construct.
 gambling |> dplyr::select(starts_with("pa",ignore.case=F) &!starts_with("pad")) |> alpha()
 ```
 
-
 ### Perceived Disadvantage
 
 ```{r, pad}
 gambling |> dplyr::select(starts_with("pad",ignore.case=F) ) |> alpha()
 ```
-
 
 ### Behavioral Confidence
 
@@ -130,8 +126,6 @@ gambling |> dplyr::select(starts_with("cpe",ignore.case=F) ) |> alpha()
 gambling |> dplyr::select(starts_with(c("pa","pad","bc","cpe","Ini"),ignore.case=F)) |> alpha()
 ```
 
-
-
 ### Emotional Transformation
 
 ```{r, et}
@@ -150,18 +144,15 @@ gambling |> dplyr::select(starts_with("pfc",ignore.case=F) ) |> alpha()
 gambling |> dplyr::select(starts_with("cse",ignore.case=F) ) |> alpha()
 ```
 
-
 ### Overall sustenance
 
 ```{r, susalpha}
 gambling |>  dplyr::select(starts_with(c("et","pfc","cse","Sus"),ignore.case=F)) |> alpha()
 ```
 
+# CFA and SEM Analysis
 
-
-# CFA and SEM Analysis 
 ## Initiation of quitting gambling
-
 
 We now check for correlations between the items for initiation of quitting gambling.
 
@@ -181,25 +172,28 @@ inimod <- 'pa =~ pa1 + pa2 +pa3+pa4 + pa5
                 bc =~ bc1 + bc2 + bc3 + bc4 + bc5
                 ini=~ Ini'
 
-CFAfit_ini <- cfa(inimod,data=gambling,meanstructure=T,mimic="Mplus",
+CFAfit_ini <- cfa(inimod,data=gambling,
                   estimator="MLM")
 
-CFAfit_ini |> summary(fit.measures=T)
+CFAfit_ini |> summary(fit.measures=T,standardized=T)
 
+semPaths(CFAfit_ini,what="diagram","std",layout="tree", rotation=2)
 
-cfasem_ini <- sem(inimod,data=gambling)
-lavaanPlot(model=cfasem_ini,coefs = TRUE, stand = TRUE, sig = 0.05) -> lpsem
-save_png(lpsem,"sem_ini_nogroups.png")
-semPaths(CFAfit_ini,what="diagram","std",layout="tree")
+semPaths(CFAfit_ini,what="diagram","std",layout="tree",
+          filetype="png",
+         filename="CFA_ini",
+         width=12,
+         height=9,
+         rotation=2)
 
 
 ```
 
-The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of $\leq$ 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable. 
+The important fit measures are the following: RMSEA, SRMR, and CFI. For an accetable fit, the following conditions should be satisfied: RMSEA values of $\leq$ 0.06, CFI values close to 1, and SRMR values less than 0.10. The overall model seems to satisfy the CFI and SRMR criteria, but not the RMSEA. However, there are some sources that say that RMSEA below 0.10 is still acceptable.
 
 ## Construct Validity (Convergent and Discriminant Validity)
 
-We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity. 
+We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.
 
 ```{r,validity}
 
@@ -209,74 +203,86 @@ CFAfit_ini |> semTools::reliability()
 CFAfit_ini |> AVE()
 ```
 
+<!--# This is testing measurement invariance which we will not look at for this paper. -->
 
-## Configural Invariance
+<!-- ## Configural Invariance -->
 
-Let us now see if we have configural invariance between the non-gambling and gambling groups.
+<!-- Let us now see if we have configural invariance between the non-gambling and gambling groups. -->
 
-```{r,config}
-cfa.config <- cfa(inimod,data=gambling,group="Gambled",mimic="Mplus",
-                  estimator="MLM")
-cfa.config |> summary(fit.measures=T,standardized=T)
-cfa.config |> fitMeasures()
-cfasem <- sem(inimod,data=gambling,group="Gambled")
-lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05) -> lp
-save_png(lp,"sem_ini.png")
-semPaths(cfasem,"std",layout="tree")
-```
+<!-- ```{r,config} -->
+<!-- cfa.config <- cfa(inimod,data=gambling,group="Gambled",mimic="Mplus", -->
+<!--                   estimator="MLM") -->
+<!-- cfa.config |> summary(fit.measures=T,standardized=T) -->
+<!-- cfa.config |> fitMeasures() -->
+<!-- cfasem <- sem(inimod,data=gambling,group="Gambled") -->
+<!-- lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05) -> lp -->
+<!-- save_png(lp,"sem_ini.png") -->
+<!-- semPaths(cfasem,"std",layout="tree") -->
+<!-- ``` -->
 
-The results show that the fit is good between the groups. CFI and TLI are close to 1,and the SRMR is close to 0.8. The RMSEA is slightly higher than 0.06. We can conclude that the two groups have the same factor structure.
+<!-- The results show that the fit is good between the groups. CFI and TLI are close to 1,and the SRMR is close to 0.8. The RMSEA is slightly higher than 0.06. We can conclude that the two groups have the same factor structure. -->
 
-```{r,configvsgen}
-compareFit(CFAfit_ini,cfa.config) |> summary()
-```
+<!-- ```{r,configvsgen} -->
+<!-- compareFit(CFAfit_ini,cfa.config) |> summary() -->
+<!-- ``` -->
 
-We can compare this result with the model that does not consider groups. The AIC and BIC are significantly lower than the general model, which means the model that accounts for the recently gambled grouping performs better. Bear in mind that even if the CFI and TLI slightly decreased, it did not decrease significantly. The same can be said about the RMSEA and SRMR. 
+<!-- We can compare this result with the model that does not consider groups. The AIC and BIC are significantly lower than the general model, which means the model that accounts for the recently gambled grouping performs better. Bear in mind that even if the CFI and TLI slightly decreased, it did not decrease significantly. The same can be said about the RMSEA and SRMR. -->
+
+<!-- ### Construct validity -->
+
+<!-- We now check validity through CR and AVE for the model with groupings: -->
+
+<!-- ```{r,iniconfigvalidity} -->
 
 
-### Construct validity
-We now check validity through CR and AVE for the model with groupings:
-
-```{r,iniconfigvalidity}
-
-
-cfa.config |> compRelSEM()
-cfa.config |> semTools::reliability()
-cfa.config |> AVE()
-```
+<!-- cfa.config |> compRelSEM() -->
+<!-- cfa.config |> semTools::reliability() -->
+<!-- cfa.config |> AVE() -->
+<!-- ``` -->
 
 <!-- ## Metric Invariance -->
 
 <!-- Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions. -->
 
 <!-- ```{r,metric} -->
+
 <!-- cfa.metric <- cfa(inimod,data=gambling,group="Gambled",group.equal="loadings",estimator="MLM") -->
 
 <!-- cfa.metric |> summary(fit.measures=T) -->
+
 <!-- # cfa.metric |> fitmeasures() -->
+
 <!-- # lavInspect(cfa.metric, -->
+
 <!-- # "options")[c("estimator","test","meanstructure")] -->
+
 <!-- #  -->
+
 <!-- # lavInspect(cfa.config, -->
+
 <!-- # "options")[c("estimator","test","meanstructure")] -->
+
 <!-- compareFit(cfa.config,cfa.metric) |> summary() -->
+
 <!-- ``` -->
 
 <!-- Results show that the chi-square test is significant, which means that the metric invariance is not satisfied. This means that even if the groups have the same factor structures, the factor loadings are different across groups. This is understandable based on the nature of grouping (problem vs non-problem gamblers). There must be different sense of importance in their attitude towards quitting gambling. -->
 
 <!-- ```{r, lavtestscore} -->
+
 <!-- lavTestScore(cfa.config) -->
+
 <!-- ``` -->
+
 <!-- The significant score tests shows which questions between groups have different loadings. We can look at which relations/loadings are significantly different in the table below. -->
 
 <!-- ```{r,parameters} -->
+
 <!-- parTable(cfa.config) -->
+
 <!-- ``` -->
 
-
-
 ## Sustenance of quitting gambling
-
 
 We now check for correlations between the items for sustenance of quitting gambling.
 
@@ -297,15 +303,22 @@ susmod <- 'et =~ et1 + et2 + et3
 
 CFAfit <- cfa(susmod,data=gambling,estimator="MLM")
 
-CFAfit |> summary(fit.measures=T)
+CFAfit |> summary(fit.measures=T, standardized=T)
+
+semPaths(CFAfit,"std",what="diagram",layout="tree", rotation=2)
+semPaths(CFAfit,"std",what="diagram",layout="tree",
+         filetype="png",
+         filename="CFA_sus",
+         width=12,
+         height=9,
+         rotation=2)
 ```
 
-All fit measures indicate a good fit, with the CLI close to 1, RMSEA < 0.06, and SRMR < 0.05.
-
+All fit measures indicate a good fit, with the CLI close to 1, RMSEA \< 0.06, and SRMR \< 0.05.
 
 ## Construct Validity (Convergent and Discriminant Validity)
 
-We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity. 
+We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.
 
 ```{r,validitysus}
 
@@ -315,60 +328,68 @@ CFAfit |> AVE()
 
 ```
 
-## Configural Invariance
 
-Let us now see if we have configural invariance between the non-gambling and gambling groups.
+<!-- ## Configural Invariance -->
 
-```{r,configsus}
-cfa.config <- cfa(susmod,data=gambling,group="Gambled",mimic="Mplus",
-                  estimator="MLM")
-cfa.config |> summary(fit.measures=T,standardized=T)
-cfasem <- sem(susmod,data=gambling,group="Gambled")
-lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05) -> lp_sus
-save_png(lp_sus,"sem_sus.png")
-semPaths(cfasem,"std",layout="tree")
+<!-- Let us now see if we have configural invariance between the non-gambling and gambling groups. -->
 
-```
+<!-- ```{r,configsus} -->
+<!-- cfa.config <- cfa(susmod,data=gambling,group="Gambled",mimic="Mplus", -->
+<!--                   estimator="MLM") -->
+<!-- cfa.config |> summary(fit.measures=T,standardized=T) -->
+<!-- cfasem <- sem(susmod,data=gambling,group="Gambled") -->
+<!-- lavaanPlot(model=cfasem,coefs = TRUE, stand = TRUE, sig = 0.05) -> lp_sus -->
+<!-- save_png(lp_sus,"sem_sus.png") -->
+<!-- semPaths(cfasem,"std",layout="tree") -->
 
-The fit still remains acceptable after including groups, which means that both groups have the same factors in their model.
+<!-- ``` -->
 
-### Construct Validity
-We now check validity through CR and AVE for the model with groupings:
+<!-- The fit still remains acceptable after including groups, which means that both groups have the same factors in their model. -->
 
-```{r,susconfigvalidity}
+<!-- ### Construct Validity -->
+
+<!-- We now check validity through CR and AVE for the model with groupings: -->
+
+<!-- ```{r,susconfigvalidity} -->
 
 
-cfa.config |> compRelSEM()
-cfa.config |> semTools::reliability()
-cfa.config |> AVE()
-```
+<!-- cfa.config |> compRelSEM() -->
+<!-- cfa.config |> semTools::reliability() -->
+<!-- cfa.config |> AVE() -->
+<!-- ``` -->
 
 <!-- ## Metric Invariance -->
 
 <!-- Now we are testing metric invariance, which sets the loadings to be equal. We then compare the fit between the configural and metric assumptions. -->
 
 <!-- ```{r,metricsus} -->
+
 <!-- cfa.metric <- cfa(susmod,data=gambling,group="Gambled",group.equal="loadings",estimator="MLM") -->
 
 <!-- compareFit(cfa.config,cfa.metric) |> summary() -->
+
 <!-- ``` -->
 
 <!-- Results show that the chi-square test is not significant, which means that the metric invariance is satisfied. The new model where we constrained the loadings to be equal for both groups does not differ in terms of performance. This means that the two groups have the same factors and factor loadings.  -->
-
-
 
 <!-- ## Scalar Invariance (strong invariance) -->
 
 <!-- For scalar invariance, we also set the intercepts to be equal. -->
 
 <!-- ```{r, scalarsus} -->
+
 <!-- # Scalar model -->
+
 <!-- cfa.scalar <- cfa(susmod, data = gambling,  -->
+
 <!--                   estimator="MLM",group = "Gambled", group.equal = c("loadings","intercepts")) -->
 
 <!-- cfa.scalar |> summary(fit.measures=T) -->
+
 <!-- # Model comparison -->
+
 <!-- compareFit(cfa.metric, cfa.scalar) |> summary() -->
+
 <!-- ``` -->
 
 <!-- There is no significant difference in chi-square values as well as the other fit measures, which means that the constructs in the sustenance aspect of quitting gambling is also scalar invariant.  -->
@@ -388,4 +409,4 @@ gambling |>
 
 ## Conclusions
 
-We have established scalar invariance of the construct validity in the sustenance response, which means the factor loadings and intercepts are the same for those who did and did not gamble in the past 30 days. This invariance was not observed in the initiation to quit gambling.  
+We have established construct validity for our instrument as used in this data set. All Cronbach $\alpha$'s were calculated to be above 0.7, and the composite reliability values were all above 0.7 as well. Convergent validity was also shown by the average variance explained (AVE) where all of the AVE values were above 0.5.
