@@ -255,7 +255,7 @@ alpha: 0.883
 
 Bootstrap 95% CI based on 1000 samples
  2.5% 97.5% 
-0.872 0.893 </code></pre>
+0.872 0.894 </code></pre>
 </div>
 </div>
 <p>Overall Cronbach’s alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.</p>
@@ -1314,21 +1314,6 @@ avevar 0.7973230 0.6282236 0.5760814</code></pre>
 <section id="conclusions" class="level2">
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>We have established construct validity for our instrument as used in this data set. All Cronbach <span class="math inline">\(\alpha\)</span>’s were calculated to be above 0.7, and the composite reliability values were all above 0.7 as well. Convergent validity was also shown by the average variance explained (AVE) where all of the AVE values were above 0.5.</p>
-</section>
-</section>
-<section id="added-analysis" class="level1">
-<h1>Added Analysis</h1>
-<section id="changes-in-physical-environment-1" class="level2">
-<h2 class="anchored" data-anchor-id="changes-in-physical-environment-1">Changes in Physical Environment</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"cpe"</span>,<span class="at">ignore.case=</span>F),Gambled) <span class="sc">|&gt;</span> </span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span>cpe1<span class="sc">:</span>cpe3,<span class="at">names_to=</span><span class="st">"CPE"</span>,<span class="at">values_to=</span><span class="st">"Values"</span>) <span class="ot">-&gt;</span> cpe</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>cpe <span class="sc">|&gt;</span> </span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>CPE,<span class="at">y=</span>Values, <span class="at">fill=</span>Gambled)) <span class="sc">+</span> <span class="fu">geom_point</span>(<span class="at">position=</span><span class="st">"jitter"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
 </section>
 </section>
 

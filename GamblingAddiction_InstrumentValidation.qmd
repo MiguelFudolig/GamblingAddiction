@@ -429,13 +429,4 @@ gambling |>
 We have established construct validity for our instrument as used in this data set. All Cronbach $\alpha$'s were calculated to be above 0.7, and the composite reliability values were all above 0.7 as well. Convergent validity was also shown by the average variance explained (AVE) where all of the AVE values were above 0.5.
 
 
-# Added Analysis
 
-## Changes in Physical Environment
-
-```{r}
-gambling |> dplyr::select(starts_with("cpe",ignore.case=F),Gambled) |> 
-  pivot_longer(cols=cpe1:cpe3,names_to="CPE",values_to="Values") -> cpe
-cpe |> 
-  ggplot(aes(x=CPE,y=Values, fill=Gambled)) + geom_point(position="jitter") 
-```
