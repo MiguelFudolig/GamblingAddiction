@@ -102,10 +102,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#testing-construct-validity" id="toc-testing-construct-validity" class="nav-link active" data-scroll-target="#testing-construct-validity">Testing Construct Validity</a></li>
+  <li><a href="#loading-in-the-dataset" id="toc-loading-in-the-dataset" class="nav-link" data-scroll-target="#loading-in-the-dataset">Loading in the Dataset</a></li>
+  <li><a href="#summary-statistics-of-the-scores" id="toc-summary-statistics-of-the-scores" class="nav-link" data-scroll-target="#summary-statistics-of-the-scores">Summary statistics of the scores</a></li>
+  <li><a href="#cronbachs-alpha" id="toc-cronbachs-alpha" class="nav-link" data-scroll-target="#cronbachs-alpha">Cronbach’s alpha</a>
+  <ul class="collapse">
+  <li><a href="#perceived-advantage" id="toc-perceived-advantage" class="nav-link" data-scroll-target="#perceived-advantage">Perceived Advantage</a></li>
+  <li><a href="#perceived-disadvantage" id="toc-perceived-disadvantage" class="nav-link" data-scroll-target="#perceived-disadvantage">Perceived Disadvantage</a></li>
+  <li><a href="#behavioral-confidence" id="toc-behavioral-confidence" class="nav-link" data-scroll-target="#behavioral-confidence">Behavioral Confidence</a></li>
+  <li><a href="#changes-in-physical-environment" id="toc-changes-in-physical-environment" class="nav-link" data-scroll-target="#changes-in-physical-environment">Changes in Physical Environment</a></li>
+  <li><a href="#entire-initiation-scale" id="toc-entire-initiation-scale" class="nav-link" data-scroll-target="#entire-initiation-scale">Entire Initiation Scale</a></li>
+  <li><a href="#emotional-transformation" id="toc-emotional-transformation" class="nav-link" data-scroll-target="#emotional-transformation">Emotional Transformation</a></li>
+  <li><a href="#practice-for-change" id="toc-practice-for-change" class="nav-link" data-scroll-target="#practice-for-change">Practice for Change</a></li>
+  <li><a href="#changes-in-the-social-environment" id="toc-changes-in-the-social-environment" class="nav-link" data-scroll-target="#changes-in-the-social-environment">Changes in the social environment</a></li>
+  <li><a href="#overall-sustenance" id="toc-overall-sustenance" class="nav-link" data-scroll-target="#overall-sustenance">Overall sustenance</a></li>
+  </ul></li>
+  <li><a href="#cfa-and-sem-analysis" id="toc-cfa-and-sem-analysis" class="nav-link" data-scroll-target="#cfa-and-sem-analysis">CFA and SEM Analysis</a>
+  <ul class="collapse">
+  <li><a href="#initiation-of-quitting-gambling" id="toc-initiation-of-quitting-gambling" class="nav-link" data-scroll-target="#initiation-of-quitting-gambling">Initiation of quitting gambling</a></li>
+  <li><a href="#construct-validity-convergent-and-discriminant-validity" id="toc-construct-validity-convergent-and-discriminant-validity" class="nav-link" data-scroll-target="#construct-validity-convergent-and-discriminant-validity">Construct Validity (Convergent and Discriminant Validity)</a></li>
+  <li><a href="#sustenance-of-quitting-gambling" id="toc-sustenance-of-quitting-gambling" class="nav-link" data-scroll-target="#sustenance-of-quitting-gambling">Sustenance of quitting gambling</a></li>
+  <li><a href="#construct-validity-convergent-and-discriminant-validity-1" id="toc-construct-validity-convergent-and-discriminant-validity-1" class="nav-link" data-scroll-target="#construct-validity-convergent-and-discriminant-validity-1">Construct Validity (Convergent and Discriminant Validity)</a></li>
+  <li><a href="#t-test-for-different-items" id="toc-t-test-for-different-items" class="nav-link" data-scroll-target="#t-test-for-different-items">T-test for different items</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
@@ -942,17 +975,27 @@ cpe  0.255 -0.165  0.584  1.000
 ini  0.310 -0.238  0.456  0.368  1.000</code></pre>
 </div>
 </div>
+<p>The <span class="math inline">\(R^2\)</span> values can be calculated using the inspect() or lavInspect() function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> lavaan<span class="sc">::</span><span class="fu">inspect</span>(<span class="at">what=</span><span class="st">"rsquare"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  pa1   pa2   pa3   pa4   pa5  pad1  pad2  pad3  pad4  pad5   bc1   bc2   bc3 
+0.687 0.438 0.841 0.834 0.779 0.408 0.749 0.478 0.819 0.514 0.547 0.727 0.720 
+  bc4   bc5  cpe1  cpe2  cpe3   Ini 
+0.630 0.634 0.317 0.346 0.970 1.000 </code></pre>
+</div>
+</div>
 </section>
 <section id="construct-validity-convergent-and-discriminant-validity" class="level2">
 <h2 class="anchored" data-anchor-id="construct-validity-convergent-and-discriminant-validity">Construct Validity (Convergent and Discriminant Validity)</h2>
 <p>We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   pa   pad    bc   cpe 
 0.928 0.867 0.905 0.701 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              pa       pad        bc       cpe
 alpha  0.9251719 0.8807793 0.8983117 0.7701384
@@ -961,7 +1004,7 @@ omega2 0.9326725 0.8840933 0.9048613 0.7404453
 omega3 0.9280533 0.8671547 0.9052186 0.7008800
 avevar 0.7421940 0.6151151 0.6617169 0.4950705</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>CFAfit_ini <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   pa   pad    bc   cpe 
 0.742 0.615 0.662 0.495 </code></pre>
@@ -1020,24 +1063,24 @@ avevar 0.7421940 0.6151151 0.6617169 0.4950705</code></pre>
 <h2 class="anchored" data-anchor-id="sustenance-of-quitting-gambling">Sustenance of quitting gambling</h2>
 <p>We now check for correlations between the items for sustenance of quitting gambling.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a> cormat <span class="ot">&lt;-</span> gambling <span class="sc">|&gt;</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>   dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="fu">c</span>(<span class="st">"et"</span>,<span class="st">"pfc"</span>,<span class="st">"cse"</span>,<span class="st">"Sus"</span>),<span class="at">ignore.case=</span>F)) <span class="sc">|&gt;</span>   <span class="fu">cor</span>()</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a> <span class="fu">corrplot</span>(cormat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/corrsus-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>We now use the <code>lavaan</code> package to estimate a multi-group CFA by grouping each construct.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">estimator=</span><span class="st">"WLSMV"</span>)</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T, <span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pfc =~ pfc1 + pfc2 + pfc3</span></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus'</span></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">estimator=</span><span class="st">"WLSMV"</span>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T, <span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>lavaan 0.6.15 ended normally after 38 iterations
 
@@ -1141,16 +1184,16 @@ Variances:
     cse               0.976    0.067   14.560    0.000    1.000    1.000
     sus               2.147    0.058   36.781    0.000    1.000    1.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>, <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>, <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/constructsus-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>,</span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">filetype=</span><span class="st">"png"</span>,</span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">filename=</span><span class="st">"CFA_sus"</span>,</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">width=</span><span class="dv">12</span>,</span>
-<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">height=</span><span class="dv">9</span>,</span>
-<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>,</span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">filetype=</span><span class="st">"png"</span>,</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">filename=</span><span class="st">"CFA_sus"</span>,</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">width=</span><span class="dv">12</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">height=</span><span class="dv">9</span>,</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Output stored in C:/Users/migsf/Documents/GitHub/GamblingAddiction/CFA_sus.png</code></pre>
 </div>
@@ -1158,7 +1201,7 @@ Variances:
 <p>All fit measures indicate a good fit, with the CLI close to 1, RMSEA &lt; 0.06, and SRMR &lt; 0.05.</p>
 <p>The matrix that shows the factor loadings are shown below in the lambda matrix</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> lavaan<span class="sc">::</span><span class="fu">inspect</span>(<span class="at">what=</span><span class="st">"std"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> lavaan<span class="sc">::</span><span class="fu">inspect</span>(<span class="at">what=</span><span class="st">"std"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$lambda
         et   pfc   cse sus
@@ -1194,17 +1237,25 @@ cse 0.585 0.677 1.000
 sus 0.438 0.423 0.256 1.000</code></pre>
 </div>
 </div>
+<p>The <span class="math inline">\(R^2\)</span> values can be calculated using the inspect() or lavInspect() function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> lavaan<span class="sc">::</span><span class="fu">inspect</span>(<span class="at">what=</span><span class="st">"rsquare"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  et1   et2   et3  pfc1  pfc2  pfc3  cse1  cse2  cse3   Sus 
+0.760 0.815 0.826 0.514 0.774 0.678 0.641 0.695 0.434 1.000 </code></pre>
+</div>
+</div>
 </section>
 <section id="construct-validity-convergent-and-discriminant-validity-1" class="level2">
 <h2 class="anchored" data-anchor-id="construct-validity-convergent-and-discriminant-validity-1">Construct Validity (Convergent and Discriminant Validity)</h2>
 <p>We check convergent and discriminant validity by looking at the AVE (average variance extracted) for convergent validity and CR (composite reliability) for discriminant validity.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">compRelSEM</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   et   pfc   cse 
 0.921 0.835 0.802 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> semTools<span class="sc">::</span><span class="fu">reliability</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              et       pfc       cse
 alpha  0.9215844 0.8341404 0.8023436
@@ -1213,7 +1264,7 @@ omega2 0.9217674 0.8349993 0.8027466
 omega3 0.9208446 0.8351677 0.8023924
 avevar 0.7973230 0.6282236 0.5760814</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>CFAfit <span class="sc">|&gt;</span> <span class="fu">AVE</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   et   pfc   cse 
 0.797 0.628 0.576 </code></pre>
@@ -1261,14 +1312,14 @@ avevar 0.7973230 0.6282236 0.5760814</code></pre>
 <section id="t-test-for-different-items" class="level2">
 <h2 class="anchored" data-anchor-id="t-test-for-different-items">T-test for different items</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> </span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_at</span>(<span class="fu">vars</span>(pa1<span class="sc">:</span>Sus),</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">pvalue=</span><span class="sc">~</span><span class="fu">t.test</span>(.<span class="sc">~</span>Gambled)<span class="sc">$</span>p.value)) <span class="sc">|&gt;</span> </span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">ends_with</span>(<span class="st">"value"</span>),</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Item"</span>,</span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"p.value"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value=</span><span class="fu">round</span>(p.value,<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
-<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>gambling <span class="sc">|&gt;</span> </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize_at</span>(<span class="fu">vars</span>(pa1<span class="sc">:</span>Sus),</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">pvalue=</span><span class="sc">~</span><span class="fu">t.test</span>(.<span class="sc">~</span>Gambled)<span class="sc">$</span>p.value)) <span class="sc">|&gt;</span> </span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="fu">ends_with</span>(<span class="st">"value"</span>),</span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Item"</span>,</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"p.value"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">p.value=</span><span class="fu">round</span>(p.value,<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          Item p.value
 1   pa1_pvalue   0.000
