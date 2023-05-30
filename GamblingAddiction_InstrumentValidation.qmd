@@ -457,4 +457,48 @@ gambling |>
 We have established construct validity for our instrument as used in this data set. All Cronbach $\alpha$'s were calculated to be above 0.7, and the composite reliability values were all above 0.7 as well. Convergent validity was also shown by the average variance explained (AVE) where all of the AVE values were above 0.5.
 
 
+# combining two constructs
 
+Looking at full model:
+
+```{r,}
+susmod <- 'et =~ et1 + et2 + et3
+              pfc =~ pfc1 + pfc2 + pfc3
+                cse =~ cse1 + cse2 + cse3
+                sus=~ Sus
+            etp =~ et+pfc'
+
+CFAfitcomb <- cfa(susmod,data=gambling,estimator="WLSMV")
+
+CFAfitcomb |> summary(fit.measures=T, standardized=T)
+
+
+semPaths(CFAfit,"std",what="diagram",layout="tree", rotation=2)
+# semPaths(CFAfit,"std",what="diagram",layout="tree",
+#          filetype="png",
+#          filename="CFA_sus",
+#          width=12,
+#          height=9,
+#          rotation=2)
+
+compareFit(CFAfit,CFAfitcomb) |> summary()
+
+# CFAfitcomb |> parameterEstimates(standardized=T)
+```
+
+```{r}
+inimod <- 'pa =~ pa1 + pa2 +pa3 + pa4 + pa5
+                pad =~ pad1 + pad2 + pad3 + pad4 + pad5
+                bcc =~ bc1 + bc2 + bc3 + bc4 + bc5+ cpe1 + cpe2 + cpe3
+                ini=~ Ini'
+
+CFAfit_inicomb <- cfa(inimod,data=gambling,
+                  estimator="WLSMV")
+
+CFAfit_inicomb |> summary(fit.measures=T,standardized=T)
+
+semPaths(CFAfit_ini,what="diagram","std",layout="tree", rotation=2)
+
+compareFit(CFAfit_ini,CFAfit_inicomb) |> summary()
+
+```

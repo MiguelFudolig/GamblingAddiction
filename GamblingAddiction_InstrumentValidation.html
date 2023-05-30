@@ -134,6 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#t-test-for-different-items" id="toc-t-test-for-different-items" class="nav-link" data-scroll-target="#t-test-for-different-items">T-test for different items</a></li>
   <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
   </ul></li>
+  <li><a href="#combining-two-constructs" id="toc-combining-two-constructs" class="nav-link" data-scroll-target="#combining-two-constructs">combining two constructs</a></li>
   </ul>
 </nav>
 </div>
@@ -288,7 +289,7 @@ alpha: 0.883
 
 Bootstrap 95% CI based on 1000 samples
  2.5% 97.5% 
-0.871 0.894 </code></pre>
+0.872 0.893 </code></pre>
 </div>
 </div>
 <p>Overall Cronbach’s alpha is estimated to be 0.883 (95% CI=(0.872,0.893)) higher than 0.70, which leads us to conclude that the instrument is acceptable.</p>
@@ -1837,6 +1838,330 @@ Warning in lav_object_post_check(object): lavaan WARNING: covariance matrix of l
 <h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
 <p>We have established construct validity for our instrument as used in this data set. All Cronbach <span class="math inline">\(\alpha\)</span>’s were calculated to be above 0.7, and the composite reliability values were all above 0.7 as well. Convergent validity was also shown by the average variance explained (AVE) where all of the AVE values were above 0.5.</p>
 </section>
+</section>
+<section id="combining-two-constructs" class="level1">
+<h1>combining two constructs</h1>
+<p>Looking at full model:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a>susmod <span class="ot">&lt;-</span> <span class="st">'et =~ et1 + et2 + et3</span></span>
+<span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="st">              pfc =~ pfc1 + pfc2 + pfc3</span></span>
+<span id="cb74-3"><a href="#cb74-3" aria-hidden="true" tabindex="-1"></a><span class="st">                cse =~ cse1 + cse2 + cse3</span></span>
+<span id="cb74-4"><a href="#cb74-4" aria-hidden="true" tabindex="-1"></a><span class="st">                sus=~ Sus</span></span>
+<span id="cb74-5"><a href="#cb74-5" aria-hidden="true" tabindex="-1"></a><span class="st">            etp =~ et+pfc'</span></span>
+<span id="cb74-6"><a href="#cb74-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-7"><a href="#cb74-7" aria-hidden="true" tabindex="-1"></a>CFAfitcomb <span class="ot">&lt;-</span> <span class="fu">cfa</span>(susmod,<span class="at">data=</span>gambling,<span class="at">estimator=</span><span class="st">"WLSMV"</span>)</span>
+<span id="cb74-8"><a href="#cb74-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb74-9"><a href="#cb74-9" aria-hidden="true" tabindex="-1"></a>CFAfitcomb <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T, <span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.15 ended normally after 39 iterations
+
+  Estimator                                       DWLS
+  Optimization method                           NLMINB
+  Number of model parameters                        24
+
+  Number of observations                          1474
+
+Model Test User Model:
+                                              Standard      Scaled
+  Test Statistic                                33.703     137.084
+  Degrees of freedom                                31          31
+  P-value (Chi-square)                           0.338       0.000
+  Scaling correction factor                                  0.263
+  Shift parameter                                            8.872
+    simple second-order correction                                
+
+Model Test Baseline Model:
+
+  Test statistic                              8036.939    2188.391
+  Degrees of freedom                                45          45
+  P-value                                        0.000       0.000
+  Scaling correction factor                                  3.729
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    1.000       0.951
+  Tucker-Lewis Index (TLI)                       1.000       0.928
+                                                                  
+  Robust Comparative Fit Index (CFI)                         0.997
+  Robust Tucker-Lewis Index (TLI)                            0.995
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.008       0.048
+  90 Percent confidence interval - lower         0.000       0.040
+  90 Percent confidence interval - upper         0.021       0.057
+  P-value H_0: RMSEA &lt;= 0.050                    1.000       0.624
+  P-value H_0: RMSEA &gt;= 0.080                    0.000       0.000
+                                                                  
+  Robust RMSEA                                               0.025
+  90 Percent confidence interval - lower                     0.021
+  90 Percent confidence interval - upper                     0.029
+  P-value H_0: Robust RMSEA &lt;= 0.050                         1.000
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.000
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.027       0.027
+
+Parameter Estimates:
+
+  Standard errors                           Robust.sem
+  Information                                 Expected
+  Information saturated (h1) model        Unstructured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  et =~                                                                 
+    et1               1.000                               0.881    0.872
+    et2               0.907    0.025   36.795    0.000    0.800    0.903
+    et3               0.937    0.029   32.522    0.000    0.826    0.909
+  pfc =~                                                                
+    pfc1              1.000                               0.906    0.717
+    pfc2              0.926    0.032   29.165    0.000    0.839    0.880
+    pfc3              0.909    0.033   27.600    0.000    0.824    0.823
+  cse =~                                                                
+    cse1              1.000                               0.989    0.802
+    cse2              0.986    0.034   28.614    0.000    0.975    0.834
+    cse3              0.906    0.043   20.887    0.000    0.896    0.658
+  sus =~                                                                
+    Sus               1.000                               1.465    1.000
+  etp =~                                                                
+    et                1.000                               0.881    0.881
+    pfc               1.134    0.053   21.362    0.000    0.972    0.972
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  cse ~~                                                                
+    sus               0.371    0.046    8.089    0.000    0.256    0.256
+    etp               0.523    0.040   13.211    0.000    0.681    0.681
+  sus ~~                                                                
+    etp               0.528    0.040   13.374    0.000    0.464    0.464
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .et1               0.245    0.027    9.063    0.000    0.245    0.240
+   .et2               0.146    0.016    9.236    0.000    0.146    0.185
+   .et3               0.143    0.016    8.688    0.000    0.143    0.173
+   .pfc1              0.776    0.053   14.612    0.000    0.776    0.486
+   .pfc2              0.205    0.020   10.446    0.000    0.205    0.225
+   .pfc3              0.323    0.032   10.042    0.000    0.323    0.323
+   .cse1              0.544    0.051   10.615    0.000    0.544    0.357
+   .cse2              0.415    0.045    9.186    0.000    0.415    0.304
+   .cse3              1.049    0.066   15.996    0.000    1.049    0.567
+   .Sus               0.000                               0.000    0.000
+   .et                0.173    0.023    7.499    0.000    0.223    0.223
+   .pfc               0.045    0.025    1.811    0.070    0.054    0.054
+    cse               0.977    0.067   14.576    0.000    1.000    1.000
+    sus               2.147    0.058   36.781    0.000    1.000    1.000
+    etp               0.603    0.048   12.622    0.000    1.000    1.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit,<span class="st">"std"</span>,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="at">layout=</span><span class="st">"tree"</span>, <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1" aria-hidden="true" tabindex="-1"></a><span class="co"># semPaths(CFAfit,"std",what="diagram",layout="tree",</span></span>
+<span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a><span class="co">#          filetype="png",</span></span>
+<span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a><span class="co">#          filename="CFA_sus",</span></span>
+<span id="cb77-4"><a href="#cb77-4" aria-hidden="true" tabindex="-1"></a><span class="co">#          width=12,</span></span>
+<span id="cb77-5"><a href="#cb77-5" aria-hidden="true" tabindex="-1"></a><span class="co">#          height=9,</span></span>
+<span id="cb77-6"><a href="#cb77-6" aria-hidden="true" tabindex="-1"></a><span class="co">#          rotation=2)</span></span>
+<span id="cb77-7"><a href="#cb77-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb77-8"><a href="#cb77-8" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(CFAfit,CFAfitcomb) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>################### Nested Model Comparison #########################
+
+Scaled Chi-Squared Difference Test (method = "satorra.2000")
+
+lavaan NOTE:
+    The "Chisq" column contains standard test statistics, not the
+    robust test that should be reported per model. A robust difference
+    test is a function of two standard (not robust) statistics.
+ 
+           Df AIC BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)   
+CFAfit     30         28.015                                 
+CFAfitcomb 31         33.703     10.582       1   0.001142 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+####################### Model Fit Indices ###########################
+           chisq.scaled df.scaled pvalue.scaled rmsea.robust cfi.robust
+CFAfit         123.325†        30          .000        .023†     0.997†
+CFAfitcomb     137.084         31          .000        .025      0.997 
+           tli.robust  srmr
+CFAfit         0.996† .025†
+CFAfitcomb      .995  .027 
+
+################## Differences in Fit Indices #######################
+                    df.scaled rmsea.robust cfi.robust tli.robust  srmr
+CFAfitcomb - CFAfit         1        0.002     -0.001     -0.001 0.002</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="co"># CFAfitcomb |&gt; parameterEstimates(standardized=T)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>inimod <span class="ot">&lt;-</span> <span class="st">'pa =~ pa1 + pa2 +pa3 + pa4 + pa5</span></span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="st">                pad =~ pad1 + pad2 + pad3 + pad4 + pad5</span></span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a><span class="st">                bcc =~ bc1 + bc2 + bc3 + bc4 + bc5+ cpe1 + cpe2 + cpe3</span></span>
+<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="st">                ini=~ Ini'</span></span>
+<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>CFAfit_inicomb <span class="ot">&lt;-</span> <span class="fu">cfa</span>(inimod,<span class="at">data=</span>gambling,</span>
+<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">estimator=</span><span class="st">"WLSMV"</span>)</span>
+<span id="cb80-8"><a href="#cb80-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-9"><a href="#cb80-9" aria-hidden="true" tabindex="-1"></a>CFAfit_inicomb <span class="sc">|&gt;</span> <span class="fu">summary</span>(<span class="at">fit.measures=</span>T,<span class="at">standardized=</span>T)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>lavaan 0.6.15 ended normally after 51 iterations
+
+  Estimator                                       DWLS
+  Optimization method                           NLMINB
+  Number of model parameters                        43
+
+  Number of observations                          1474
+
+Model Test User Model:
+                                              Standard      Scaled
+  Test Statistic                              1445.864    1697.824
+  Degrees of freedom                               147         147
+  P-value (Chi-square)                           0.000       0.000
+  Scaling correction factor                                  0.891
+  Shift parameter                                           75.045
+    simple second-order correction                                
+
+Model Test Baseline Model:
+
+  Test statistic                             20389.248    6423.736
+  Degrees of freedom                               171         171
+  P-value                                        0.000       0.000
+  Scaling correction factor                                  3.234
+
+User Model versus Baseline Model:
+
+  Comparative Fit Index (CFI)                    0.936       0.752
+  Tucker-Lewis Index (TLI)                       0.925       0.711
+                                                                  
+  Robust Comparative Fit Index (CFI)                         0.932
+  Robust Tucker-Lewis Index (TLI)                            0.921
+
+Root Mean Square Error of Approximation:
+
+  RMSEA                                          0.077       0.085
+  90 Percent confidence interval - lower         0.074       0.081
+  90 Percent confidence interval - upper         0.081       0.088
+  P-value H_0: RMSEA &lt;= 0.050                    0.000       0.000
+  P-value H_0: RMSEA &gt;= 0.080                    0.127       0.983
+                                                                  
+  Robust RMSEA                                               0.080
+  90 Percent confidence interval - lower                     0.076
+  90 Percent confidence interval - upper                     0.083
+  P-value H_0: Robust RMSEA &lt;= 0.050                         0.000
+  P-value H_0: Robust RMSEA &gt;= 0.080                         0.482
+
+Standardized Root Mean Square Residual:
+
+  SRMR                                           0.074       0.074
+
+Parameter Estimates:
+
+  Standard errors                           Robust.sem
+  Information                                 Expected
+  Information saturated (h1) model        Unstructured
+
+Latent Variables:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  pa =~                                                                 
+    pa1               1.000                               1.091    0.828
+    pa2               0.650    0.026   24.805    0.000    0.708    0.666
+    pa3               1.137    0.026   43.863    0.000    1.241    0.918
+    pa4               1.170    0.027   43.292    0.000    1.276    0.913
+    pa5               1.197    0.029   40.676    0.000    1.305    0.881
+  pad =~                                                                
+    pad1              1.000                               0.705    0.640
+    pad2              1.339    0.067   20.052    0.000    0.944    0.863
+    pad3              0.874    0.053   16.549    0.000    0.617    0.689
+    pad4              1.558    0.079   19.684    0.000    1.099    0.906
+    pad5              1.012    0.060   17.001    0.000    0.713    0.718
+  bcc =~                                                                
+    bc1               1.000                               0.565    0.700
+    bc2               1.660    0.073   22.695    0.000    0.937    0.813
+    bc3               1.497    0.063   23.758    0.000    0.846    0.807
+    bc4               1.371    0.062   22.158    0.000    0.774    0.753
+    bc5               1.694    0.090   18.897    0.000    0.957    0.771
+    cpe1              1.088    0.083   13.154    0.000    0.614    0.391
+    cpe2              1.063    0.080   13.220    0.000    0.600    0.405
+    cpe3              1.740    0.089   19.471    0.000    0.983    0.773
+  ini =~                                                                
+    Ini               1.000                               1.087    1.000
+
+Covariances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+  pa ~~                                                                 
+    pad               0.033    0.020    1.657    0.098    0.043    0.043
+    bcc               0.165    0.021    7.790    0.000    0.268    0.268
+    ini               0.368    0.037    9.845    0.000    0.310    0.310
+  pad ~~                                                                
+    bcc              -0.132    0.016   -8.447    0.000   -0.331   -0.331
+    ini              -0.182    0.025   -7.259    0.000   -0.238   -0.238
+  bcc ~~                                                                
+    ini               0.297    0.032    9.395    0.000    0.485    0.485
+
+Variances:
+                   Estimate  Std.Err  z-value  P(&gt;|z|)   Std.lv  Std.all
+   .pa1               0.545    0.036   15.214    0.000    0.545    0.314
+   .pa2               0.631    0.033   19.000    0.000    0.631    0.557
+   .pa3               0.289    0.028   10.505    0.000    0.289    0.158
+   .pa4               0.326    0.033    9.789    0.000    0.326    0.167
+   .pa5               0.489    0.045   10.784    0.000    0.489    0.223
+   .pad1              0.715    0.047   15.206    0.000    0.715    0.590
+   .pad2              0.304    0.034    8.839    0.000    0.304    0.254
+   .pad3              0.420    0.031   13.484    0.000    0.420    0.525
+   .pad4              0.263    0.046    5.692    0.000    0.263    0.179
+   .pad5              0.479    0.037   13.012    0.000    0.479    0.485
+   .bc1               0.332    0.026   12.733    0.000    0.332    0.510
+   .bc2               0.451    0.029   15.295    0.000    0.451    0.339
+   .bc3               0.383    0.025   15.434    0.000    0.383    0.349
+   .bc4               0.458    0.028   16.372    0.000    0.458    0.433
+   .bc5               0.624    0.038   16.366    0.000    0.624    0.405
+   .cpe1              2.087    0.052   40.230    0.000    2.087    0.847
+   .cpe2              1.835    0.047   38.950    0.000    1.835    0.836
+   .cpe3              0.649    0.044   14.631    0.000    0.649    0.402
+   .Ini               0.000                               0.000    0.000
+    pa                1.189    0.062   19.306    0.000    1.000    1.000
+    pad               0.497    0.045   11.097    0.000    1.000    1.000
+    bcc               0.319    0.033    9.548    0.000    1.000    1.000
+    ini               1.181    0.072   16.423    0.000    1.000    1.000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">semPaths</span>(CFAfit_ini,<span class="at">what=</span><span class="st">"diagram"</span>,<span class="st">"std"</span>,<span class="at">layout=</span><span class="st">"tree"</span>, <span class="at">rotation=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="GamblingAddiction_InstrumentValidation_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">compareFit</span>(CFAfit_ini,CFAfit_inicomb) <span class="sc">|&gt;</span> <span class="fu">summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>################### Nested Model Comparison #########################
+
+Scaled Chi-Squared Difference Test (method = "satorra.2000")
+
+lavaan NOTE:
+    The "Chisq" column contains standard test statistics, not the
+    robust test that should be reported per model. A robust difference
+    test is a function of two standard (not robust) statistics.
+ 
+                Df AIC BIC  Chisq Chisq diff Df diff Pr(&gt;Chisq)    
+CFAfit_ini     143         1011.0                                  
+CFAfit_inicomb 147         1445.9     157.26       4  &lt; 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+####################### Model Fit Indices ###########################
+               chisq.scaled df.scaled pvalue.scaled rmsea.robust cfi.robust
+CFAfit_ini        1463.511†       143          .000        .067†      .953†
+CFAfit_inicomb    1697.824        147          .000        .080       .932 
+               tli.robust  srmr
+CFAfit_ini          .943† .064†
+CFAfit_inicomb      .921  .074 
+
+################## Differences in Fit Indices #######################
+                            df.scaled rmsea.robust cfi.robust tli.robust srmr
+CFAfit_inicomb - CFAfit_ini         4        0.013     -0.021     -0.023 0.01</code></pre>
+</div>
+</div>
 </section>
 
 </main>
